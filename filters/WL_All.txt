@@ -1,0 +1,3 @@
+# WL_All — Accept all articles (catch-all whitelist)
+# Use this when you want whitelist to impose no filtering.
+.

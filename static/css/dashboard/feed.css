@@ -1,0 +1,88 @@
+/**
+ * RYBAT Dashboard - Feed Area Styles
+ * Feed area container, feed header, feed content layout
+ */
+
+/* ==================== FEED AREA ==================== */
+.feed-area {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary);
+    margin-left: 260px;
+    flex: 1;
+    height: calc(100vh - 120px);
+    overflow: hidden;
+}
+
+/* ==================== FEED HEADER ==================== */
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.feed-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.feed-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.feed-count {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* ==================== FEED CONTENT ==================== */
+.feed-content {
+    padding: 16px 24px;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* ==================== PINNED SECTION ==================== */
+.pinned-section {
+    margin-bottom: 20px;
+    display: none;
+}
+
+.pinned-section.has-pins {
+    display: block;
+}
+
+.pinned-header {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-primary);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pinned-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ==================== LOADING SPINNER ==================== */
+.loading-spinner {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+}

@@ -1,0 +1,327 @@
+/**
+ * RYBAT Dashboard - Compact Table Styles
+ * Compact table view for signal list (default and only view)
+ */
+
+/* ==================== COMPACT VIEW ==================== */
+.compact-table {
+    width: 100%;
+    border-collapse: collapse;
+    display: none;
+    table-layout: fixed;
+}
+
+.compact-table.active {
+    display: table;
+}
+
+.compact-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-secondary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+}
+
+/* Column resize handle */
+.col-resize-handle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    cursor: col-resize;
+    background: transparent;
+    z-index: 11;
+}
+
+.col-resize-handle:hover,
+.col-resize-handle.active {
+    background: var(--accent-primary);
+}
+
+.compact-table.resizing {
+    cursor: col-resize;
+    user-select: none;
+}
+
+/* Column drag-and-drop */
+.compact-table th.dragging {
+    opacity: 0.4;
+}
+
+.compact-table th.drag-over {
+    border-left: 2px solid var(--accent-primary);
+}
+
+.compact-table th:hover {
+    color: var(--text-primary);
+}
+
+.compact-table th.sorted {
+    color: var(--accent-primary);
+}
+
+.compact-table th .sort-icon {
+    margin-left: 4px;
+    font-size: 8px;
+}
+
+.compact-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.compact-table tr {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.compact-table tr:hover {
+    background: var(--bg-hover);
+}
+
+.compact-table tr.selected {
+    background: var(--accent-primary-muted);
+}
+
+.compact-table tr.pinned {
+    background: var(--accent-primary-muted);
+}
+
+.compact-table tr.reviewed {
+    opacity: 0.6;
+}
+
+.compact-age {
+    width: 60px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Smaller age dot (75% of original 8px) */
+.age-dot-small {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin: 0 auto 2px auto;
+}
+
+.age-dot-small.fresh { background: var(--accent-green); }
+.age-dot-small.recent { background: var(--accent-yellow); }
+.age-dot-small.old { background: var(--text-muted); }
+
+.compact-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    display: block;
+    text-align: center;
+}
+
+/* Indicators column */
+.compact-indicators {
+    white-space: nowrap;
+    width: 80px;
+}
+
+.compact-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.compact-location {
+    width: 120px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.compact-score {
+    width: 36px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.score-badge {
+    display: inline-block;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 2px;
+    text-align: center;
+}
+
+.score-critical { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.score-high     { background: rgba(249, 115, 22, 0.2); color: #f97316; }
+.score-medium   { background: rgba(234, 179, 8, 0.2);  color: #eab308; }
+.score-low      { background: rgba(107, 114, 128, 0.15); color: var(--text-muted); }
+
+/* Author column */
+.compact-author {
+    width: 100px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Feed group column */
+.compact-group {
+    width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-muted);
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.group-badge {
+    display: inline-block;
+    background: rgba(45, 212, 191, 0.15);
+    color: #2dd4bf;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.compact-source {
+    width: 110px;
+    color: var(--text-muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.compact-actions {
+    width: 140px;
+    white-space: nowrap;
+}
+
+.compact-actions .compact-action-btn {
+    display: inline-block;
+    margin-right: 2px;
+}
+
+.compact-action-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 11px;
+    transition: color 0.2s;
+}
+
+.compact-action-btn:hover {
+    color: var(--accent-primary);
+}
+
+.compact-action-btn.pinned {
+    color: var(--accent-primary);
+}
+
+.compact-action-btn.reviewed {
+    color: var(--accent-green);
+}
+
+/* ==================== COMPACT INLINE BADGES ==================== */
+
+/* Risk indicator badges in title cell */
+.compact-indicator {
+    display: inline-block;
+    background: var(--accent-primary-muted);
+    color: var(--accent-primary);
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 2px;
+    margin-right: 4px;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+}
+
+/* Translation language badge */
+.compact-translated {
+    display: inline-block;
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    font-size: 8px;
+    font-weight: 600;
+    padding: 1px 3px;
+    border-radius: 2px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+/* ==================== COLUMN VISIBILITY MENU ==================== */
+.col-menu {
+    position: fixed;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 0;
+    min-width: 160px;
+    z-index: 1000;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.col-menu-title {
+    padding: 4px 12px 8px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+}
+
+.col-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.col-menu-item:hover {
+    background: var(--bg-hover);
+}
+
+.col-menu-item input[type="checkbox"] {
+    accent-color: var(--accent-primary);
+    cursor: pointer;
+}
+
+.col-menu-hint {
+    padding: 6px 12px 2px;
+    font-size: 9px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+    font-style: italic;
+}

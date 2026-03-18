@@ -1,0 +1,32 @@
+# RYBAT Auto-Generated Whitelist Filter
+# Topic: latin america
+# Generated: 2026-02-10 22:53 UTC
+# Model: llama3.2:3b
+# Patterns: 26 valid, 0 invalid (removed)
+#
+Here are the whitelist regex patterns to capture news about Latin America:
+\bLatin\ America\b
+\bAmerica Latina\b
+\bCentral America\b
+\bSouth America\b
+\bCaribbean\b
+\bColombia\b
+\bVenezuela\b
+\bMexico\b
+\bBrazil\b
+\bArgentina\b
+\bChile\b
+\bPeru\b
+\bEcuador\b
+\bCuba\b
+\bHaiti\b
+\bDominican Republic\b
+\blatin america news\b
+\blatin america update\b
+\blatin america report\b
+\blatin america analysis\b
+\bLatin America briefing\b
+\bAmerica Latina en vivo\b
+\bNoticias de America Latina\b
+\bInformación sobre América Latina\b
+Note: I've included variations such as abbreviations (e.g. "LatAm"), alternate spellings (e.g. "Latin America"), key people, locations, and organizations to capture a wide range of news related to Latin America.

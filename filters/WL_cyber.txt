@@ -1,0 +1,78 @@
+# RYBAT Whitelist Filter: Cyber & Infrastructure
+# ================================================
+# Focus on cyber operations, data breaches, critical infrastructure,
+# and information warfare.
+
+# Cyber operations
+\bcyber\b
+\bcyber attack\b
+\bcyber espionage\b
+\bcyber warfare\b
+\bhack\b
+\bhacked\b
+\bhacking\b
+\bbreach\b
+\bdata breach\b
+\bransomware\b
+\bransomware attack\b
+\bmalware\b
+\bddos\b
+\bddos campaign\b
+\bzero day exploit\b
+\bzero.day\b
+\bstate.sponsored hack\b
+\bphishing\b
+\bspear phishing\b
+\bsocial engineering\b
+\bbackdoor\b
+\bbotnet\b
+\bcommand and control\b
+\bc2 server\b
+\bapt\b
+\badvanced persistent threat\b
+
+# SCADA / ICS
+\bscada\b
+\bics\b
+\bindustrial control\b
+\bplc\b
+
+# Intelligence / espionage
+\bespionage\b
+\bspy\b
+\bsurveillance\b
+\bintelligence\b
+\bcounter.intelligence\b
+\bsigint\b
+\bhumint\b
+
+# Information warfare
+\bdisinformation\b
+\bmisinformation\b
+\bpropaganda\b
+\binfluence operation\b
+\bdeepfake\b
+\btroll farm\b
+\bbot network\b
+\bforeign interference\b
+
+# Critical infrastructure
+\bpipeline\b
+\bpipeline sabotage\b
+\bgas pipeline\b
+\boil pipeline\b
+\bnord stream\b
+\brefinery\b
+\bpower grid\b
+\bpower grid failure\b
+\bsubstation\b
+\bblackout\b
+\boutage\b
+\bsubsea cable\b
+\bundersea cable\b
+\bfiber.optic\b
+\bwater treatment\b
+\binfrastructure attack\b
+\binfrastructure damage\b
+\bport shutdown\b
+\bsupply chain disruption\b

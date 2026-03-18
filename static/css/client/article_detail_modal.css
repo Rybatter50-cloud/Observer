@@ -1,0 +1,334 @@
+/**
+ * RYBAT Client - Article Detail Modal
+ * Draggable modal showing full signal details, article text, and fetch controls.
+ */
+
+/* ── Overlay ── */
+.article-detail-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.article-detail-overlay.active {
+    display: flex;
+}
+
+/* ── Modal container ── */
+.article-detail-modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 680px;
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    position: absolute;
+}
+
+/* ── Header (draggable) ── */
+.article-detail-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    cursor: move;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.article-detail-header h3 {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin: 0;
+    cursor: move;
+}
+
+.article-detail-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 4px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.article-detail-close:hover {
+    color: var(--text-primary);
+}
+
+/* ── Body (scrollable) ── */
+.article-detail-body {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+}
+
+/* ── Metadata grid ── */
+.article-detail-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.article-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 4px 0;
+}
+
+.article-meta-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.article-meta-value {
+    font-size: 11px;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+.article-meta-value.score-high { color: #ef4444; font-weight: 700; }
+.article-meta-value.score-med  { color: #f59e0b; font-weight: 600; }
+.article-meta-value.score-low  { color: var(--text-secondary); }
+
+/* ── Actions row ── */
+.article-detail-actions {
+    display: flex;
+    gap: 6px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.article-detail-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 5px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.article-detail-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.article-detail-btn.primary {
+    background: var(--accent-primary-muted);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.article-detail-btn.primary:hover {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.article-detail-btn.sdr-btn {
+    background: rgba(34, 211, 238, 0.15);
+    border-color: rgba(34, 211, 238, 0.4);
+    color: #22d3ee;
+}
+
+.article-detail-btn.sdr-btn:hover {
+    background: rgba(34, 211, 238, 0.3);
+    border-color: #22d3ee;
+}
+
+.article-detail-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.article-detail-btn.blocked {
+    background: rgba(120, 120, 120, 0.15);
+    border-color: rgba(120, 120, 120, 0.3);
+    color: var(--text-muted);
+    opacity: 0.6;
+    cursor: not-allowed;
+    font-style: italic;
+}
+
+.article-detail-btn .spinner {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--text-muted);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Article text panel ── */
+.article-detail-text {
+    padding: 12px 16px;
+    min-height: 80px;
+    max-height: 300px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Scroll-fade: subtle gradient at the bottom when content overflows */
+.article-detail-text.has-overflow::after {
+    content: '';
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    height: 28px;
+    background: linear-gradient(transparent, var(--bg-secondary));
+    pointer-events: none;
+}
+
+.article-detail-text-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.article-detail-text-content {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    word-break: break-word;
+    max-width: 70ch;
+}
+
+.article-detail-text-content p {
+    margin: 0 0 0.7em 0;
+}
+
+.article-detail-text-content p:last-child {
+    margin-bottom: 0;
+}
+
+.article-detail-text-content p:first-child {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.article-detail-text-content.empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ── X Post Modal ── */
+.adm-xpost-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.adm-xpost-overlay.active {
+    display: flex;
+}
+
+.adm-xpost-modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 440px;
+    max-width: 90vw;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.adm-xpost-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.adm-xpost-header h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.adm-xpost-body {
+    padding: 16px;
+}
+
+.adm-xpost-textarea {
+    width: 100%;
+    min-height: 140px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 10px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.adm-xpost-textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.adm-xpost-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.adm-xpost-count {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-xpost-count.over {
+    color: #ef4444;
+    font-weight: 600;
+}

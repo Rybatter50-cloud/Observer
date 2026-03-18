@@ -1,0 +1,305 @@
+/* ==================== VIRUSTOTAL SOURCE SCANNING ====================
+ * @created 2026-02-21 by Mr Cat + Claude
+ * Dashboard card for VirusTotal feed URL scanning.
+ *
+ * Sections:
+ *   - Connection badge (header)
+ *   - Quota progress bar
+ *   - Stats grid (scan progress)
+ *   - Manual URL scan input
+ *   - Scheduler toggle
+ *   - Threshold config dropdowns
+ *   - Result panel (scan results)
+ */
+
+
+/* ── Connection badge in card header ── */
+.vt-conn-badge {
+    font-size: 8px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+.vt-conn-badge.connected {
+    background: rgba(63, 185, 80, 0.15);
+    color: var(--success, #3fb950);
+}
+
+.vt-conn-badge.disconnected {
+    background: rgba(248, 81, 73, 0.15);
+    color: var(--error, #f85149);
+}
+
+.vt-conn-badge.disabled {
+    background: rgba(110, 118, 129, 0.15);
+    color: var(--text-muted, #6e7681);
+}
+
+
+/* ── Quota progress bar ── */
+.vt-quota-section {
+    padding: 6px 0;
+}
+
+.vt-quota-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.vt-quota-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--text-muted, #6e7681);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.vt-quota-value {
+    font-size: 10px;
+    color: var(--text-secondary, #8b949e);
+    font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.vt-quota-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-tertiary, #21262d);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.vt-quota-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--success, #3fb950);
+    transition: width 0.5s ease, background 0.5s ease;
+}
+
+/* Quota bar color changes as budget depletes */
+.vt-quota-fill.medium {
+    background: var(--warning, #d29922);
+}
+
+.vt-quota-fill.high {
+    background: var(--error, #f85149);
+}
+
+
+/* ── Stats grid (reuses screening-stat-row pattern) ── */
+.vt-stat-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 0;
+}
+
+.vt-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0;
+}
+
+.vt-stat-label {
+    font-size: 10px;
+    color: var(--text-muted, #6e7681);
+}
+
+.vt-stat-value {
+    font-size: 10px;
+    color: var(--text-primary, #e6edf3);
+    font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+/* Threat count highlighted red */
+.vt-stat-value.threats {
+    color: var(--error, #f85149);
+    font-weight: 600;
+}
+
+
+/* ── Manual URL scan ── */
+.vt-manual-section {
+    padding: 6px 0;
+}
+
+.vt-input-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.vt-url-input {
+    flex: 1;
+    background: var(--bg-primary, #0d1117);
+    border: 1px solid var(--border, #30363d);
+    color: var(--text-primary, #e6edf3);
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    outline: none;
+    min-width: 0;
+}
+
+.vt-url-input:focus {
+    border-color: var(--accent-red, #58a6ff);
+}
+
+.vt-url-input::placeholder {
+    color: var(--text-muted, #6e7681);
+}
+
+.vt-scan-btn {
+    background: var(--accent-red, #58a6ff);
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.vt-scan-btn:hover {
+    opacity: 0.85;
+}
+
+.vt-scan-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ── Scan result panel ── */
+.vt-result-panel {
+    min-height: 0;
+    font-size: 10px;
+    color: var(--text-secondary, #8b949e);
+    transition: min-height 0.3s ease;
+}
+
+.vt-result-panel:empty {
+    display: none;
+}
+
+.vt-result-clean {
+    padding: 6px 10px;
+    background: rgba(63, 185, 80, 0.08);
+    border: 1px solid rgba(63, 185, 80, 0.2);
+    border-radius: 4px;
+    color: var(--success, #3fb950);
+    font-size: 10px;
+}
+
+.vt-result-threat {
+    padding: 6px 10px;
+    background: rgba(248, 81, 73, 0.08);
+    border: 1px solid rgba(248, 81, 73, 0.2);
+    border-radius: 4px;
+    color: var(--error, #f85149);
+    font-size: 10px;
+}
+
+.vt-result-warning {
+    padding: 6px 10px;
+    background: rgba(210, 153, 34, 0.08);
+    border: 1px solid rgba(210, 153, 34, 0.2);
+    border-radius: 4px;
+    color: var(--warning, #d29922);
+    font-size: 10px;
+}
+
+.vt-result-error {
+    padding: 6px 10px;
+    background: rgba(110, 118, 129, 0.08);
+    border: 1px solid rgba(110, 118, 129, 0.2);
+    border-radius: 4px;
+    color: var(--text-muted, #6e7681);
+    font-size: 10px;
+}
+
+/* Spinner for in-progress scan */
+.vt-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(88, 166, 255, 0.2);
+    border-top-color: var(--accent-red, #58a6ff);
+    border-radius: 50%;
+    animation: vt-spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+@keyframes vt-spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* ── Scheduler toggle row ── */
+.vt-scheduler-section {
+    padding: 4px 0;
+}
+
+.vt-scheduler-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vt-scheduler-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-primary, #e6edf3);
+}
+
+.vt-scheduler-status {
+    font-size: 9px;
+    color: var(--text-muted, #6e7681);
+    margin-left: auto;
+    margin-right: 4px;
+}
+
+
+/* ── Config threshold dropdowns ── */
+.vt-config-section {
+    padding: 4px 0;
+}
+
+.vt-config-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 0;
+}
+
+.vt-config-label {
+    font-size: 10px;
+    color: var(--text-muted, #6e7681);
+    min-width: 80px;
+}
+
+.vt-config-select {
+    background: var(--bg-primary, #0d1117);
+    border: 1px solid var(--border, #30363d);
+    color: var(--text-primary, #e6edf3);
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+.vt-config-select:focus {
+    border-color: var(--accent-red, #58a6ff);
+}

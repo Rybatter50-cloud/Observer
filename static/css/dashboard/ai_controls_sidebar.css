@@ -1,0 +1,447 @@
+/* ==================== SIDEBAR CONTROLS ====================
+ * Shared styles for Content Filter and Collector toggle controls
+ */
+
+.ai-control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-control-label {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.ai-mode-select {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.ai-mode-select:focus {
+    border-color: var(--accent-primary);
+    outline: none;
+}
+
+/* ==================== COLLECTOR CONTROLS ====================
+ * Toggle switches for RSS, NewsAPI, NP4K collectors
+ */
+.sidebar-section:has(.collector-api-controls) {
+    padding-top: 8px;
+    margin-top: 4px;
+}
+
+.collector-api-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.collector-api-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.collector-api-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.collector-api-icon {
+    font-size: 14px;
+}
+
+.collector-api-name {
+    font-size: 11px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.collector-api-status {
+    font-size: 9px;
+    color: var(--text-muted);
+    padding-left: 22px;
+}
+
+.collector-api-status-text.enabled {
+    color: var(--accent-green);
+}
+
+.collector-api-status-text.disabled {
+    color: var(--text-muted);
+}
+
+.collector-api-status-text.unavailable {
+    color: var(--text-secondary);
+}
+
+/* Toggle switch styling */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 9px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    transition: 0.3s;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 6px;
+    width: 6px;
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--text-muted);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: rgba(63, 185, 80, 0.25);
+    border-color: rgba(63, 185, 80, 0.4);
+    box-shadow: 0 0 4px rgba(63, 185, 80, 0.3);
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(9px);
+    background-color: #3fb950;
+}
+
+.toggle-switch input:disabled + .toggle-slider {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ==================== API KEY BUTTON ==================== */
+.apikey-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 6px;
+    margin-right: 6px;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.apikey-btn:hover {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-muted);
+}
+
+/* ==================== API KEY DIALOG ==================== */
+.apikey-dialog-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.apikey-dialog-overlay.visible {
+    display: flex;
+}
+
+.apikey-dialog {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90vw;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.apikey-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.apikey-dialog-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.apikey-dialog-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.apikey-dialog-close:hover {
+    color: var(--text-primary);
+}
+
+.apikey-dialog-body {
+    padding: 16px;
+}
+
+.apikey-dialog-current {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.apikey-dialog-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.apikey-dialog-masked {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.apikey-dialog-input-row {
+    display: flex;
+    gap: 6px;
+}
+
+.apikey-dialog-input {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    outline: none;
+    font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.apikey-dialog-input:focus {
+    border-color: var(--accent-primary);
+}
+
+.apikey-dialog-show {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 8px;
+    color: var(--text-muted);
+}
+
+.apikey-dialog-show:hover {
+    border-color: var(--accent-primary);
+}
+
+.apikey-dialog-status {
+    font-size: 10px;
+    margin-top: 8px;
+    min-height: 16px;
+    color: var(--text-muted);
+}
+
+.apikey-dialog-status.success {
+    color: var(--accent-green);
+}
+
+.apikey-dialog-status.error {
+    color: var(--warn-red);
+}
+
+.apikey-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+}
+
+.apikey-dialog-btn {
+    padding: 8px 16px;
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.apikey-dialog-btn.cancel {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.apikey-dialog-btn.cancel:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
+.apikey-dialog-btn.save {
+    background: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+    color: white;
+}
+
+.apikey-dialog-btn.save:hover {
+    opacity: 0.9;
+}
+
+/* ==================== WHITELIST CUSTOM DROPDOWN ==================== */
+
+.filter-dropdown-wrap {
+    position: relative;
+    min-width: 100px;
+}
+
+.filter-dropdown-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.filter-dropdown-btn:hover {
+    border-color: var(--accent-primary);
+}
+
+.filter-dropdown-arrow {
+    font-size: 8px;
+    color: var(--text-muted);
+}
+
+.filter-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 170px;
+    max-height: 200px;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    margin-top: 2px;
+}
+
+.filter-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    font-size: 10px;
+    color: var(--text-primary);
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.05));
+}
+
+.filter-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.filter-dropdown-item:hover {
+    background: var(--bg-hover, rgba(255,255,255,0.05));
+}
+
+.filter-dropdown-item.active {
+    background: rgba(59, 130, 246, 0.12);
+}
+
+.filter-dropdown-item.active .filter-item-name {
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.filter-item-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.filter-badge-ai-sm {
+    display: inline-block;
+    padding: 0 3px;
+    border-radius: 2px;
+    font-size: 8px;
+    font-weight: 700;
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    flex-shrink: 0;
+}
+
+.filter-delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 10px;
+    cursor: pointer;
+    padding: 0 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+.filter-delete-btn:hover {
+    color: #f87171;
+    opacity: 1;
+}
+
+.collector-api-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}

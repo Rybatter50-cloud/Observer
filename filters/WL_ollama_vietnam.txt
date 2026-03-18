@@ -1,0 +1,8 @@
+# RYBAT Auto-Generated Whitelist Filter
+# Topic: vietnam
+# Generated: 2026-02-14 23:39 UTC
+# Model: llama3.2:3b
+# Patterns: 2 valid, 1 invalid (removed)
+#
+Here are the whitelist regex patterns to capture news about Vietnam:
+Note: I've included variations with word boundaries (\b) to capture different spellings and abbreviations.

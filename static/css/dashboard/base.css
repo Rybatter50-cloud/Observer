@@ -1,0 +1,135 @@
+/**
+ * RYBAT Dashboard - Base Styles
+ * CSS Variables, reset, body layout, scrollbars, keyframes
+ * 
+ * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html
+ * @updated 2026-02-03 by Claude - Fixed variable naming (accent-red -> accent-primary)
+ * 
+ * COLOR SCHEME DOCUMENTATION
+ * ==========================
+ * HOW TO CUSTOMIZE:
+ * 1. Edit the :root section below
+ * 2. Update [data-theme="light"] for light mode colors
+ * 
+ * VARIABLE REFERENCE:
+ * --bg-primary       : Main page background (darkest)
+ * --bg-secondary     : Sidebar, header, panels
+ * --bg-tertiary      : Buttons, inputs
+ * --bg-card          : Intel cards
+ * --bg-hover         : Hover states
+ * --bg-input         : Input fields
+ * --accent-primary   : Brand color, logo, primary actions
+ * --accent-primary-hover : Primary hover state
+ * --accent-primary-muted : Primary backgrounds (10-15% opacity)
+ * --accent-green     : Success, healthy, low threat
+ * --accent-green-muted : Green backgrounds
+ * --accent-orange    : Warning, pending, pinned
+ * --accent-yellow    : Caution, medium threat
+ * --warn-red         : Critical, error, high threat
+ * --accent-teal      : Feed groups, regions
+ * --accent-purple    : NewsAPI badge, special
+ * --text-primary     : Main text
+ * --text-secondary   : Secondary text
+ * --text-muted       : Disabled/placeholder
+ * --border           : Standard borders
+ * --border-light     : Subtle borders
+ * --shadow           : Box shadows
+ */
+
+/* === DARK THEME (Default) === */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #21262d;
+    --bg-card: #151a21;
+    --bg-hover: #2a3038;
+    --bg-input: #0a0e12;
+    --accent-primary: #58a6ff;
+    --accent-primary-hover: #79b8ff;
+    --accent-primary-muted: rgba(88, 166, 255, 0.12);
+    --accent-green: #3fb950;
+    --accent-green-muted: rgba(63, 185, 80, 0.15);
+    --accent-orange: #d29922;
+    --accent-yellow: #e3b341;
+    --warn-red: #f85149;
+    --accent-teal: #39c5cf;
+    --accent-purple: #a371f7;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --border: #30363d;
+    --border-light: #3d444d;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* === LIGHT THEME (auto-applies when toggled) === */
+[data-theme="light"] {
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #fafafa;
+    --bg-card: #ffffff;
+    --bg-hover: #f0f0f0;
+    --bg-input: #ffffff;
+    --accent-primary: #0969da;
+    --accent-primary-hover: #0550ae;
+    --accent-primary-muted: rgba(9, 105, 218, 0.08);
+    --accent-green: #16a34a;
+    --accent-green-muted: rgba(22, 163, 74, 0.1);
+    --accent-orange: #d97706;
+    --accent-yellow: #ca8a04;
+    --warn-red: #dc2626;
+    --accent-teal: #0d9488;
+    --accent-purple: #7c3aed;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --border: #e0e0e0;
+    --border-light: #eeeeee;
+    --shadow: rgba(0,0,0,0.1);
+}
+
+/* === RESET === */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+/* === BODY === */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow: hidden; /* Main content area handles its own scroll */
+    transition: background 0.3s, color 0.3s;
+}
+
+/* === SCROLLBARS === */
+::-webkit-scrollbar { 
+    width: 8px; 
+    height: 8px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: var(--bg-primary); 
+}
+
+::-webkit-scrollbar-thumb { 
+    background: var(--border); 
+    border-radius: 4px; 
+}
+
+::-webkit-scrollbar-thumb:hover { 
+    background: var(--accent-primary); 
+}
+
+/* === KEYFRAME ANIMATIONS === */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+

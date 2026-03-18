@@ -1,0 +1,66 @@
+# RYBAT Whitelist Filter: Conflict Only
+# =======================================
+# Narrow focus: active conflict, military operations, terrorism.
+# Use this when you only want kinetic/violent event reporting.
+
+# Combat / operations
+\bmilitary\b
+\bairstrikes?\b
+\bbombing\b
+\bbombardment\b
+\bmissiles?\b
+\bwar\b
+\bwarzone\b
+\bconflict\b
+\binvasion\b
+\bincursion\b
+\boffensive\b
+\bcounterattack\b
+\bfrontline\b
+\bfirefight\b
+\bskirmish\b
+\bambush\b
+\bsiege\b
+\bblockade\b
+\bescalation\b
+\bretaliation\b
+\binsurgency\b
+\bmilitary strike\b
+
+# Personnel
+\btroops?\b
+\bsoldiers?\b
+\bmilitia\b
+\brebels?\b
+\bmilitants?\b
+
+# Weapons
+\bartillery\b
+\bshelling\b
+\bdrone strike\b
+\bdrone attack\b
+\bmissiles?\b
+\brocket fire\b
+\bballistic missile\b
+
+# Casualties
+\bcasualt(y|ies)\b
+\bkilled\b
+\bwounded\b
+\bdeath toll\b
+\bmassacre\b
+\bexplosion\b
+\bblast\b
+
+# Terrorism
+\bterroris[mt]\b
+\bextremis[mt]\b
+\bhostage\b
+\bassassination\b
+\bactive shooter\b
+
+# Ceasefires
+\bceasefire\b
+\btruce\b
+\barmistice\b
+\bmartial law\b

@@ -1,0 +1,452 @@
+# RYBAT Whitelist Filter: Full Geopolitical OSINT
+# =================================================
+# One regex pattern per line. Lines starting with # are comments.
+# Blank lines are ignored. Patterns are case-insensitive.
+#
+# Articles matching ANY pattern here will be accepted.
+# Covers: conflict, hot zones, key actors, geopolitical/humanitarian,
+# cyber/information warfare, and critical infrastructure.
+
+# ── CONFLICT & MILITARY ───────────────────────────────────────
+
+# Combat / operations
+\bmilitary\b
+\bairstrikes?\b
+\bbombing\b
+\bbombardment\b
+\bmissiles?\b
+\bwar\b
+\bwarzone\b
+\bwarplane\b
+\bconflict\b
+\binvasion\b
+\bincursion\b
+\boccupation\b
+\boffensive\b
+\bdefensive\b
+\bcounterattack\b
+\bfrontline\b
+\bfront line\b
+\bflanking\b
+\bground assault\b
+\bstrafing\b
+\bfirefight\b
+\bskirmish\b
+\bambush\b
+\braid\b
+\bencirclement\b
+\bsiege\b
+\bblockade\b
+\bmobilization\b
+\btroop deployment\b
+\bpatrol clash\b
+\bborder clash\b
+\bescalation\b
+\bde-escalation\b
+\bretaliation\b
+\bproxy war\b
+\bguerrilla warfare\b
+\bguerrilla\b
+\binsurgency\b
+\binsurgents?\b
+\bmilitary engagement\b
+\bmilitary strike\b
+\bno.fly zone\b
+
+# Personnel
+\btroops?\b
+\bsoldiers?\b
+\bmilitia\b
+\brebels?\b
+\bmilitants?\b
+\bbattalion\b
+\bregiment\b
+
+# Weapons & munitions
+\bnuclear\b
+\bweapons?\b
+\barms\b
+\bammunition\b
+\bartillery\b
+\bshelling\b
+\bmortar attack\b
+\bbarrage\b
+\bbombard
+\bgrenade\b
+\bshrapnel\b
+\brocket fire\b
+\btank\b
+\btanks\b
+\btorpedo\b
+\bwarhead\b
+\bballistic missile\b
+\bcruise missile\b
+\bhypersonic weapon\b
+\bicbm\b
+\bwmd\b
+\bchemical weapon\b
+\bbiological attack\b
+\bbioterrorism\b
+\bdirty bomb\b
+\bemp attack\b
+\benriched uranium\b
+\bplutonium\b
+\bied\b
+\bied explosion\b
+\bcar bomb\b
+\bsuicide bomb\b
+\bfighter jet\b
+\bnaval strike\b
+\bnaval blockade\b
+\bdrone strike\b
+\bdrone attack\b
+
+# Casualties & destruction
+\bcasualt(y|ies)\b
+\bmass casualty\b
+\bkilled\b
+\bwounded\b
+\binjured\b
+\bdead\b
+\bdeaths?\b
+\bdeath toll\b
+\bcivilians killed\b
+\bcivilians dead\b
+\bmassacre\b
+\bslaughter\b
+\bgenocide\b
+\bincinerated\b
+\bscorched\b
+\brubble\b
+\bcrater\b
+\bdestruction\b
+\bblast\b
+\bexplosion\b
+
+# Terrorism
+\bterroris[mt]\b
+\bextremis[mt]\b
+\bactive shooter\b
+\bhostage\b
+\bhostage crisis\b
+\bassassination\b
+\bassault\b
+
+# Ceasefires & accords
+\bceasefire\b
+\bceasefire violation\b
+\btruce\b
+\barmistice\b
+\bdemilitarized\b
+\bdemilitarized zone\b
+\bsanctions?\b
+\bembargo\b
+\btariffs?\b
+\bmartial law\b
+
+# ── HOT ZONES ─────────────────────────────────────────────────
+
+# Eastern Europe
+\bukraine\b
+\bkyiv\b
+\bkharkiv\b
+\bodesa\b
+\bzapor
+\bdonbas\b
+\bcrimea\b
+\bdonetsk\b
+\bluhansk\b
+\brussia\b
+\bmoscow\b
+\bkremlin\b
+
+# Middle East
+\bgaza\b
+\brafah\b
+\bkhan younis\b
+\bisrael\b
+\bpalestine\b
+\bwest bank\b
+\bjenin\b
+\bhamas\b
+\bhezbollah\b
+\bidf\b
+\biran\b
+\btehran\b
+\birgc\b
+\bsyria\b
+\bdamascus\b
+\baleppo\b
+\byemen\b
+\bhouthis?\b
+\bsana'?a\b
+\biraq\b
+\bbaghdad\b
+\bmosul\b
+\blebanon\b
+\bbeirut\b
+
+# Asia-Pacific
+\btaiwan\b
+\bstrait\b
+\btaiwan strait\b
+\bbeijing\b
+\bchina\b
+\bsouth china sea\b
+\bnorth korea\b
+\bpyongyang\b
+\bkim jong\b
+\bmyanmar\b
+\bburma\b
+
+# Africa
+\bsudan\b
+\bkhartoum\b
+\bethiopia\b
+\bsomalia\b
+\bmogadishu\b
+\blibya\b
+\btripoli\b
+
+# Central/South Asia
+\bafghanistan\b
+\btaliban\b
+\bkabul\b
+\bpakistan\b
+
+# Strategic chokepoints
+\bred sea\b
+\bpersian gulf\b
+\bstrait of hormuz\b
+\bblack sea\b
+\bbaltic\b
+
+# ── KEY ACTORS ─────────────────────────────────────────────────
+
+# World leaders
+\bzelensky\b
+\bputin\b
+\bbiden\b
+\btrump\b
+\bnetanyahu\b
+\bxi jinping\b
+\bkim jong\b
+\bmacron\b
+\bscholz\b
+\bstarmer\b
+\berdogan\b
+\bmodi\b
+\bbin salman\b
+\bkhamenei\b
+\bsisi\b
+
+# International organizations
+\bunited nations\b
+\bnato\b
+\beuropean union\b
+\bosce\b
+\bunsc\b
+\biaea\b
+\binterpol\b
+\bicc\b
+\bred cross\b
+\bicrc\b
+\bamnesty\b
+\bwho\b
+
+# Intelligence & military agencies
+\bpentagon\b
+\bcia\b
+\bfbi\b
+\bnsa\b
+\bmi6\b
+\bmi5\b
+\bgchq\b
+\bmossad\b
+\bshin bet\b
+\bfsb\b
+\bgru\b
+\bsvr\b
+\bdgse\b
+\bbnd\b
+
+# Armed groups & non-state actors
+\bisis\b
+\bisil\b
+\bdaesh\b
+\bal.qaeda\b
+\bboko haram\b
+\bwagner\b
+\bpmc\b
+\bhouthis?\b
+
+# ── GEOPOLITICAL & HUMANITARIAN ────────────────────────────────
+
+# Diplomacy & negotiations
+\bsummit\b
+\btreaty\b
+\bpact\b
+\balliance\b
+\bdiplomat
+\bambassador\b
+\bemissary\b
+\benvoy\b
+\bforeign minister\b
+\bdefense minister\b
+\bprime minister\b
+\bpresident\b
+\bgovernment\b
+\bnegotiations?\b
+\bmediation\b
+\brapprochement\b
+\bbilateral\b
+\bmultilateral\b
+\bministerial\b
+\bjoint statement\b
+\breadout\b
+\bstate visit\b
+\bworking dinner\b
+\bconsulate\b
+\bembassy\b
+
+# Peace processes (named)
+\bpeace accord\b
+\barmistice\b
+\bgeneva convention\b
+\bgeneva talks\b
+\bvienna talks\b
+\bparis talks\b
+\bminsk agreement\b
+\bnormalization\b
+\bastana process\b
+\boslo process\b
+\bdayton accord\b
+\bwye river\b
+\bcamp david\b
+\bberlin conference\b
+\bframework agreement\b
+\bnon.aggression\b
+\bconfidence building\b
+
+# Diplomatic methods
+\bbackchannel\b
+\bhotline\b
+\bshuttle diplomacy\b
+\bquiet diplomacy\b
+\bgood offices\b
+\bflag meeting\b
+\btrack ii\b
+\bspecial rapporteur\b
+\bun envoy\b
+\bde-escalation\b
+\bproxy talks\b
+
+# Political instability
+\belection\b
+\bvoting\b
+\breferendum\b
+\bcoup\b
+\bcoup attempt\b
+\bprotest\b
+\bdemonstrat
+\briot\b
+\bcivil unrest\b
+\bcrackdown\b
+\bauthoritarian\b
+\bforeign election interference\b
+\bdisinformation campaign\b
+\bsanctions evasion\b
+
+# Humanitarian
+\brefugee\b
+\bmigrant\b
+\basylum\b
+\bdisplaced\b
+\bmass migration\b
+\bhumanitarian\b
+\bcrisis\b
+\bemergency\b
+\bfamine\b
+\bglobal famine\b
+\bstarvation\b
+\bepidemic\b
+\bpandemic\b
+\bpandemic outbreak\b
+\bgenocide\b
+\bethnic cleansing\b
+\batrocit
+\bmass grave\b
+
+# Natural disaster
+\bearthquake\b
+\btsunami\b
+\bhurricane\b
+\btyphoon\b
+\bcyclone\b
+\bwildfire\b
+\bvolcano\b
+\beruption\b
+\bradiation leak\b
+\bmeltdown\b
+
+# ── CYBER & INFORMATION WARFARE ───────────────────────────────
+
+\bcyber\b
+\bcyber attack\b
+\bcyber espionage\b
+\bhack\b
+\bhacked\b
+\bhacking\b
+\bbreach\b
+\bdata breach\b
+\bransomware\b
+\bransomware attack\b
+\bmalware\b
+\bddos\b
+\bddos campaign\b
+\bzero day exploit\b
+\bzero.day\b
+\bstate.sponsored hack\b
+\bscada\b
+\bics\b
+\bespionage\b
+\bspy\b
+\bsurveillance\b
+\bintelligence\b
+
+# ── CRITICAL INFRASTRUCTURE ───────────────────────────────────
+
+# Energy / pipelines
+\bpipeline\b
+\bpipeline sabotage\b
+\bgas pipeline\b
+\boil pipeline\b
+\bnord stream\b
+\bbalticconnector\b
+\bestlink\b
+\brefinery\b
+
+# Power grid
+\bpower grid\b
+\bpower grid failure\b
+\bsubstation\b
+\btransformer\b
+\btransmission line\b
+\bblackout\b
+\boutage\b
+
+# Subsea / comms
+\bsubsea cable\b
+\bundersea cable\b
+\bfiber.optic\b
+
+# Water & civil
+\bwater treatment\b
+\bdam\b
+\breservoir\b
+
+# Attack / sabotage phrases
+\binfrastructure attack\b
+\binfrastructure damage\b
+\bport shutdown\b
+\bsupply chain disruption\b

@@ -1,0 +1,108 @@
+/**
+ * RYBAT Dashboard - Header Styles
+ * Header bar, logo, status badge, stale warning banner
+ * 
+ * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html
+ */
+
+/* ==================== HEADER ==================== */
+.header {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 1000;
+}
+
+.header-left { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--accent-primary);
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    animation: pulse 2s infinite;
+}
+
+.status-dot.stale {
+    background: var(--accent-orange);
+    animation: pulse 1s infinite;
+}
+
+.header-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+}
+
+.header-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header-btn:hover { 
+    border-color: var(--accent-primary); 
+    color: var(--text-primary); 
+}
+
+.header-btn.active { 
+    background: var(--accent-primary); 
+    border-color: var(--accent-primary); 
+    color: white; 
+}
+
+/* ==================== STALE WARNING BANNER ==================== */
+.stale-warning {
+    background: var(--accent-orange);
+    color: #000;
+    padding: 8px 24px;
+    font-size: 11px;
+    text-align: center;
+    display: none;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
+.stale-warning.visible { 
+    display: block; 
+}

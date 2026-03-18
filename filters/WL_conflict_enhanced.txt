@@ -1,0 +1,330 @@
+# Narrow focus: active conflict, military operations, terrorism.
+# Use this when you only want kinetic/violent event reporting.
+
+# --- General Combat / Operations ---
+\bmilitary\b
+\bairstrikes?\b
+\bbombing\b
+\bbombardment\b
+\bmissiles?\b
+\bwar\b
+\bwarfare\b
+\bwarzone\b
+\bconflict\b
+\binvasion\b
+\bincursion\b
+\boffensive\b
+\bcounter[- ]?offensive\b
+\bcounter[- ]?attack\b
+\bfrontline\b
+\bfirefight\b
+\bskirmish\b
+\bambush\b
+\bsiege\b
+\bblockade\b
+\bescalation\b
+\bretaliation\b
+\binsurgency\b
+\bcounter[- ]?insurgency\b
+\bmilitary strike\b
+\bspecial operation\b
+\btactical strike\b
+\bkinetic (action|strike|event)\b
+\bground operation\b
+\bamphibious assault\b
+
+# --- Personnel & Units ---
+\btroops?\b
+\bsoldiers?\b
+\bforces?\b
+\binfantry\b
+\bmarines?\b
+\bparatroopers?\b
+\bmilitia\b
+\brebels?\b
+\bmilitants?\b
+\bguerrillas?\b
+\bcommandos?\b
+\bspecial forces\b
+\bmercenar(y|ies)\b
+\bPMC\b
+\bwagner\b
+\bforeign legion\b
+\breservists?\b
+\bsniper\b
+
+# --- General Weapons & Ordnance ---
+\bartillery\b
+\bhowitzer\b
+\bmortars?\b
+\bshelling\b
+\bbarrage\b
+\bdrone strike\b
+\bdrone attack\b
+\bUAV\b
+\bUCAV\b
+\bloitering munition\b
+\bkamikaze drone\b
+\bmissiles?\b
+\brocket fire\b
+\bballistic missile\b
+\bcruise missile\b
+\bhypersonic missile\b
+\bcluster (bomb|munition)\b
+\bthermobaric\b
+\bvacuum bomb\b
+\bwhite phosphorus\b
+\bincendiary\b
+\bwarhead\b
+\bshrapnel\b
+\banti-tank\b
+\banti-aircraft\b
+\bMANPADS\b
+\bRPG\b
+
+# --- Specific Aircraft (Fighters/Bombers/Support) ---
+\bF-35(A|B|C)?\b
+\bLightning II\b
+\bF-22\b
+\bRaptor\b
+\bF-16\b
+\bF-15(EX)?\b
+\bF\/A-18\b
+\bSuper Hornet\b
+\bEurofighter\b
+\bTyphoon\b
+\bRafale\b
+\bGripen\b
+\bMirage\b
+\bSu-57\b
+\bFelon\b
+\bSu-35\b
+\bSu-34\b
+\bSu-27\b
+\bSu-25\b
+\bMiG-31\b
+\bMiG-29\b
+\bTu-160\b
+\bBlackjack\b
+\bTu-95\b
+\bBear\b
+\bTu-22M3?\b
+\bB-2\b
+\bSpirit\b
+\bB-21\b
+\bRaider\b
+\bB-52\b
+\bStratofortress\b
+\bB-1B?\b
+\bLancer\b
+\bJ-20\b
+\bJ-10\b
+\bH-6\b
+\bA-10\b
+\bWarthog\b
+\bAC-130\b
+\bApache\b
+\bAh-64\b
+\bKa-52\b
+\bAlligator\b
+\bMi-24\b
+\bMi-28\b
+\bHavoc\b
+\bChinook\b
+\bBlack Hawk\b
+
+# --- Specific Missiles & Rockets (Strategic/Tactical) ---
+\bOreshnik\b
+\bKinzhal\b
+\bDagger\b
+\bZircon\b
+\bTsirkon\b
+\bIskander(-M)?\b
+\bKalibr\b
+\bKh-101\b
+\bKh-55\b
+\bSarmat\b
+\bSatan II\b
+\bYars\b
+\bAvangard\b
+\bATACMS\b
+\bHIMARS\b
+\bGMLRS\b
+\bPrSM\b
+\bTomahawk\b
+\bStorm Shadow\b
+\bSCALP(-EG)?\b
+\bTaurus\b
+\bJASSM(-ER)?\b
+\bLRASM\b
+\bHarpoon\b
+\bNeptune\b
+\bExocet\b
+\bMinuteman III\b
+\bTrident II\b
+\bBulava\b
+\bJericho\b
+\bFateh-110\b
+\bZolfaghar\b
+\bQader\b
+\bBurkan\b
+
+# --- Specific Drones & Loitering Munitions ---
+\bShahed(-136|-131)?\b
+\bGeran-2\b
+\bMohajer\b
+\bReaper\b
+\bMQ-9\b
+\bPredator\b
+\bGlobal Hawk\b
+\bBayraktar\b
+\bTB2\b
+\bAkinci\b
+\bSwitchblade\b
+\bLancet\b
+\bOrlan-10\b
+\bScanEagle\b
+\bHeron\b
+\bHermes\b
+\bHarop\b
+
+# --- Specific Air Defense Systems ---
+\bPatriot\b
+\bPAC-3\b
+\bTHAAD\b
+\bAegis\b
+\bIron Dome\b
+\bDavid's Sling\b
+\bArrow (2|3)\b
+\bNASAMS\b
+\bIRIS-T\b
+\bS-400\b
+\bTriumf\b
+\bS-300\b
+\bS-500\b
+\bPrometheus\b
+\bPantsir\b
+\bTor-M2\b
+\bBuk-M3\b
+\bGepard\b
+\bC-RAM\b
+\bPhalanx\b
+
+# --- Specific Ground Vehicles (Tanks/IFVs/Artillery) ---
+\bAbrams\b
+\bM1A1\b
+\bM1A2\b
+\bLeopard (1|2)\b
+\bChallenger (2|3)\b
+\bLeclerc\b
+\bMerkava\b
+\bT-90(M)?\b
+\bT-80\b
+\bT-72\b
+\bT-64\b
+\bT-14\b
+\bArmata\b
+\bBradley\b
+\bM2\b
+\bStryker\b
+\bM113\b
+\bCV90\b
+\bMarder\b
+\bBMP(-1|-2|-3)?\b
+\bBTR(-80|-82|-90)?\b
+\bTiger\b
+\bHumvee\b
+\bMRAP\b
+\bCaesar\b
+\bPzH 2000\b
+\bArcher\b
+\bKrab\b
+\bM777\b
+\bGrad\b
+\bBM-21\b
+\bUragan\b
+\bSmerch\b
+\bTornado-S\b
+\bTOS-1A?\b
+\bSolntsepek\b
+
+# --- Naval Assets ---
+\baircraft carrier\b
+\bsupercarrier\b
+\bdestroyer\b
+\bfrigate\b
+\bcorvette\b
+\bsubmarine\b
+\bSSBN\b
+\bSSN\b
+\bMoskva\b
+\bFord-class\b
+\bNimitz-class\b
+\bArleigh Burke\b
+\bZumwalt\b
+\bType 055\b
+\bBorei\b
+\bYasen\b
+\bVirginia-class\b
+\bsea drone\b
+\bUSV\b
+\bMagura\b
+
+# --- Casualties & Damage ---
+\bcasualt(y|ies)\b
+\bkilled\b
+\bkia\b
+\bwounded\b
+\bwia\b
+\binjured\b
+\bfatalit(y|ies)\b
+\bdeath toll\b
+\bmassacre\b
+\bgenocide\b
+\bethnic cleansing\b
+\bexplosion\b
+\bblast\b
+\bdebris\b
+\brubble\b
+\bcollateral damage\b
+\bcivilian deaths?\b
+
+# --- Terrorism / Asymmetric Warfare ---
+\bterroris[mt]\b
+\bextremis[mt]\b
+\bjihad(ist)?\b
+\bISIS\b
+\bISIL\b
+\bDaesh\b
+\bAl-?Qaeda\b
+\bHamas\b
+\bHezbollah\b
+\bHouthis?\b
+\bTaliban\b
+\bhostage\b
+\bkidnapping\b
+\babduction\b
+\bassassination\b
+\bactive shooter\b
+\bIED\b
+\bVBIED\b
+\bcar bomb\b
+\bsuicide bomb(er|ing)?\b
+\bsuicide vest\b
+\bdirty bomb\b
+\bcbrn\b
+\bbioweapon\b
+
+# --- Ceasefires / Status ---
+\bceasefire\b
+\btruce\b
+\barmistice\b
+\bmartial law\b
+\bstate of emergency\b
+\bcurfew\b
+\bpeace treaty\b
+\bdemilitarized zone\b
+\bDMZ\b
+\bsurrender\b
+\bpow\b
+\bprisoner exchange\b

@@ -1,0 +1,115 @@
+/**
+ * RYBAT Dashboard - Stats Bar Styles
+ * Dashboard instrument panel - displays system metrics at a glance
+ *
+ * Layout: Fixed position bar below header with centered metric cells
+ * Components: Active Feeds, Total Feeds, Accept Rate, Errors | Translator | Clock
+ */
+
+/* ==================== STATS BAR ==================== */
+.stats-bar {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 999;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    min-height: 56px;
+}
+
+/* Main stat value - large number display */
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+/* Status-based stat colors - blue accent, green healthy, red errors only */
+.stat-value.green { color: var(--accent-green); }
+.stat-value.red { color: var(--warn-red); }
+
+/* Stat label - uppercase descriptor below value */
+.stat-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* Secondary text line (used for UTC time) */
+.stat-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==================== TRANSLATOR ACTIVITY ====================
+ * Simple activity indicator with flashing dot
+ */
+.translator-activity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.translator-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: background 0.3s;
+}
+
+.translator-dot.active {
+    background: var(--accent-green);
+    animation: pulse 2s infinite;
+}
+
+.translator-value {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==================== SESSION TIMER ==================== */
+.stat-item.session-timer {
+    align-items: flex-end;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.session-timer-value {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    color: var(--accent-primary);
+    letter-spacing: 1px;
+}
+
+.session-timer-label {
+    font-size: 11px;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+}

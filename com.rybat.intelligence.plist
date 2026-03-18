@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+=============================================================================
+RYBAT Intelligence Platform - macOS LaunchAgent
+Version: 1.0.0
+Last Updated: 2026-02-02
+Authors: Mr Cat + Claude AI
+=============================================================================
+
+INSTALLATION (User Agent - runs when user logs in):
+  1. Copy this file to ~/Library/LaunchAgents/
+     cp com.rybat.intelligence.plist ~/Library/LaunchAgents/
+
+  2. Edit the file to set correct paths:
+     nano ~/Library/LaunchAgents/com.rybat.intelligence.plist
+
+  3. Load the agent:
+     launchctl load ~/Library/LaunchAgents/com.rybat.intelligence.plist
+
+  4. Start immediately:
+     launchctl start com.rybat.intelligence
+
+MANAGEMENT:
+  launchctl list | grep rybat           # Check if running
+  launchctl start com.rybat.intelligence   # Start
+  launchctl stop com.rybat.intelligence    # Stop
+  launchctl unload ~/Library/LaunchAgents/com.rybat.intelligence.plist  # Disable
+
+LOGS:
+  tail -f /tmp/rybat.log
+  tail -f /tmp/rybat.error.log
+
+=============================================================================
+-->
+<plist version="1.0">
+<dict>
+    <!-- Service identifier -->
+    <key>Label</key>
+    <string>com.rybat.intelligence</string>
+    
+    <!-- Description -->
+    <key>ServiceDescription</key>
+    <string>RYBAT Intelligence Platform - Real-time tactical intelligence monitoring</string>
+    
+    <!-- Program to run -->
+    <!-- IMPORTANT: Update these paths to match your installation -->
+    <key>ProgramArguments</key>
+    <array>
+        <!-- Path to Python in virtual environment -->
+        <string>/Users/YOUR_USERNAME/rybat/venv/bin/python</string>
+        <!-- Path to main.py -->
+        <string>/Users/YOUR_USERNAME/rybat/main.py</string>
+    </array>
+    
+    <!-- Working directory -->
+    <key>WorkingDirectory</key>
+    <string>/Users/YOUR_USERNAME/rybat</string>
+    
+    <!-- Environment variables -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+        <string>/Users/YOUR_USERNAME</string>
+    </dict>
+    
+    <!-- Start automatically on login -->
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <!-- Keep alive (restart if crashes) -->
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+        <key>Crashed</key>
+        <true/>
+    </dict>
+    
+    <!-- Restart throttle (wait 10 seconds before restart) -->
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    
+    <!-- Logging -->
+    <key>StandardOutPath</key>
+    <string>/tmp/rybat.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/rybat.error.log</string>
+    
+    <!-- Process type -->
+    <key>ProcessType</key>
+    <string>Background</string>
+    
+    <!-- Low priority (be nice to other processes) -->
+    <key>LowPriorityIO</key>
+    <true/>
+    
+    <!-- Session type -->
+    <key>LimitLoadToSessionType</key>
+    <array>
+        <string>Aqua</string>
+        <string>Background</string>
+        <string>StandardIO</string>
+    </array>
+</dict>
+</plist>

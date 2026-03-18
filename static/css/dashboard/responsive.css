@@ -1,0 +1,54 @@
+/**
+ * RYBAT Dashboard - Responsive Styles
+ * Media queries for responsive layout adjustments
+ *
+ * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html
+ * @updated 2026-02-16 - Adapted for full-width grid layout
+ */
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1100px) {
+    .control-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .metrics-text {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .terminal-row {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .terminal-side {
+        width: 100%;
+    }
+
+    .control-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-bar {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    /* Broadcast panel: stack priority/encrypt radios */
+    .bcast-priority-group,
+    .bcast-encrypt-group {
+        flex-wrap: wrap;
+    }
+
+    .bcast-actions-row {
+        flex-direction: column;
+    }
+
+    /* Embeddings panel: stack rows vertically */
+    .emb-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+}

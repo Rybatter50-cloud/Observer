@@ -1,0 +1,403 @@
+/**
+ * RYBAT Dashboard - Inline Edit Modal Styles
+ * Score and indicator editing from the feed interface
+ *
+ * 2026-02-18 | Mr Cat + Claude
+ */
+
+/* ==================== CLICKABLE HINTS ==================== */
+
+/* Cursor change on editable score/indicator cells */
+.ie-clickable {
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.ie-clickable:hover {
+    opacity: 0.8;
+}
+
+/* Score badge highlight on hover */
+.compact-score .ie-clickable:hover,
+.badge-score.ie-clickable:hover {
+    outline: 1px dashed var(--accent-primary);
+    outline-offset: 1px;
+}
+
+/* Indicator cell highlight on hover */
+.compact-indicators .ie-clickable:hover {
+    outline: 1px dashed var(--accent-primary);
+    outline-offset: 1px;
+    border-radius: 2px;
+}
+
+/* "+" hint when no indicators */
+.ie-add-hint {
+    color: var(--text-muted);
+    font-size: 10px;
+    opacity: 0.4;
+}
+
+.ie-clickable:hover .ie-add-hint {
+    opacity: 0.8;
+    color: var(--accent-primary);
+}
+
+/* Manual edit indicator - subtle underline */
+.ie-manual {
+    border-bottom: 1px dotted var(--accent-purple);
+}
+
+/* Score badge for card view (inline in card-meta) */
+.badge-score {
+    background: rgba(148,163,184,0.10);
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+/* ==================== MODAL OVERLAY ==================== */
+
+.ie-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+
+/* ==================== MODAL CONTAINER ==================== */
+
+.ie-modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 380px;
+    max-width: 90vw;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+.ie-indicator-modal {
+    width: 440px;
+}
+
+/* ==================== MODAL HEADER ==================== */
+
+.ie-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.ie-modal-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-primary);
+}
+
+.ie-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    transition: color 0.15s;
+}
+
+.ie-close-btn:hover {
+    color: var(--text-primary);
+}
+
+/* ==================== MODAL BODY ==================== */
+
+.ie-modal-body {
+    padding: 16px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.ie-signal-title {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.4;
+    border-left: 2px solid var(--border);
+    padding-left: 8px;
+}
+
+.ie-field {
+    margin-bottom: 12px;
+}
+
+.ie-label {
+    display: block;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* ==================== SCORE MODAL ==================== */
+
+.ie-score-input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ie-score-slider {
+    flex: 1;
+    height: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+}
+
+.ie-score-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.ie-score-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.ie-score-number {
+    width: 56px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    padding: 6px;
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+.ie-score-number:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.ie-score-presets {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.ie-preset {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-variant-numeric: tabular-nums;
+}
+
+.ie-preset:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: var(--accent-primary-muted);
+}
+
+.ie-current-indicators {
+    margin-top: 12px;
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+/* ==================== INDICATOR MODAL ==================== */
+
+.ie-ind-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin-bottom: 14px;
+}
+
+.ie-ind-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--bg-primary);
+}
+
+.ie-ind-option:hover {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-muted);
+}
+
+.ie-ind-option.active {
+    border-color: var(--accent-primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.ie-ind-option input[type="checkbox"] {
+    accent-color: var(--accent-primary);
+    cursor: pointer;
+    margin: 0;
+}
+
+.ie-ind-code {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    min-width: 14px;
+}
+
+.ie-ind-label {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+/* Compound presets */
+.ie-compound-section {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.ie-compound-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.ie-compound-btn {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+}
+
+.ie-compound-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* Custom compound input */
+.ie-custom-compound {
+    margin-top: 4px;
+}
+
+.ie-compound-input {
+    width: 100%;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.ie-compound-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+/* ==================== MODAL FOOTER ==================== */
+
+.ie-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    gap: 8px;
+}
+
+.ie-footer-right {
+    display: flex;
+    gap: 8px;
+}
+
+.ie-cancel-btn,
+.ie-clear-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.ie-cancel-btn:hover,
+.ie-clear-btn:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+.ie-save-btn {
+    background: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.ie-save-btn:hover {
+    opacity: 0.9;
+}
+
+.ie-save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

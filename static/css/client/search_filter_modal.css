@@ -1,0 +1,879 @@
+/**
+ * RYBAT Client - Search & Filter Modal Styles
+ * 4-tab modal: Quick Filters, Filter Builder, SQL Query, Saved Filters
+ * Follows screening.css overlay pattern.
+ */
+
+/* ==================== OVERLAY ==================== */
+.sfm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+}
+
+.sfm-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==================== MODAL PANEL ==================== */
+.sfm-modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 920px;
+    max-width: 95vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ==================== HEADER ==================== */
+.sfm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    cursor: grab;
+    user-select: none;
+}
+
+.sfm-header:active {
+    cursor: grabbing;
+}
+
+.sfm-header h3 {
+    margin: 0;
+    font-size: 13px;
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.sfm-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sfm-match-count {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.sfm-match-count strong {
+    color: var(--accent-primary);
+}
+
+.sfm-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.sfm-close:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+}
+
+/* ==================== TAB BAR ==================== */
+.sfm-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    padding: 0 20px;
+    gap: 0;
+}
+
+.sfm-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    padding: 10px 16px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sfm-tab:hover {
+    color: var(--text-primary);
+}
+
+.sfm-tab.active {
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+}
+
+/* ==================== TAB BODY ==================== */
+.sfm-body {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.sfm-tab-panel {
+    display: none;
+    padding: 16px 20px;
+}
+
+.sfm-tab-panel.active {
+    display: block;
+}
+
+/* ==================== SECTION LABELS ==================== */
+.sfm-section-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.sfm-section-label:not(:first-child) {
+    margin-top: 18px;
+}
+
+/* ==================== QUICK FILTERS: TEXT SEARCH ==================== */
+.sfm-search-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.sfm-search-input {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 9px 12px;
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.sfm-search-input:focus {
+    border-color: var(--accent-primary);
+}
+
+.sfm-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* ==================== QUICK FILTERS: SOC REGION CHIPS ==================== */
+.sfm-chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.sfm-chip {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 5px 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s;
+    user-select: none;
+}
+
+.sfm-chip:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.sfm-chip.active {
+    background: var(--accent-primary-muted);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.sfm-chip.negated {
+    background: rgba(248, 81, 73, 0.1);
+    border-color: var(--warn-red);
+    color: var(--warn-red);
+    text-decoration: line-through;
+}
+
+/* AOR News chips — amber/orange active state to distinguish from teal Region chips */
+.sfm-news-chip.active {
+    background: rgba(227, 166, 50, 0.15);
+    border-color: #e3a632;
+    color: #e3a632;
+}
+
+/* ==================== QUICK FILTERS: SCORE TIERS ==================== */
+.sfm-tier-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.sfm-tier-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 5px 14px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s;
+}
+
+.sfm-tier-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.sfm-tier-btn.active {
+    background: var(--accent-primary-muted);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* ==================== QUICK FILTERS: TIME WINDOW ==================== */
+.sfm-tw-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.sfm-tw-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s;
+    flex: 1;
+    text-align: center;
+}
+
+.sfm-tw-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.sfm-tw-btn.active {
+    background: var(--accent-primary-muted);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* ==================== QUICK FILTERS: TOGGLES ==================== */
+.sfm-toggle-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.sfm-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.sfm-toggle input[type="checkbox"] {
+    accent-color: var(--accent-primary);
+    cursor: pointer;
+}
+
+/* ==================== QUICK FILTERS: RISK INDICATORS ==================== */
+.sfm-risk-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.sfm-risk-chip {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+    user-select: none;
+}
+
+.sfm-risk-chip:hover {
+    border-color: var(--accent-primary);
+}
+
+.sfm-risk-chip.active {
+    background: var(--accent-primary-muted);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* ==================== QUICK FILTERS: FOOTER ==================== */
+.sfm-actions-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.sfm-btn {
+    padding: 7px 18px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sfm-btn-primary {
+    background: var(--accent-primary-muted);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.sfm-btn-primary:hover {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.sfm-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.sfm-btn-ghost:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+.sfm-btn-danger {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+}
+
+.sfm-btn-danger:hover {
+    border-color: var(--warn-red);
+    color: var(--warn-red);
+}
+
+/* ==================== FILTER BUILDER: CONDITION ROWS ==================== */
+.sfm-conditions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sfm-condition-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+.sfm-condition-row select,
+.sfm-condition-row input {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 5px 8px;
+    font-size: 11px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.sfm-condition-row select:focus,
+.sfm-condition-row input:focus {
+    border-color: var(--accent-primary);
+}
+
+.sfm-condition-field {
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.sfm-condition-op {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.sfm-condition-value {
+    flex: 1;
+    min-width: 0;
+}
+
+.sfm-condition-count {
+    font-size: 10px;
+    color: var(--text-muted);
+    min-width: 40px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.sfm-condition-remove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+
+.sfm-condition-remove:hover {
+    color: var(--warn-red);
+    background: rgba(248, 81, 73, 0.1);
+}
+
+/* Logic toggle */
+.sfm-logic-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.sfm-logic-toggle {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.sfm-logic-option {
+    background: var(--bg-tertiary);
+    border: none;
+    color: var(--text-muted);
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.sfm-logic-option.active {
+    background: var(--accent-primary-muted);
+    color: var(--accent-primary);
+}
+
+/* ==================== SQL QUERY TAB ==================== */
+.sfm-sql-layout {
+    display: flex;
+    gap: 12px;
+}
+
+.sfm-sql-editor-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sfm-sql-textarea {
+    width: 100%;
+    min-height: 140px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+    color: var(--text-primary);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    resize: vertical;
+    outline: none;
+    tab-size: 2;
+}
+
+.sfm-sql-textarea:focus {
+    border-color: var(--accent-primary);
+}
+
+.sfm-sql-textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.sfm-sql-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.sfm-sql-status {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+.sfm-sql-status.error {
+    color: var(--warn-red);
+}
+
+.sfm-sql-status.success {
+    color: var(--accent-green);
+}
+
+/* Column reference sidebar */
+.sfm-sql-ref {
+    width: 200px;
+    flex-shrink: 0;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.sfm-sql-ref-title {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.sfm-sql-ref-col {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 4px;
+    font-size: 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.1s;
+}
+
+.sfm-sql-ref-col:hover {
+    background: var(--bg-hover);
+}
+
+.sfm-sql-ref-col .col-name {
+    color: var(--text-primary);
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.sfm-sql-ref-col .col-type {
+    color: var(--text-muted);
+    font-size: 8px;
+    text-transform: uppercase;
+}
+
+/* ==================== SAVED FILTERS TAB ==================== */
+.sfm-saved-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sfm-saved-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.sfm-saved-card:hover {
+    border-color: var(--accent-primary);
+}
+
+.sfm-saved-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sfm-saved-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.sfm-saved-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.sfm-saved-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.sfm-saved-action-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px 6px;
+    font-size: 11px;
+    border-radius: 3px;
+    transition: all 0.15s;
+}
+
+.sfm-saved-action-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+
+.sfm-saved-action-btn.delete:hover {
+    color: var(--warn-red);
+    background: rgba(248, 81, 73, 0.1);
+}
+
+.sfm-saved-empty {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* ==================== SAVE PROMPT (inline) ==================== */
+.sfm-save-prompt {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.sfm-save-prompt input {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: var(--text-primary);
+    font-size: 12px;
+    outline: none;
+}
+
+.sfm-save-prompt input:focus {
+    border-color: var(--accent-primary);
+}
+
+/* ==================== FILTER ACTIVE BADGE (in feed-header) ==================== */
+.sfm-filter-badge {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: rgba(57, 197, 207, 0.12);
+    border: 1px solid rgba(57, 197, 207, 0.4);
+    color: var(--accent-teal);
+    padding: 3px 10px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sfm-filter-badge.visible {
+    display: inline-flex;
+}
+
+.sfm-filter-badge:hover {
+    background: rgba(57, 197, 207, 0.2);
+    border-color: var(--accent-teal);
+}
+
+.sfm-filter-badge .badge-clear {
+    cursor: pointer;
+    opacity: 0.7;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.sfm-filter-badge .badge-clear:hover {
+    opacity: 1;
+}
+
+/* Search text label — sits outside the teal badge as plain grey text */
+.sfm-search-label {
+    color: var(--text-muted);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    margin-left: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.sfm-search-label:hover {
+    color: var(--text-secondary);
+}
+
+/* ==================== SEARCH HINT ==================== */
+.sfm-search-hint {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    padding-left: 2px;
+}
+
+/* ==================== AND/OR CONNECTOR PILLS ==================== */
+.sfm-connector-row {
+    display: flex;
+    justify-content: center;
+    padding: 2px 0;
+}
+
+.sfm-connector-pill {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1px 14px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.sfm-connector-and {
+    color: var(--accent-primary, #39c5cf);
+    border-color: var(--accent-primary, #39c5cf);
+}
+
+.sfm-connector-or {
+    color: #e8a838;
+    border-color: #e8a838;
+}
+
+.sfm-connector-pill:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* ==================== SQL RESULTS TABLE ==================== */
+.sfm-sql-results {
+    margin-top: 12px;
+}
+
+.sfm-sql-table-wrap {
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.sfm-sql-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.sfm-sql-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.sfm-sql-table th {
+    background: var(--bg-tertiary, #1a1a2e);
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.sfm-sql-table td {
+    padding: 4px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text-primary);
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sfm-sql-table tbody tr:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+.sfm-sql-table td.sfm-sql-null {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.sfm-sql-no-results {
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 12px;
+    text-align: center;
+}
+
+.sfm-sql-col-note {
+    font-size: 10px;
+    color: var(--text-muted);
+    padding: 4px 0;
+}

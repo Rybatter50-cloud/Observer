@@ -1,0 +1,283 @@
+# ── Everything from BL_strict ++ ────────────────────────────────
+
+# Spam / promotional
+\bsponsored\b
+\badvertisement\b
+\bpromotional\b
+\bsubscribe now\b
+\bsign up free\b
+\bfree trial\b
+\blottery\b
+\bsweepstakes\b
+\bgiveaway\b
+\bpartner content\b
+\bpaid content\b
+\baffiliate link\b
+\bpromo code\b
+\blimited time offer\b
+\bflash sale\b
+\bexclusive offer\b
+\bwin a trip\b
+\bgift guide\b
+\bbuy now\b
+\bclick here\b
+
+# Non-news content
+\bhoroscope\b
+\bzodiac\b
+\bastrology\b
+\btarot\b
+\bcrossword\b
+\bsudoku\b
+\bwordle\b
+\bquordle\b
+\bpuzzle solution\b
+\bquiz\b
+\bpersonality test\b
+\brecipe of\b
+\bcooking tips\b
+\bmeal prep\b
+\bdiet plan\b
+\bfashion trends\b
+\boutfit ideas\b
+\bmakeup tutorial\b
+\bskincare routine\b
+\bdo it yourself\b
+\bdiy project\b
+\blife hack\b
+
+# Sports
+\bnfl draft\b
+\bnba playoffs\b
+\bworld cup qualif\b
+\btransfer news\b
+\bfantasy football\b
+\bsuper bowl\b
+\bmarch madness\b
+\bolympic games\b
+\bwimbledon\b
+\bgrand slam\b
+\bpremier league\b
+\bchampions league\b
+\beuro 20\d{2}\b
+\bformula 1\b
+\bformula one\b
+\bnascar\b
+\bpga tour\b
+\bufc fight\b
+\bboxing match\b
+\bwrestling\b
+\bcricket test\b
+\bthe ashes\b
+\brugby union\b
+\brugby league\b
+\bseries opener\b
+\btouchdown\b
+\bhome run\b
+\bhat trick\b
+\bclean sheet\b
+\bpenalty kick\b
+\bvar decision\b
+\bovertime\b
+\bshootout\b
+
+# Entertainment fluff
+\bcelebrity gossip\b
+\bred carpet\b
+\baward show\b
+\breality tv\b
+\bkardashians?\b
+\broyal family\b
+\bprince harry\b
+\bmeghan markle\b
+\bpaparazzi\b
+\bwho wore it better\b
+\bspotted at\b
+\bsecret wedding\b
+\baby bump\b
+\bdivorce rumors\b
+\bbreakup\b
+\bcast member\b
+\bsoap opera\b
+\bsitcom\b
+\bcomedy special\b
+\binfluencer\b
+\bvlogger\b
+
+# Clickbait
+you won't believe
+shocking reveal
+this one trick
+\d+ things you
+what happened next
+mind-blowing
+jaw-dropping
+tears of joy
+restore your faith
+caught on camera
+photos that prove
+reason why
+truth about
+unrecognizable
+net worth
+wait until you see
+gone viral
+
+# ── Extended: broader entertainment ───────────────────────────
+\bmovie review\b
+\bbox office\b
+\balbum review\b
+\bconcert tour\b
+\bstreaming service\b
+\bnetflix\b
+\btiktok trend\b
+\bviral video\b
+\bmeme\b
+\bhulu\b
+\bdisney\+\b
+\bprime video\b
+\bspotify wrapped\b
+\bnew single\b
+\bmusic video\b
+\bchart topper\b
+\bgrammy\b
+\boscar\b
+\bemmy\b
+\bgolden globe\b
+\bcomic-con\b
+\bcosplay\b
+\bfan theory\b
+\bspoiler alert\b
+\bseason finale\b
+\brelease date\b
+\btrailer breakdown\b
+\bgaming news\b
+\besports\b
+\btwitch stream\b
+\bplaystation\b
+\bxbox\b
+\bnintendo\b
+
+# ── Extended: lifestyle / local interest ──────────────────────
+\breal estate\b
+\bhome improvement\b
+\bgardening tips\b
+\bpet care\b
+\bwedding planning\b
+\bbest restaurants\b
+\btravel guide\b
+\bhotel review\b
+\bshopping deal\b
+\bblack friday\b
+\bcoupon\b
+\bdiscount code\b
+\bopen house\b
+\bhousing market\b
+\bmortgage rates\b
+\binterior design\b
+\brenovation\b
+\bairbnb\b
+\bstaycation\b
+\bweekend getaway\b
+\bhidden gem\b
+\bfoodie\b
+\bwine tasting\b
+\bcraft beer\b
+\bparenting advice\b
+\brelationship advice\b
+\bdating app\b
+\btinder\b
+\bbumble\b
+\bwellness retreat\b
+\byoga class\b
+\bmeditation app\b
+
+# ── Extended: broader sports ──────────────────────────────────
+\bsports scores?\b
+\bgame recap\b
+\bplayoff\b
+\bchampionship game\b
+\bdraft pick\b
+\bfree agent\b
+\btrade deadline\b
+\bspring training\b
+\bpreseason\b
+\broster move\b
+\binjury report\b
+\bstarting lineup\b
+\bmanager sacked\b
+\bcoach fired\b
+\bstanley cup\b
+\bworld series\b
+\bcollege football\b
+\bcollege basketball\b
+\bheisman\b
+\bfinal four\b
+\btour de france\b
+\bgiro d'italia\b
+\bvuelta a espana\b
+\bdavis cup\b
+\bryder cup\b
+\bx games\b
+\bwinter olympics\b
+\bparalympics\b
+\bcommonwealth games\b
+\basian games\b
+
+# ── Extended: Hyper-Local / Non-Geopolitical Noise ────────────
+\bcar accident\b
+\bvehicle crash\b
+\btraffic collision\b
+\bfender bender\b
+\broad closure\b
+\btraffic jam\b
+\bhouse fire\b
+\bapartment fire\b
+\bfirefighter\b
+\bcat in tree\b
+\bdog rescue\b
+\blost pet\b
+\bfound dog\b
+\bschool bus\b
+\bschool board meeting\b
+\bpta meeting\b
+\bbake sale\b
+\bcharity run\b
+\bfun run\b
+\b5k run\b
+\bmarathon route\b
+\bparade route\b
+\bfireworks display\b
+\bcounty fair\b
+\bstate fair\b
+\bribbon cutting\b
+\bgroundbreaking ceremony\b
+\blocal business\b
+\bstore opening\b
+\bmall hours\b
+\btrash pickup\b
+\brecycling schedule\b
+\bwater main break\b
+\bpower outage\b
+\bpot hole\b
+\bstreet cleaning\b
+\bsnow removal\b
+\bparking ban\b
+\bweather alert\b
+\bschool closing\b
+\bdelay opening\b
+\blocal hero\b
+\bhigh school reunion\b
+\bobituary\b
+\bfuneral service\b
+\bpolice blotter\b
+\bmugshot\b
+\bshoplifting\b
+\bvandalism\b
+\bgraffiti\b
+\bnoise complaint\b
+\bneighbor dispute\b
+\bdui checkpoint\b
+\bspeeding ticket\b
+\bparking ticket\b
+\blottery winner\b

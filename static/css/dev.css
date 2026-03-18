@@ -1,0 +1,52 @@
+/* ==========================================================================
+   RYBAT Dev Console Styles
+   Extracted from templates/dev.html inline <style> block (WARN-09)
+   ========================================================================== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Courier New', Courier, monospace; font-size: 13px; background: #111; color: #ccc; padding: 12px 20px; line-height: 1.4; }
+h1 { color: #6af; font-size: 15px; font-weight: bold; margin-bottom: 6px; }
+h2 { color: #6af; font-size: 13px; font-weight: bold; margin: 10px 0 3px 0; white-space: pre; }
+.row { padding: 1px 0; white-space: nowrap; }
+label { display: inline-block; color: #888; }
+.row > label { width: 200px; }
+.kvpair label { width: auto; margin-right: 4px; }
+span.val { color: #eee; }
+input[type=text], input[type=number], input[type=password], select, textarea {
+  background: #1a1a1a; color: #eee; border: 1px solid #444; padding: 1px 6px;
+  font-family: inherit; font-size: 12px; outline: none;
+}
+input[type=text]:focus, input[type=number]:focus, textarea:focus, select:focus { border-color: #6af; }
+input[type=text] { width: 240px; }
+input[type=number] { width: 80px; }
+input[type=password] { width: 240px; }
+select { padding: 1px 2px; }
+textarea { width: 100%; max-width: 700px; height: 60px; resize: vertical; display: block; margin-top: 2px; }
+button { background: #252525; color: #ccc; border: 1px solid #555; padding: 1px 10px; cursor: pointer; font-family: inherit; font-size: 12px; }
+button:hover { background: #333; color: #fff; }
+button:active { background: #444; }
+button.on { background: #1a3a1a; color: #4d4; border-color: #4d4; }
+button.off { background: #1a1a1a; color: #666; border-color: #444; }
+button.danger { border-color: #a44; }
+button.danger:hover { background: #422; color: #f88; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; margin-right: 4px; }
+.green { background: #0c0; }
+.red { background: #c00; }
+.yellow { background: #ca0; }
+.gray { background: #555; }
+.sep { border-top: 1px solid #2a2a2a; margin: 8px 0; }
+.warn { color: #fa0; }
+.err { color: #f44; }
+.ok { color: #4c4; }
+.mute { color: #666; }
+.mono-table { border-collapse: collapse; width: 100%; max-width: 1200px; margin-top: 4px; }
+.mono-table th { text-align: left; color: #888; font-weight: normal; border-bottom: 1px solid #333; padding: 2px 8px 2px 0; }
+.mono-table td { padding: 2px 8px 2px 0; border-bottom: 1px solid #1a1a1a; max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mono-table tr:hover td { background: #1a1a1a; }
+#chat-log { background: #0a0a0a; border: 1px solid #333; padding: 8px; height: 200px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; max-width: 700px; margin: 4px 0; font-size: 12px; }
+.chat-user { color: #6af; }
+.chat-assistant { color: #adc; }
+.chat-error { color: #f66; }
+.chat-mute { color: #666; font-size: 11px; }
+.inline-group { display: inline-block; margin-right: 12px; }
+.kvpair { display: inline-block; margin-right: 14px; }

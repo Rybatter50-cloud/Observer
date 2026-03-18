@@ -1,0 +1,83 @@
+# RYBAT Blacklist Filter: Strict
+# ================================
+# Extended blacklist: default patterns + broader entertainment,
+# lifestyle, and local-interest filters.
+
+# ── Everything from BL_default ────────────────────────────────
+
+# Spam / promotional
+\bsponsored\b
+\badvertisement\b
+\bpromotional\b
+\bsubscribe now\b
+\bsign up free\b
+\bfree trial\b
+\blottery\b
+\bsweepstakes\b
+\bgiveaway\b
+
+# Non-news content
+\bhoroscope\b
+\bzodiac\b
+\bcrossword\b
+\bsudoku\b
+\brecipe of\b
+\bcooking tips\b
+\bfashion trends\b
+
+# Sports
+\bnfl draft\b
+\bnba playoffs\b
+\bworld cup qualif\b
+\btransfer news\b
+\bfantasy football\b
+
+# Entertainment fluff
+\bcelebrity gossip\b
+\bred carpet\b
+\baward show\b
+\breality tv\b
+\bkardashians?\b
+
+# Clickbait
+you won't believe
+shocking reveal
+this one trick
+\d+ things you
+what happened next
+
+# ── Extended: broader entertainment ───────────────────────────
+\bmovie review\b
+\bbox office\b
+\balbum review\b
+\bconcert tour\b
+\bstreaming service\b
+\bnetflix\b
+\btiktok trend\b
+\bviral video\b
+\bmeme\b
+
+# ── Extended: lifestyle / local interest ──────────────────────
+\breal estate\b
+\bhome improvement\b
+\bgardening tips\b
+\bpet care\b
+\bwedding planning\b
+\bbest restaurants\b
+\btravel guide\b
+\bhotel review\b
+\bshopping deal\b
+\bblack friday\b
+\bcoupon\b
+\bdiscount code\b
+
+# ── Extended: broader sports ──────────────────────────────────
+\bsports scores?\b
+\bgame recap\b
+\bplayoff\b
+\bchampionship game\b
+\bdraft pick\b
+\bfree agent\b
+\btrade deadline\b
+\bspring training\b
+\bpreseason\b

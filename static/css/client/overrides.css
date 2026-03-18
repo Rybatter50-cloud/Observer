@@ -1,0 +1,477 @@
+/**
+ * RYBAT Client View - CSS Overrides
+ * Styles specific to the read-only client page.
+ * Layered on top of dashboard CSS modules.
+ *
+ * NOTE: Dashboard sidebar.css was refactored to a full-width grid layout (v3.1).
+ * The client still uses the original sidebar + feed layout, so we restore those
+ * styles here as overrides.
+ */
+
+/* ==================== TOP-LEVEL LAYOUT ==================== */
+/* Stats bar removed — telemetry now lives in Console 0.
+   Top panel row sits directly below the header (50px). */
+.stats-bar { display: none; }
+
+.top-panel-row {
+    margin-top: 50px; /* Header only (50px) */
+}
+
+/* Main layout: sidebar + feed, positioned below top panel + resize handle.
+   Height fills remaining viewport below header(50)+topPanel+handle(5).
+   --top-panel-h is set dynamically by initTopPanelResize() in init.js. */
+.main-layout {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+    overflow: hidden;
+    height: calc(100vh - 55px - var(--top-panel-h, 250px));
+    padding: 0;
+    gap: 0;
+}
+
+.sidebar {
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    top: 0;
+    width: 260px;
+    flex-shrink: 0;
+    align-self: stretch;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.sidebar-section h3 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent-primary);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* ==================== FILTER GRID ==================== */
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.filter-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: var(--accent-primary-muted);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.filter-btn.full-width {
+    grid-column: 1 / -1;
+}
+
+/* ==================== ACTIVE FILTERS DISPLAY ==================== */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    min-height: 24px;
+}
+
+.filter-pill {
+    background: var(--accent-primary-muted);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    padding: 3px 8px;
+    font-size: 9px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.filter-pill .remove {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.filter-pill .remove:hover {
+    opacity: 1;
+}
+
+/* ==================== TIME WINDOW ==================== */
+.time-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.time-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 4px;
+    font-size: 9px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+}
+
+.time-btn:hover {
+    border-color: var(--accent-primary);
+}
+
+.time-btn.active {
+    background: var(--accent-primary-muted);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* ==================== CLIENT RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .top-panel-row {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+        top: 0;
+        width: 100%;
+        max-height: 300px;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+    }
+
+    .feed-area {
+        margin-left: 0;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .main-layout {
+        flex-direction: column;
+    }
+}
+
+/* ==================== FEED AREA OVERRIDE ==================== */
+/* Override dashboard feed.css: remove fixed margin-left since client uses
+   sidebar+feed flex layout.  Feed-area fills remaining viewport height
+   (below top panel + resize handle) so feed-content can scroll internally.
+   Height is recalculated by initTopPanelResize() via --top-panel-h var. */
+.feed-area {
+    margin-left: 0;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.feed-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* ==================== CLIENT BADGE ==================== */
+.client-badge {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--bg-primary);
+    background: var(--accent-green);
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.top-panel-row {
+    display: flex;
+    gap: 8px;
+    min-height: 150px;
+    overflow: visible;
+    padding: 0;
+}
+
+/* (Unused media panels removed) */
+
+/* ==================== CLICKABLE TITLE IN COMPACT TABLE ==================== */
+.compact-title-link {
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.compact-title-link:hover {
+    color: var(--accent-primary);
+    text-decoration: underline;
+}
+
+/* ==================== SEARCH / FILTER BUTTON (in feed header) ==================== */
+.feed-header .search-filter-trigger-btn {
+    width: auto;
+    flex-shrink: 0;
+    padding: 6px 16px;
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: var(--accent-primary-muted);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.feed-header .search-filter-trigger-btn:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+}
+
+/* ==================== SIDEBAR SCREENING BUTTON ==================== */
+.sidebar-action-btn {
+    width: 100%;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.sidebar-action-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: var(--accent-primary-muted);
+}
+
+.screening-trigger-btn {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: var(--accent-primary-muted);
+}
+
+.screening-trigger-btn:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+}
+
+/* ==================== SIDEBAR SEARCH INPUT ==================== */
+.sidebar-search-input {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--bg-input, var(--bg-tertiary));
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    color: var(--text-primary);
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.sidebar-search-input:focus {
+    border-color: var(--accent-primary);
+}
+
+.sidebar-search-input::placeholder {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.sidebar-search-hint {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    padding-left: 1px;
+    line-height: 1.3;
+}
+
+/* ==================== TOP PANEL RESIZE HANDLE ==================== */
+.top-panel-resize-handle {
+    height: 5px;
+    background: transparent;
+    cursor: ns-resize;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.top-panel-resize-handle::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 1px auto 0;
+    transition: background 0.2s;
+}
+
+.top-panel-resize-handle:hover::after,
+.top-panel-resize-handle.dragging::after {
+    background: var(--accent-primary);
+}
+
+/* ==================== WIKIPEDIA CURRENT EVENTS ==================== */
+.wiki-events-panel {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 9px;
+    padding: 6px 8px;
+}
+
+.wiki-events-loading {
+    color: var(--text-muted);
+    font-size: 9px;
+    text-align: center;
+    padding: 8px;
+}
+
+.wiki-events-section {
+    margin-bottom: 10px;
+}
+
+.wiki-events-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Top-level heading: "Ongoing", "Elections & Referendums" */
+.wiki-events-top-heading {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--accent-primary);
+}
+
+/* Sub-headings: "Armed conflicts", "Economics", "Recent", etc. */
+.wiki-events-subheading {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin: 8px 0 3px 0;
+    padding: 0;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.wiki-events-subheading::before,
+.wiki-events-subheading::after {
+    content: '';
+    flex: 1;
+    min-width: 8px;
+    height: 1px;
+    background: var(--accent-primary);
+}
+
+.wiki-events-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wiki-events-list > li {
+    color: var(--text-secondary);
+    font-size: 9px;
+    line-height: 1.4;
+    padding: 1px 0 1px 10px;
+    position: relative;
+}
+
+.wiki-events-list > li::before {
+    content: '\2022';
+    color: var(--text-muted);
+    position: absolute;
+    left: 2px;
+}
+
+/* Nested sub-items */
+.wiki-events-sublist {
+    list-style: none;
+    padding: 0;
+    margin: 1px 0 1px 6px;
+}
+
+.wiki-events-sublist li {
+    color: var(--text-muted);
+    font-size: 8px;
+    line-height: 1.4;
+    padding: 0 0 0 8px;
+    position: relative;
+}
+
+.wiki-events-sublist li::before {
+    content: '\2013';
+    color: var(--border);
+    position: absolute;
+    left: 0;
+    font-size: 8px;
+}
+
+/* Hyperlinks to Wikipedia articles */
+.wiki-events-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.wiki-events-link:hover {
+    color: var(--accent-primary);
+    text-decoration: underline;
+}
+
+.wiki-events-sublist .wiki-events-link {
+    color: var(--text-muted);
+}
+
+.wiki-events-sublist .wiki-events-link:hover {
+    color: var(--accent-primary);
+}
+
+.wiki-events-error {
+    color: var(--text-muted);
+    font-size: 9px;
+    text-align: center;
+    padding: 8px;
+    font-style: italic;
+}

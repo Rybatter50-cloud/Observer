@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RYBAT Lite | Intelligence Feed</title>
+
+    <!-- Reuse dashboard CSS -->
+    <link rel="stylesheet" href="/static/css/dashboard/base.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/header.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/stats.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/sidebar.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/feed.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/cards.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/compact.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/screening.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/inline_edit.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/keyboard.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/dashboard/responsive.css?v={{ v }}" />
+
+    <!-- Client-specific overrides -->
+    <link rel="stylesheet" href="/static/css/client/overrides.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/client/search_filter_modal.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/client/screening_modal.css?v={{ v }}" />
+    <link rel="stylesheet" href="/static/css/client/article_detail_modal.css?v={{ v }}" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">RYBAT</div>
+            <span class="client-badge">LITE</span>
+            <div class="status-badge">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">CONNECTING</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="header-btn" onclick="exportData('csv')" title="Export CSV">CSV</button>
+            <button class="header-btn" onclick="exportData('json')" title="Export JSON">JSON</button>
+            <button class="header-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Theme">Theme</button>
+            <button class="header-btn" id="keyboardHintBtn" onclick="toggleKeyboardHint()" title="Keyboard Shortcuts">Keys</button>
+        </div>
+    </header>
+
+    <!-- Stale Warning -->
+    <div class="stale-warning" id="staleWarning">
+        No new signals received in 5+ minutes. System may be experiencing issues.
+    </div>
+
+    <!-- Hidden stat elements for JS compatibility -->
+    <div style="display:none">
+        <span id="statTime"></span>
+        <span id="statTimeUTC"></span>
+        <span id="sessionTimer"></span>
+        <span id="statActiveFeeds"></span>
+        <span id="statTotalFeeds"></span>
+        <span id="statHitRate"></span>
+        <span id="statErrors"></span>
+        <span id="translatorValue"></span>
+        <span id="translatorDot"></span>
+    </div>
+
+    <!-- Main Layout: Sidebar + Feed -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Time Window -->
+            <div class="sidebar-section">
+                <h3>Time Window</h3>
+                <div class="time-grid">
+                    <button class="time-btn" data-window="4h">4H</button>
+                    <button class="time-btn" data-window="24h">24H</button>
+                    <button class="time-btn" data-window="72h">72H</button>
+                    <button class="time-btn" data-window="7d">7D</button>
+                </div>
+                <button class="time-btn active full-width" data-window="all" style="margin-top: 4px; width: 100%;">All Time</button>
+            </div>
+
+            <!-- Search -->
+            <div class="sidebar-section">
+                <h3>Search</h3>
+                <input type="text" class="sidebar-search-input" id="sidebarSearchInput" placeholder='ukraine "military base" -russia ...' oninput="_sidebarOnSearchInput(this.value)">
+                <div class="sidebar-search-hint">"quotes" = exact &nbsp;|&nbsp; -word = exclude</div>
+            </div>
+        </aside>
+
+        <!-- Feed Area -->
+        <main class="feed-area">
+            <!-- Hidden input keeps shared filter JS working until modal is built -->
+            <input type="hidden" id="searchInput" value="">
+
+            <!-- Feed Header -->
+            <div class="feed-header">
+                <div class="feed-title-row">
+                    <span class="feed-title">News Feed</span>
+                    <span class="feed-count" id="feedCount">0 articles</span>
+                    <div class="sfm-filter-badge" id="sfmFilterBadge" onclick="openSearchFilterModal()"></div>
+                    <div class="active-filters" id="activeFilters"></div>
+                </div>
+                <button class="sidebar-action-btn search-filter-trigger-btn" id="searchFilterBtn" onclick="openSearchFilterModal()">
+                    Search / Filter
+                </button>
+            </div>
+
+            <!-- Feed Content -->
+            <div class="feed-content" id="feedContent">
+                <!-- Pinned Section -->
+                <div class="pinned-section" id="pinnedSection">
+                    <div class="pinned-header">Pinned Signals</div>
+                    <div id="pinnedCards"></div>
+                </div>
+
+                <!-- Compact Table View -->
+                <table class="compact-table active" id="compactTable">
+                    <thead><tr></tr></thead>
+                    <tbody id="compactBody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Keyboard Hint -->
+    <div class="keyboard-hint" id="keyboardHint">
+        <kbd>J</kbd>/<kbd>K</kbd> Navigate |
+        <kbd>O</kbd> Open |
+        <kbd>P</kbd> Pin |
+        <kbd>R</kbd> Mark Reviewed |
+        <kbd>C</kbd> Copy Link |
+        <kbd>F</kbd> Focus Search |
+        <kbd>1-4</kbd> Filter |
+        <kbd>?</kbd> Toggle Help
+    </div>
+
+    <!-- Reuse dashboard JS modules (order matters!) -->
+    <script src="/static/js/dashboard/config.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/state.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/theme.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/websocket.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/signals.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/cards.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/compact.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/filters.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/feeds.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/stats.js?v={{ v }}"></script>
+
+    <script src="/static/js/dashboard/screening.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/inline_edit.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/export.js?v={{ v }}"></script>
+    <script src="/static/js/dashboard/keyboard.js?v={{ v }}"></script>
+
+    <!-- Client-specific modules -->
+    <script src="/static/js/client/search_filter_modal.js?v={{ v }}"></script>
+    <script src="/static/js/client/article_detail_modal.js?v={{ v }}"></script>
+
+    <script src="/static/js/client/init.js?v={{ v }}"></script>
+</body>
+</html>

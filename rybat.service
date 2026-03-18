@@ -1,0 +1,151 @@
+# =============================================================================
+# RYBAT Intelligence Platform - Systemd Service File
+# Version: 1.0.0
+# Last Updated: 2026-02-02
+# Authors: Mr Cat + Claude AI
+# =============================================================================
+#
+# INSTALLATION:
+#   1. Copy this file to systemd directory:
+#      sudo cp rybat.service /etc/systemd/system/
+#
+#   2. Create system user (optional, recommended for security):
+#      sudo useradd --system --no-create-home --shell /bin/false rybat
+#
+#   3. Set ownership of RYBAT directory:
+#      sudo chown -R rybat:rybat /opt/rybat
+#
+#   4. Reload systemd and enable service:
+#      sudo systemctl daemon-reload
+#      sudo systemctl enable rybat
+#      sudo systemctl start rybat
+#
+# MANAGEMENT:
+#   sudo systemctl status rybat    # Check status
+#   sudo systemctl start rybat     # Start service
+#   sudo systemctl stop rybat      # Stop service
+#   sudo systemctl restart rybat   # Restart service
+#   sudo journalctl -u rybat -f    # View logs
+#
+# =============================================================================
+
+[Unit]
+Description=RYBAT Intelligence Platform
+Documentation=https://github.com/Rybatter50-cloud/RYBAT
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+# -----------------------------------------------------------------------------
+# Service Identity
+# -----------------------------------------------------------------------------
+Type=simple
+
+# Run as dedicated user (create with: useradd --system rybat)
+# For development, you can use your own user
+User=rybat
+Group=rybat
+
+# -----------------------------------------------------------------------------
+# Working Directory & Environment
+# -----------------------------------------------------------------------------
+WorkingDirectory=/opt/rybat
+EnvironmentFile=/opt/rybat/.env
+
+# -----------------------------------------------------------------------------
+# Execution
+# -----------------------------------------------------------------------------
+# Using virtual environment (recommended)
+ExecStart=/opt/rybat/venv/bin/python /opt/rybat/main.py
+
+# Alternative: Using system Python (not recommended)
+# ExecStart=/usr/bin/python3 /opt/rybat/main.py
+
+# -----------------------------------------------------------------------------
+# Restart Policy
+# -----------------------------------------------------------------------------
+Restart=always
+RestartSec=10
+
+# Maximum restart attempts (5 times in 60 seconds = give up)
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+# -----------------------------------------------------------------------------
+# Timeouts
+# -----------------------------------------------------------------------------
+# Wait 30 seconds for startup
+TimeoutStartSec=30
+
+# Wait 30 seconds for graceful shutdown
+TimeoutStopSec=30
+
+# Send SIGINT for graceful shutdown, then SIGKILL
+KillSignal=SIGINT
+FinalKillSignal=SIGKILL
+
+# -----------------------------------------------------------------------------
+# Resource Limits
+# -----------------------------------------------------------------------------
+# Maximum open files (for many RSS connections)
+LimitNOFILE=65535
+
+# Maximum memory (adjust based on your system)
+# MemoryMax=2G
+
+# CPU quota (optional, percentage of one CPU core)
+# CPUQuota=100%
+
+# -----------------------------------------------------------------------------
+# Security Hardening
+# -----------------------------------------------------------------------------
+# Protect system directories
+ProtectSystem=strict
+ProtectHome=true
+
+# Allow write only to specific directories
+ReadWritePaths=/opt/rybat/data /opt/rybat/logs
+
+# Private /tmp
+PrivateTmp=true
+
+# No new privileges
+NoNewPrivileges=true
+
+# Restrict capabilities
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Restrict address families (only IPv4/IPv6 and Unix sockets)
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+# Restrict namespaces
+RestrictNamespaces=true
+
+# Restrict realtime scheduling
+RestrictRealtime=true
+
+# System call filter (allow common system calls only)
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources
+
+# Protect kernel tunables
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+
+# Protect control groups
+ProtectControlGroups=true
+
+# Private devices
+PrivateDevices=true
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=rybat
+
+[Install]
+WantedBy=multi-user.target

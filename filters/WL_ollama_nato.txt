@@ -1,0 +1,20 @@
+# RYBAT Auto-Generated Whitelist Filter
+# Topic: NATO
+# Generated: 2026-02-10 19:21 UTC
+# Model: llama3.2:3b
+# Patterns: 14 valid, 6 invalid (removed)
+#
+Here are the whitelist regex patterns to capture news about NATO:
+\bnato\b
+\nato\s*
+\bonatlantic\s*nato
+\bonato\s*alliance
+\nato\s*summit
+\nato\s*ministerial
+\nato\s*defense
+\nato\s*partnership
+\nato\s*cooperation
+\nato\s*expansion
+\nato\s*budget
+\nato\s*reform
+Note: I've included variations such as "nato" with and without hyphens, and abbreviations like "USNATO" to capture a range of possible spellings.

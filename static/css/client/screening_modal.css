@@ -1,0 +1,602 @@
+/**
+ * RYBAT Client - Redesigned Entity Screening Modal Styles
+ * Table-based results, source summary bar, tab layout.
+ * Layered on top of screening.css (which keeps card-badge styles).
+ */
+
+/* ==================== OVERLAY (reuses .screening-overlay from screening.css) ==================== */
+
+/* ==================== MODAL PANEL (override width for table layout) ==================== */
+.screening-modal.redesigned {
+    width: 1000px;
+    max-width: 96vw;
+    max-height: 90vh;
+}
+
+/* ==================== SOURCE SUMMARY BAR ==================== */
+.scr-source-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.scr-source-badge {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-right: 1px solid var(--border);
+    user-select: none;
+}
+
+.scr-source-badge:last-child {
+    border-right: none;
+}
+
+.scr-source-badge .scr-src-count {
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* ── Per-source colors ── */
+.scr-source-badge[data-source="fbi"] {
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.06);
+}
+.scr-source-badge[data-source="fbi"]:hover,
+.scr-source-badge[data-source="fbi"].active {
+    background: rgba(59, 130, 246, 0.15);
+}
+.scr-source-badge[data-source="fbi"].active {
+    border-bottom: 2px solid #60a5fa;
+}
+
+.scr-source-badge[data-source="opensanctions"] {
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.06);
+}
+.scr-source-badge[data-source="opensanctions"]:hover,
+.scr-source-badge[data-source="opensanctions"].active {
+    background: rgba(245, 158, 11, 0.15);
+}
+.scr-source-badge[data-source="opensanctions"].active {
+    border-bottom: 2px solid #fbbf24;
+}
+
+.scr-source-badge[data-source="sanctions_network"] {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.06);
+}
+.scr-source-badge[data-source="sanctions_network"]:hover,
+.scr-source-badge[data-source="sanctions_network"].active {
+    background: rgba(74, 222, 128, 0.15);
+}
+.scr-source-badge[data-source="sanctions_network"].active {
+    border-bottom: 2px solid #4ade80;
+}
+
+.scr-source-badge[data-source="interpol"] {
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.06);
+}
+.scr-source-badge[data-source="interpol"]:hover,
+.scr-source-badge[data-source="interpol"].active {
+    background: rgba(239, 68, 68, 0.15);
+}
+.scr-source-badge[data-source="interpol"].active {
+    border-bottom: 2px solid #f87171;
+}
+
+.scr-source-badge.disabled {
+    opacity: 0.35;
+    cursor: default;
+    color: var(--text-muted);
+    background: transparent;
+}
+
+.scr-source-badge.disabled:hover {
+    background: transparent;
+}
+
+.scr-source-badge.failed {
+    opacity: 0.5;
+}
+
+.scr-source-badge.failed .scr-src-label::after {
+    content: ' \2717';
+    color: var(--warn-red);
+    font-size: 8px;
+}
+
+/* ==================== ENTITY TYPE TOGGLE ==================== */
+.scr-entity-type {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    color: var(--text-primary);
+    font-size: 11px;
+    outline: none;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.scr-entity-type:focus {
+    border-color: #ef4444;
+}
+
+/* ==================== TABS ==================== */
+.scr-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    padding: 0 20px;
+}
+
+.scr-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    padding: 10px 16px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.scr-tab:hover {
+    color: var(--text-primary);
+}
+
+.scr-tab.active {
+    color: #ef4444;
+    border-bottom-color: #ef4444;
+}
+
+/* ==================== TAB BODY ==================== */
+.scr-body {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.scr-tab-panel {
+    display: none;
+}
+
+.scr-tab-panel.active {
+    display: block;
+}
+
+/* ==================== RESULTS: INLINE FILTERS ROW ==================== */
+.scr-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.scr-filter-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.scr-filter-search {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 4px 8px;
+    color: var(--text-primary);
+    font-size: 11px;
+    outline: none;
+    width: 180px;
+}
+
+.scr-filter-search:focus {
+    border-color: #ef4444;
+}
+
+.scr-score-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 3px 10px;
+    font-size: 9px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+}
+
+.scr-score-btn:hover {
+    border-color: #ef4444;
+}
+
+.scr-score-btn.active {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.scr-cat-chip {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 2px 8px;
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+}
+
+.scr-cat-chip:hover {
+    border-color: #ef4444;
+}
+
+.scr-cat-chip.active {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+/* ==================== RESULTS TABLE ==================== */
+.scr-results-wrap {
+    overflow-x: auto;
+}
+
+.scr-results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    table-layout: fixed;
+}
+
+.scr-results-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.scr-results-table th {
+    background: var(--bg-primary);
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 8px;
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+}
+
+.scr-results-table th:hover {
+    color: var(--text-primary);
+}
+
+.scr-results-table th.sorted-asc::after {
+    content: ' \25B2';
+    font-size: 7px;
+}
+
+.scr-results-table th.sorted-desc::after {
+    content: ' \25BC';
+    font-size: 7px;
+}
+
+/* Column widths */
+.scr-results-table th:nth-child(1),
+.scr-results-table td:nth-child(1) { width: 52px; text-align: center; }  /* Score */
+.scr-results-table th:nth-child(2),
+.scr-results-table td:nth-child(2) { width: 100px; }  /* Source */
+.scr-results-table th:nth-child(3),
+.scr-results-table td:nth-child(3) { width: 180px; }  /* Name */
+.scr-results-table th:nth-child(4),
+.scr-results-table td:nth-child(4) { width: 110px; }  /* Category */
+.scr-results-table th:nth-child(5),
+.scr-results-table td:nth-child(5) { width: auto; }   /* Details */
+.scr-results-table th:nth-child(6),
+.scr-results-table td:nth-child(6) { width: 50px; text-align: center; }  /* Link */
+
+.scr-results-table td {
+    padding: 7px 8px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: top;
+}
+
+.scr-results-table tbody tr {
+    transition: background 0.1s;
+}
+
+.scr-results-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.scr-results-table tbody tr.expanded {
+    background: rgba(239, 68, 68, 0.04);
+}
+
+/* Score cell */
+.scr-score-cell {
+    display: inline-block;
+    min-width: 34px;
+    text-align: center;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+}
+
+.scr-score-cell.high {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+.scr-score-cell.medium {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+.scr-score-cell.low {
+    background: rgba(128, 128, 128, 0.15);
+    color: var(--text-secondary);
+}
+
+/* Source cell badge */
+.scr-src-cell {
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.scr-src-cell.fbi         { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+.scr-src-cell.interpol    { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.scr-src-cell.opensanctions { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.scr-src-cell.sanctions_network { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+
+/* Category cell */
+.scr-cat-cell {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Details cell - allows wrapping */
+.scr-results-table td.scr-detail-cell {
+    white-space: normal;
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-height: 40px;
+    overflow: hidden;
+}
+
+/* Expanded detail row */
+.scr-detail-row td {
+    padding: 8px 12px 12px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    white-space: normal;
+}
+
+.scr-detail-row .scr-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+    font-size: 10px;
+}
+
+.scr-detail-row .scr-detail-field {
+    display: flex;
+    gap: 6px;
+}
+
+.scr-detail-row .scr-detail-key {
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--text-muted);
+    min-width: 70px;
+    flex-shrink: 0;
+}
+
+.scr-detail-row .scr-detail-val {
+    color: var(--text-secondary);
+    word-break: break-word;
+}
+
+/* Link cell */
+.scr-link-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+    transition: color 0.15s;
+}
+
+.scr-link-btn:hover {
+    color: var(--accent-primary);
+}
+
+/* ==================== EMPTY / LOADING STATES ==================== */
+.scr-results-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.scr-results-loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.scr-results-loading .spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(239, 68, 68, 0.2);
+    border-top-color: #ef4444;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 8px;
+}
+
+/* ==================== SUMMARY ROW (above table) ==================== */
+.scr-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    font-size: 11px;
+}
+
+.scr-summary.has-hits {
+    background: rgba(239, 68, 68, 0.06);
+    color: #f87171;
+}
+
+.scr-summary.no-hits {
+    background: rgba(63, 185, 80, 0.06);
+    color: var(--accent-green);
+}
+
+.scr-summary-icon {
+    font-size: 14px;
+}
+
+.scr-summary-text {
+    font-weight: 600;
+}
+
+.scr-summary-meta {
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+/* ==================== CONTEXT TAB ==================== */
+.scr-context-grid {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 6px 12px;
+    font-size: 11px;
+}
+
+.scr-context-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding-top: 2px;
+}
+
+.scr-context-value {
+    color: var(--text-secondary);
+    word-break: break-word;
+    line-height: 1.5;
+}
+
+.scr-context-fulltext {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    padding: 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 10px;
+    color: var(--text-muted);
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+/* ==================== LOG TAB ==================== */
+.scr-log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+}
+
+.scr-log-table th {
+    background: var(--bg-primary);
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-size: 8px;
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.scr-log-table td {
+    padding: 5px 8px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.scr-log-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.scr-log-table .log-name-cell {
+    cursor: pointer;
+    color: var(--accent-primary);
+}
+
+.scr-log-table .log-name-cell:hover {
+    text-decoration: underline;
+}
+
+.scr-log-hits-zero { color: var(--accent-green); }
+.scr-log-hits-positive { color: #f87171; font-weight: 700; }

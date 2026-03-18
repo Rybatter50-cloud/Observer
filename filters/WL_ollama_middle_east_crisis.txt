@@ -1,0 +1,40 @@
+# RYBAT Auto-Generated Whitelist Filter
+# Topic: Middle East Crisis
+# Generated: 2026-02-10 19:30 UTC
+# Model: llama3.2:3b
+# Patterns: 34 valid, 1 invalid (removed)
+#
+Here are the whitelist regex patterns to capture news about "Middle East Crisis":
+\bmiddle east\b
+crisis in middle east
+middle east conflict
+iran us tensions
+iran crisis
+us iran relations
+iran sanctions
+iran nuclear program
+israel palestine conflict
+gaza strip situation
+syria conflict
+syrian civil war
+iranian revolution
+iranian protests
+iranian government
+\bsaudi arabia\b
+\saudiarabia\b
+qatar crisis
+qatar us relations
+qatar israel relations
+iran saudi arabia tensions
+iran qatar relations
+us saudi arabia relations
+us iran relations
+\bpalestine\b
+\spalestine\b
+palestinian israel conflict
+israeli palestine relations
+gaza strip situation
+west bank conflict
+east jerusalem dispute
+iran palestine relations
+iran israel relations

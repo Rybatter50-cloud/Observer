@@ -1,0 +1,48 @@
+# RYBAT Blacklist Filter: Default
+# ================================
+# One regex pattern per line. Lines starting with # are comments.
+# Blank lines are ignored. Patterns are case-insensitive.
+#
+# Articles matching ANY pattern here will be rejected
+# (unless overridden by a whitelist match in "both" mode).
+
+# ── Spam / promotional ────────────────────────────────────────
+\bsponsored\b
+\badvertisement\b
+\bpromotional\b
+\bsubscribe now\b
+\bsign up free\b
+\bfree trial\b
+\blottery\b
+\bsweepstakes\b
+\bgiveaway\b
+
+# ── Non-news content ──────────────────────────────────────────
+\bhoroscope\b
+\bzodiac\b
+\bcrossword\b
+\bsudoku\b
+\brecipe of\b
+\bcooking tips\b
+\bfashion trends\b
+
+# ── Sports (unless explicitly wanted) ─────────────────────────
+\bnfl draft\b
+\bnba playoffs\b
+\bworld cup qualif\b
+\btransfer news\b
+\bfantasy football\b
+
+# ── Entertainment fluff ───────────────────────────────────────
+\bcelebrity gossip\b
+\bred carpet\b
+\baward show\b
+\breality tv\b
+\bkardashians?\b
+
+# ── Clickbait patterns ────────────────────────────────────────
+you won't believe
+shocking reveal
+this one trick
+\d+ things you
+what happened next
