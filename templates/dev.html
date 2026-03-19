@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observer Console</title>
+<link rel="stylesheet" href="/static/css/dev.css?v={{ v }}">
+</head>
+<body>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<h1>Observer Console <span class="mute">|</span> WS: <span class="dot gray" id="ws-dot"></span><span id="ws-status" class="mute">CONNECTING</span> <span class="mute">|</span> <span id="clock" class="mute">--:--:-- UTC</span> <span class="mute">|</span> Session: <span id="session-timer" class="mute">00:00:00</span></h1>
+
+<!-- ═══════════════════════════ SYSTEM ═══════════════════════════ -->
+<h2>── System ─────────────────────────────────────────────────────────────────</h2>
+<div class="row">
+  <div class="kvpair"><label>Active Feeds:</label><span class="val" id="sys-active-feeds">--</span></div>
+  <div class="kvpair"><label>Total Feeds:</label><span class="val" id="sys-total-feeds">--</span></div>
+  <div class="kvpair"><label>Accept Rate:</label><span class="val" id="sys-accept-rate">--</span></div>
+</div>
+<div class="row">
+  <div class="kvpair"><label>Errors:</label><span class="val" id="sys-errors">--</span></div>
+  <div class="kvpair"><label>Queue Depth:</label><span class="val" id="sys-queue">--</span></div>
+  <div class="kvpair"><label>Translator:</label><span class="val" id="sys-translator">--</span></div>
+</div>
+<div class="row" style="margin-top: 4px;">
+  <button id="restart-pipeline-btn" class="danger">Restart Pipeline</button>
+  <button id="restart-app-btn" class="danger">Restart App</button>
+</div>
+
+<!-- ═══════════════════════════ DATABASE ═══════════════════════════ -->
+<h2>── Database ────────────────────────────────────────────────────────────────</h2>
+<div class="row">
+  <div class="kvpair"><label>DB Size:</label><span class="val" id="db-size">--</span></div>
+  <div class="kvpair"><label>Signals:</label><span class="val" id="db-signals">--</span></div>
+  <div class="kvpair"><label>Pool:</label><span class="val" id="db-pool">--</span></div>
+</div>
+<div class="row">
+  <div class="kvpair"><label>Processed:</label><span class="val" id="db-processed">--</span></div>
+  <div class="kvpair"><label>Pending:</label><span class="val" id="db-pending">--</span></div>
+</div>
+<div class="row">
+  <div class="kvpair"><label>Oldest Signal:</label><span class="val" id="db-oldest">--</span></div>
+  <div class="kvpair"><label>Newest Signal:</label><span class="val" id="db-newest">--</span></div>
+</div>
+<div class="row">
+  <label>Max Signals:</label>
+  <input type="number" id="db-max-input" value="50000" style="width:80px">
+  <button id="db-max-btn">Set</button>
+  <span class="mute" style="margin-left:20px">|</span>
+  <button id="db-backup-btn" style="margin-left:8px">Backup</button>
+  <button id="db-restore-btn">Restore</button>
+  <select id="db-restore-select" style="display:none; margin-left:4px;"></select>
+</div>
+
+<!-- ═══════════════════════════ COLLECTORS ═══════════════════════════ -->
+<h2>── Collectors ──────────────────────────────────────────────────────────────</h2>
+<table class="mono-table" style="max-width:900px">
+<tr><th style="width:130px">Name</th><th style="width:100px">Status</th><th>24h</th><th>Errors</th><th>Last Run</th><th>Controls</th></tr>
+<tr id="coll-rss">
+  <td>RSS</td>
+  <td><span class="dot gray" id="coll-rss-dot"></span><span id="coll-rss-status">--</span></td>
+  <td id="coll-rss-24h">--</td>
+  <td id="coll-rss-errors">--</td>
+  <td id="coll-rss-last">--</td>
+  <td><button id="coll-rss-toggle" class="on">ON</button> <button id="coll-rss-collect">Collect</button></td>
+</tr>
+<tr id="coll-np4k">
+  <td>Trafilatura</td>
+  <td><span class="dot gray" id="coll-np4k-dot"></span><span id="coll-np4k-status">--</span></td>
+  <td id="coll-np4k-24h">--</td>
+  <td id="coll-np4k-errors">--</td>
+  <td id="coll-np4k-last">--</td>
+  <td><button id="coll-np4k-toggle" class="on">ON</button> <button id="coll-np4k-collect">Collect</button></td>
+</tr>
+</table>
+
+<!-- ═══════════════════════════ CONTENT FILTERS ═══════════════════════════ -->
+<h2>── Content Filters ─────────────────────────────────────────────────────────</h2>
+<div class="row">
+  <label>Mode:</label>
+  <select id="filter-mode"><option value="both">Both</option><option value="blacklist">Blacklist Only</option><option value="whitelist">Whitelist Only</option></select>
+</div>
+<div class="row">
+  <label>Blacklist File:</label>
+  <select id="filter-blacklist"></select>
+</div>
+<div class="row">
+  <label>Whitelist File:</label>
+  <select id="filter-whitelist"></select>
+</div>
+<div class="row" style="margin-top:4px;">
+  <label>Edit Patterns:</label>
+  <select id="filter-edit-file" style="width:180px"></select>
+  <button id="filter-edit-btn">Load</button>
+</div>
+<div class="row" id="filter-editor-row" style="display:none;">
+  <textarea id="filter-editor" style="height:120px; max-width:600px" spellcheck="false"></textarea>
+  <div style="margin-top:2px"><button id="filter-save-btn">Save Patterns</button> <span id="filter-save-status" class="mute"></span></div>
+</div>
+
+<!-- ═══════════════════════════ NLLB ═══════════════════════════ -->
+<h2>── NLLB Translation ────────────────────────────────────────────────────────</h2>
+<div class="row">
+  <div class="inline-group"><label>Device:</label><select id="nllb-device"><option value="auto">auto</option><option value="cpu">cpu</option><option value="cuda">cuda</option></select></div>
+  <div class="inline-group"><span style="color:#888">Compute Type:</span> <select id="nllb-compute"><option value="auto">auto</option><option value="int8">int8</option><option value="int8_float16">int8_float16</option><option value="float16">float16</option><option value="float32">float32</option></select></div>
+</div>
+<div class="row">
+  <div class="inline-group"><label>Workers:</label><input type="number" id="nllb-workers" value="1"></div>
+  <div class="inline-group"><span style="color:#888">Cores/Worker:</span> <input type="number" id="nllb-cores" value="4"></div>
+</div>
+<div class="row">
+  <div class="inline-group"><label>Beam Size:</label><input type="number" id="nllb-beam" value="2"></div>
+  <div class="inline-group"><span style="color:#888">Length Penalty:</span> <input type="number" id="nllb-lenpen" step="0.1" value="1.0"></div>
+  <div class="inline-group"><span style="color:#888">Rep Penalty:</span> <input type="number" id="nllb-reppen" step="0.1" value="1.0"></div>
+</div>
+<div class="row">
+  <div class="inline-group"><label>Temperature:</label><input type="number" id="nllb-temp" step="0.1" value="1.0"></div>
+  <div class="inline-group"><span style="color:#888">Top K:</span> <input type="number" id="nllb-topk" value="0"></div>
+  <div class="inline-group"><span style="color:#888">Max Batch:</span> <input type="number" id="nllb-batch" value="32"></div>
+</div>
+<div class="row" style="margin-top:4px;">
+  <button id="nllb-apply-btn">Apply</button>
+  <button id="nllb-save-btn">Save &amp; Restart</button>
+  <span id="nllb-status" class="mute"></span>
+</div>
+
+<!-- ═══════════════════════════ SCREENING ═══════════════════════════ -->
+<h2>── Entity Screening ────────────────────────────────────────────────────────</h2>
+<table class="mono-table" style="max-width:500px">
+<tr><th style="width:160px">Source</th><th style="width:100px">Status</th><th>Hits</th></tr>
+<tr><td>FBI Most Wanted</td><td><span class="dot gray" id="scr-fbi-dot"></span><span id="scr-fbi-status">--</span></td><td id="scr-fbi-hits">--</td></tr>
+<tr><td>Interpol Red Notices</td><td><span class="dot gray" id="scr-interpol-dot"></span><span id="scr-interpol-status">--</span></td><td id="scr-interpol-hits">--</td></tr>
+<tr><td>Sanctions Network</td><td><span class="dot gray" id="scr-sanctions-dot"></span><span id="scr-sanctions-status">--</span></td><td id="scr-sanctions-hits">--</td></tr>
+<tr><td>OpenSanctions</td><td><span class="dot gray" id="scr-opensanctions-dot"></span><span id="scr-opensanctions-status">--</span></td><td id="scr-opensanctions-hits">--</td></tr>
+</table>
+
+<!-- ═══════════════════════════ SIGNALS ═══════════════════════════ -->
+<h2>── Signals ─────────────────────────────────────────────────────────────────</h2>
+<div class="row">
+  <label>Filter:</label>
+  <input type="text" id="sig-search" placeholder="search..." style="width:180px">
+  <span class="mute" style="margin:0 8px">|</span>
+  <span style="color:#888">Time:</span>
+  <select id="sig-time"><option value="all">All</option><option value="4h">4h</option><option value="24h" selected>24h</option><option value="72h">72h</option><option value="7d">7d</option></select>
+  <span class="mute" style="margin:0 8px">|</span>
+  <button id="sig-refresh-btn">Refresh</button>
+  <span class="mute" style="margin-left:8px">Showing <span id="sig-count">0</span> signals</span>
+</div>
+<div style="max-height:500px; overflow-y:auto; margin-top:4px;">
+<table class="mono-table" id="sig-table">
+<thead><tr><th style="width:130px">Created</th><th style="width:40px">Score</th><th style="width:140px">Source</th><th>Title</th><th style="width:70px">Location</th></tr></thead>
+<tbody id="sig-body"></tbody>
+</table>
+</div>
+
+<!-- ═══════════════════════════ FEED GROUPS ═══════════════════════════ -->
+<h2>── Feed Groups ─────────────────────────────────────────────────────────────</h2>
+<div class="row">
+  <div class="kvpair"><label>Total Feeds:</label><span class="val" id="fg-total">--</span></div>
+  <div class="kvpair"><label>Enabled Feeds:</label><span class="val" id="fg-enabled">--</span></div>
+  <div class="kvpair"><label>Errors:</label><span class="val" id="fg-errors">--</span></div>
+  <div class="kvpair"><label>Healthy:</label><span class="val" id="fg-healthy">--</span></div>
+</div>
+<div class="row">
+  <div class="kvpair"><label>Articles Processed:</label><span class="val" id="fg-processed">--</span></div>
+  <div class="kvpair"><label>Rejected:</label><span class="val" id="fg-rejected">--</span></div>
+  <div class="kvpair"><label>Accept Rate:</label><span class="val" id="fg-accept">--</span></div>
+</div>
+<div class="row" style="margin-top:4px;">
+  <label>Region Presets:</label>
+  <button class="region-btn" data-region="ukraine">Ukraine</button>
+  <button class="region-btn" data-region="middle_east">Middle East</button>
+  <button class="region-btn" data-region="asia">Asia</button>
+  <button class="region-btn" data-region="africa">Africa</button>
+  <button class="region-btn" data-region="americas">Americas</button>
+  <button class="region-btn" data-region="caucasus_central_asia">Caucasus/C.Asia</button>
+  <span class="mute" style="margin:0 8px">|</span>
+  <button id="fg-reset-btn" class="danger">Reset Defaults</button>
+</div>
+<div style="max-height:300px; overflow-y:auto; margin-top:4px;">
+<table class="mono-table" style="max-width:700px">
+<thead><tr><th style="width:40px">Tier</th><th style="width:220px">Group</th><th style="width:60px">Feeds</th><th style="width:80px">Toggle</th></tr></thead>
+<tbody id="fg-body"></tbody>
+</table>
+</div>
+
+<!-- ═══════════════════════════ FEED SITES ═══════════════════════════ -->
+<h2>── Feed Sites ──────────────────────────────────────────────────────────────</h2>
+<div class="row">
+  <div class="kvpair"><label>Total:</label><span class="val" id="fs-total">--</span></div>
+  <div class="kvpair"><label>RSS:</label><span class="val" id="fs-rss">--</span></div>
+  <div class="kvpair"><label>Scraper:</label><span class="val" id="fs-scraper">--</span></div>
+  <div class="kvpair"><label>Enabled:</label><span class="val" id="fs-enabled">--</span></div>
+</div>
+<div class="row" style="margin-top:4px;">
+  <label>Filter:</label>
+  <input type="text" id="fs-search" placeholder="name, url, group..." style="width:200px">
+  <span class="mute" style="margin:0 8px">|</span>
+  <span style="color:#888">Type:</span>
+  <select id="fs-type-filter"><option value="all">All</option><option value="rss">RSS</option><option value="scraper">Scraper</option></select>
+</div>
+<div style="max-height:400px; overflow-y:auto; margin-top:4px;">
+<table class="mono-table" style="max-width:1100px">
+<thead><tr><th style="width:160px">Name</th><th>URL</th><th style="width:70px">Group</th><th style="width:60px">Type</th><th style="width:40px">Lang</th><th style="width:60px">Toggle</th><th style="width:50px">Del</th></tr></thead>
+<tbody id="fs-body"></tbody>
+</table>
+</div>
+
+<div style="height:40px"></div>
+<script src="/static/js/dev.js?v={{ v }}"></script>
+</body>
+</html>
