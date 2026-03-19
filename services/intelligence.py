@@ -1,5 +1,5 @@
 """
-RYBAT Lite - Intelligence Ingestion Service
+Observer Lite - Intelligence Ingestion Service
 =============================================
 Core article preparation and field extraction for the collection pipeline.
 

@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Cards Module
+ * Observer Dashboard - Cards Module
  * Intel card rendering and creation
  *
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html

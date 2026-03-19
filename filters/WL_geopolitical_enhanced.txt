@@ -1,4 +1,4 @@
-# RYBAT Whitelist Filter: Full Geopolitical OSINT
+# Observer Whitelist Filter: Full Geopolitical OSINT
 # =================================================
 # One regex pattern per line. Lines starting with # are comments.
 # Blank lines are ignored. Patterns are case-insensitive.

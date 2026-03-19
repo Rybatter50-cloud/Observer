@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # =============================================================================
-# RYBAT Intelligence Platform - Cross-Platform Setup Script
+# Observer Intelligence Platform - Cross-Platform Setup Script
 # Version: 1.0.0
 # Last Updated: 2026-02-02
 # Authors: Mr Cat + Claude AI
@@ -9,10 +9,10 @@
 # This script works on Windows, macOS, and Linux!
 #
 # USAGE:
-#   python setup_rybat.py
-#   python setup_rybat.py --dev
-#   python setup_rybat.py --check
-#   python setup_rybat.py --help
+#   python setup_observer.py
+#   python setup_observer.py --dev
+#   python setup_observer.py --check
+#   python setup_observer.py --help
 #
 # =============================================================================
 
@@ -26,7 +26,7 @@ from pathlib import Path
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
-RYBAT_VERSION = "1.0.0"
+Observer_VERSION = "1.0.0"
 PYTHON_MIN_VERSION = (3, 11)
 VENV_DIR = "venv"
 
@@ -237,11 +237,11 @@ def create_start_scripts():
     
     if system == "Windows":
         # start.bat already provided
-        print_info("Use start.bat to launch RYBAT")
+        print_info("Use start.bat to launch Observer")
     else:
         # Create Unix start script
         start_script = f"""#!/bin/bash
-# RYBAT Start Script
+# Observer Start Script
 cd "$(dirname "$0")"
 source {VENV_DIR}/bin/activate
 python main.py
@@ -253,7 +253,7 @@ python main.py
 
 def install_development():
     """Run development installation"""
-    print_header("Installing RYBAT in Development Mode")
+    print_header("Installing Observer in Development Mode")
     print()
     
     if not check_prerequisites():
@@ -291,7 +291,7 @@ def install_development():
     print("  2. Activate virtual environment:")
     print(f"     {activate_cmd}")
     print()
-    print("  3. Start RYBAT:")
+    print("  3. Start Observer:")
     if system_info["is_windows"]:
         print("     python main.py")
         print("     (or double-click start.bat)")
@@ -325,9 +325,9 @@ def show_system_info():
 def show_help():
     """Display help message"""
     print(f"""
-RYBAT Intelligence Platform - Cross-Platform Setup Script v{RYBAT_VERSION}
+Observer Intelligence Platform - Cross-Platform Setup Script v{Observer_VERSION}
 
-Usage: python setup_rybat.py [OPTIONS]
+Usage: python setup_observer.py [OPTIONS]
 
 Options:
   --dev, -d      Development mode (create venv, install deps)
@@ -336,9 +336,9 @@ Options:
   --help, -h     Show this help message
 
 Examples:
-  python setup_rybat.py              # Interactive mode
-  python setup_rybat.py --dev        # Quick development setup
-  python setup_rybat.py --check      # Verify system requirements
+  python setup_observer.py              # Interactive mode
+  python setup_observer.py --dev        # Quick development setup
+  python setup_observer.py --check      # Verify system requirements
 
 Supported Platforms:
   ✓ Windows 10/11
@@ -354,7 +354,7 @@ def main():
     Colors.init()
     
     print()
-    print_header(f"RYBAT Intelligence Platform - Setup v{RYBAT_VERSION}")
+    print_header(f"Observer Intelligence Platform - Setup v{Observer_VERSION}")
     print()
     
     # Parse arguments

@@ -1,5 +1,5 @@
 -- Migration 017: Add reference data tables for UCDP, GNS, and signal linkage
--- Supports RYBAT Data Integration Plan: conflict context, location resolution,
+-- Supports Observer Data Integration Plan: conflict context, location resolution,
 -- and enriched reporting.
 -- 2026-02-25
 

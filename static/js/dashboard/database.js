@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Database Control Panel
+ * Observer Dashboard - Database Control Panel
  * DB details, MAX_SIGNALS_LIMIT config, backup/restore
  */
 

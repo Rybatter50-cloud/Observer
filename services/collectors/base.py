@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Base Collector
+Observer Intelligence Platform - Base Collector
 =============================================
 Abstract base class that all collectors must implement.
 

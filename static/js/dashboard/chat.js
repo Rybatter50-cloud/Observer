@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Ollama Chat Panel
+ * Observer Dashboard - Ollama Chat Panel
  * Context-aware chat with Ollama + filter generation
  *
  * @created 2026-02-10 by Mr Cat + Claude
@@ -846,7 +846,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Show welcome message
     _appendChatMessage('system',
-        'RYBAT Analyst — Ollama-powered intelligence chat.\n' +
+        'Observer Analyst — Ollama-powered intelligence chat.\n' +
         'Commands: /discover <country>, /feeds <region>, /feeds all, /feeds reset, /lang <code>, /filter <topic>, /filter append <file> "patterns...", /screen [entity], /status, /clear'
     );
 

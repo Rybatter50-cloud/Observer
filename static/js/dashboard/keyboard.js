@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Keyboard Module
+ * Observer Dashboard - Keyboard Module
  * Keyboard shortcuts and navigation event listeners
  * 
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html

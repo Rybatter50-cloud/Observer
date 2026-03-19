@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Inline Score & Indicator Editing
+ * Observer Dashboard - Inline Score & Indicator Editing
  * ====================================================
  * Allows analysts to click score badges and indicator cells to edit
  * relevance_score and risk_indicators directly from the feed.

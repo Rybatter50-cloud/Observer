@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Logging Configuration
+Observer Intelligence Platform - Logging Configuration
 Provides structured logging with proper handlers and formatters
 """
 

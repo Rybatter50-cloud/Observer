@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Metrics Collector
+Observer Intelligence Platform - Metrics Collector
 Centralized metrics collection for AI services telemetry
 
 This module provides thread-safe tracking of:

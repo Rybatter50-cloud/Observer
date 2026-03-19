@@ -1,5 +1,5 @@
 """
-RYBAT Test Suite - Repository Unit Tests
+Observer Test Suite - Repository Unit Tests
 ==========================================
 Tests for SignalRepository, ReputationRepository, MetricsRepository.
 

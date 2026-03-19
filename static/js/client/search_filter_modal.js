@@ -1,5 +1,5 @@
 /**
- * RYBAT Client - Search & Filter Modal
+ * Observer Client - Search & Filter Modal
  * 4-tab modal: Quick Filters, Filter Builder, SQL Query, Saved Filters
  *
  * Follows screening.js lazy-creation pattern.
@@ -905,13 +905,13 @@ function _sfmClearSql() {
 
 function _sfmLoadSaved() {
     try {
-        return JSON.parse(localStorage.getItem('rybat_saved_filters')) || [];
+        return JSON.parse(localStorage.getItem('observer_saved_filters')) || [];
     } catch (e) { return []; }
 }
 
 function _sfmStoreSaved(list) {
     try {
-        localStorage.setItem('rybat_saved_filters', JSON.stringify(list));
+        localStorage.setItem('observer_saved_filters', JSON.stringify(list));
     } catch (e) {}
 }
 
@@ -1044,7 +1044,7 @@ function _sfmExportFilters() {
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = 'rybat_filters_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.download = 'observer_filters_' + new Date().toISOString().slice(0, 10) + '.json';
     a.click();
     URL.revokeObjectURL(url);
 }

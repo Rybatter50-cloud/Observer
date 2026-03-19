@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Export Module
+ * Observer Dashboard - Export Module
  * Data export functionality (CSV/JSON)
  * 
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html
@@ -25,13 +25,13 @@ function exportData(format) {
     
     if (format === 'json') {
         content = JSON.stringify(data, null, 2);
-        filename = `rybat-export-${Date.now()}.json`;
+        filename = `observer-export-${Date.now()}.json`;
         type = 'application/json';
     } else {
         const headers = Object.keys(data[0] || {});
         const rows = data.map(d => headers.map(h => `"${(d[h] || '').toString().replace(/"/g, '""')}"`).join(','));
         content = [headers.join(','), ...rows].join('\n');
-        filename = `rybat-export-${Date.now()}.csv`;
+        filename = `observer-export-${Date.now()}.csv`;
         type = 'text/csv';
     }
     

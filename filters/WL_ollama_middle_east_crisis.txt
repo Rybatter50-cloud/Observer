@@ -1,4 +1,4 @@
-# RYBAT Auto-Generated Whitelist Filter
+# Observer Auto-Generated Whitelist Filter
 # Topic: Middle East Crisis
 # Generated: 2026-02-10 19:30 UTC
 # Model: llama3.2:3b

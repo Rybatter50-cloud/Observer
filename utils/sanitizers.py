@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Data Sanitization Utilities
+Observer Intelligence Platform - Data Sanitization Utilities
 Provides safe data cleaning and validation functions
 """
 

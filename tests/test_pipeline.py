@@ -1,5 +1,5 @@
 """
-RYBAT Test Suite - Pipeline Integration Tests
+Observer Test Suite - Pipeline Integration Tests
 ===============================================
 Tests for IntelligenceService._prepare_article, ArticlePipeline recovery,
 and insert_final_signal + reputation upsert.

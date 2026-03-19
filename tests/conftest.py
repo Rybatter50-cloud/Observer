@@ -1,5 +1,5 @@
 """
-RYBAT Test Suite - Shared Fixtures
+Observer Test Suite - Shared Fixtures
 ===================================
 Provides a test database, repository instances, and FastAPI test client.
 
@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 TEST_DSN = os.getenv(
     "TEST_DATABASE_URL",
-    "postgresql://rybat@/rybat_test?host=/var/run/postgresql",
+    "postgresql://observer@/observer_test?host=/var/run/postgresql",
 )
 
 

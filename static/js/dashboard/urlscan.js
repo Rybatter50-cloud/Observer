@@ -1,5 +1,5 @@
 /**
- * RYBAT Intelligence Platform - urlscan.io Source Scanning
+ * Observer Intelligence Platform - urlscan.io Source Scanning
  * =========================================================
  * Dashboard card JavaScript for the urlscan.io feed URL scanner.
  * Mirrors virustotal.js — same polling, manual scan, scheduler toggle.

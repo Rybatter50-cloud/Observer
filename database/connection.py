@@ -1,5 +1,5 @@
 """
-RYBAT Lite - Database Connection Manager
+Observer Lite - Database Connection Manager
 
 Owns the asyncpg connection pool and provides it to repositories.
 """

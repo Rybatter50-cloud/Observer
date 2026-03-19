@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Database Control Panel API
+Observer Intelligence Platform - Database Control Panel API
 =========================================================
 Endpoints for database management:
   - GET  /api/v1/database/details     — DB size, table stats, signal counts
@@ -63,7 +63,7 @@ def _parse_dsn(dsn: str) -> dict:
             'port': match.group(2) or '5432',
             'dbname': match.group(3),
         }
-    return {'host': 'localhost', 'port': '5432', 'dbname': 'rybat'}
+    return {'host': 'localhost', 'port': '5432', 'dbname': 'observer'}
 
 
 @contextmanager
@@ -253,7 +253,7 @@ async def create_backup():
         BACKUP_DIR.mkdir(parents=True, exist_ok=True)
 
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f'rybat_backup_{timestamp}.sql'
+        filename = f'observer_backup_{timestamp}.sql'
         filepath = BACKUP_DIR / filename
 
         dsn = _parse_dsn(config.DATABASE_URL)
@@ -319,7 +319,7 @@ async def list_backups():
         return JSONResponse({"backups": []})
 
     backups = []
-    for f in sorted(BACKUP_DIR.glob('rybat_backup_*.sql'), reverse=True):
+    for f in sorted(BACKUP_DIR.glob('observer_backup_*.sql'), reverse=True):
         stat = f.stat()
         backups.append({
             "filename": f.name,
@@ -352,7 +352,7 @@ async def download_backup(filename: str):
 # ==================== DB RESTORE ====================
 
 class RestoreRequest(BaseModel):
-    filename: str = Field(..., pattern=r'^rybat_backup_\d{8}_\d{6}\.sql$')
+    filename: str = Field(..., pattern=r'^observer_backup_\d{8}_\d{6}\.sql$')
 
 
 @database_router.post("/restore")

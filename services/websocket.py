@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - WebSocket Manager
+Observer Intelligence Platform - WebSocket Manager
 Handles real-time communication with dashboard clients
 """
 

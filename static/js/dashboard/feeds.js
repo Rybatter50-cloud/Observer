@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Feeds Module
+ * Observer Dashboard - Feeds Module
  * Feed group management, API calls, region toggles
  * 
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html

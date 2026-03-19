@@ -1,5 +1,5 @@
 """
-RYBAT Lite v1.0.0 - Main Entry Point
+Observer Lite v1.0.0 - Main Entry Point
 Portable intelligence aggregation and screening system.
 
 Collects RSS feeds, translates with NLLB, screens against sanctions,
@@ -41,7 +41,7 @@ logger = get_logger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifespan context manager for startup and shutdown tasks."""
-    logger.info("Starting RYBAT Lite...")
+    logger.info("Starting Observer...")
 
     # Display configuration
     config.display()
@@ -161,7 +161,7 @@ limiter = Limiter(
 
 # Create FastAPI application
 app = FastAPI(
-    title="RYBAT Lite",
+    title="Observer",
     description="Portable intelligence aggregation and screening system",
     version="1.0.0",
     lifespan=lifespan

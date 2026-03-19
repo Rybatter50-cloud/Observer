@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RYBAT Intelligence Platform - UN Security Council Sanctions Loader
+Observer Intelligence Platform - UN Security Council Sanctions Loader
 ===================================================================
 Download the UN SC Consolidated Sanctions List (XML) and load into
 the existing sanctions_entities + sanctions_names tables with
@@ -51,7 +51,7 @@ UN_XML_URL = 'https://scsanctions.un.org/resources/xml/en/consolidated.xml'
 UN_XML_FALLBACK = 'https://unsolprodfiles.blob.core.windows.net/publiclegacyxmlfiles/EN/consolidatedLegacyByPRN.xml'
 
 HEADERS = {
-    'User-Agent': 'RYBAT-Intelligence/1.0 (sanctions-screening)',
+    'User-Agent': 'Observer-Intelligence/1.0 (sanctions-screening)',
     'Accept': 'application/xml',
 }
 
@@ -448,7 +448,7 @@ async def main():
     xml_path = get_xml_path()
 
     print("=" * 65)
-    print("  RYBAT — UN Security Council Sanctions Loader")
+    print("  Observer — UN Security Council Sanctions Loader")
     print("=" * 65)
 
     if not args.skip_download:

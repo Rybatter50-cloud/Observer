@@ -1,5 +1,5 @@
 /**
- * RYBAT Lite - Client View Initialization
+ * Observer Lite - Client View Initialization
  * Read-only client initialization (no admin controls)
  *
  * IMPORTANT: This file must be loaded LAST after all other modules

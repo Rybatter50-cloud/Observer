@@ -1,4 +1,4 @@
-# RYBAT Whitelist Filter: Cyber & Infrastructure
+# Observer Whitelist Filter: Cyber & Infrastructure
 # ================================================
 # Focus on cyber operations, data breaches, critical infrastructure,
 # and information warfare.

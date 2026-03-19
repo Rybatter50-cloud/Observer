@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # =============================================================================
-# RYBAT Intelligence Platform - Build Script
+# Observer Intelligence Platform - Build Script
 # Version: 1.0.0
 # Last Updated: 2026-02-02
 # Authors: Mr Cat + Claude AI
 # =============================================================================
 #
-# This script builds standalone executables for RYBAT using PyInstaller.
+# This script builds standalone executables for Observer using PyInstaller.
 # The resulting executable runs without requiring Python to be installed.
 #
 # USAGE:
@@ -16,10 +16,10 @@
 #   python build.py --help             # Show help
 #
 # OUTPUT:
-#   dist/RYBAT/                        # Directory with executable
-#   dist/RYBAT-1.0.0-windows-x64.zip   # Packaged release (Windows)
-#   dist/RYBAT-1.0.0-macos-x64.tar.gz  # Packaged release (macOS)
-#   dist/RYBAT-1.0.0-linux-x64.tar.gz  # Packaged release (Linux)
+#   dist/Observer/                        # Directory with executable
+#   dist/Observer-1.0.0-windows-x64.zip   # Packaged release (Windows)
+#   dist/Observer-1.0.0-macos-x64.tar.gz  # Packaged release (macOS)
+#   dist/Observer-1.0.0-linux-x64.tar.gz  # Packaged release (Linux)
 #
 # =============================================================================
 
@@ -34,9 +34,9 @@ from pathlib import Path
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
-APP_NAME = "RYBAT"
+APP_NAME = "Observer"
 APP_VERSION = "1.0.0"
-SPEC_FILE = "rybat.spec"
+SPEC_FILE = "observer.spec"
 
 # Files to include in the release package (in addition to PyInstaller output)
 RELEASE_FILES = [
@@ -261,22 +261,22 @@ def show_instructions():
     print()
     print("Your standalone executable is ready in the dist/ directory.")
     print()
-    print("To run RYBAT:")
+    print("To run Observer:")
     
     if system == "windows":
         print("  1. Extract the ZIP file")
         print("  2. Copy .env.example to .env and add your API keys")
-        print("  3. Double-click RYBAT.exe")
+        print("  3. Double-click Observer.exe")
     elif system == "macos":
         print("  1. Extract the tar.gz file:")
-        print("     tar -xzf RYBAT-*.tar.gz")
+        print("     tar -xzf Observer-*.tar.gz")
         print("  2. Copy .env.example to .env and add your API keys")
-        print("  3. Run: ./RYBAT")
+        print("  3. Run: ./Observer")
     else:  # Linux
         print("  1. Extract the tar.gz file:")
-        print("     tar -xzf RYBAT-*.tar.gz")
+        print("     tar -xzf Observer-*.tar.gz")
         print("  2. Copy .env.example to .env and add your API keys")
-        print("  3. Run: ./RYBAT")
+        print("  3. Run: ./Observer")
     
     print()
     print("Dashboard will be available at: http://localhost:8000")

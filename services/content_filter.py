@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Content Filter
+Observer Intelligence Platform - Content Filter
 =============================================
 Filters RSS/scraped articles by blacklist/whitelist regex patterns
 loaded from external text files in the filters/ directory.

@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - News Scraper Module
+Observer Intelligence Platform - News Scraper Module
 ==================================================
 Uses trafilatura to scrape news from sites with broken/missing RSS feeds.
 

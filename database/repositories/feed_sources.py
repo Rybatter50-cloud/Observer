@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Feed Sources Repository
+Observer Intelligence Platform - Feed Sources Repository
 
 CRUD operations for the feed_sources table, which replaces the
 feed_registry_comprehensive.json file with proper PostgreSQL storage.
@@ -446,7 +446,7 @@ class FeedSourcesRepository:
             registry: Dict[str, Any] = {
                 '_metadata': {
                     'version': '4.0',
-                    'description': 'RYBAT Feed Registry (PostgreSQL-backed)',
+                    'description': 'Observer Feed Registry (PostgreSQL-backed)',
                     'last_updated': datetime.now().isoformat(),
                 }
             }

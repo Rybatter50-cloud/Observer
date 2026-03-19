@@ -1,5 +1,5 @@
 """
-RYBAT Lite - Translation Service
+Observer Lite - Translation Service
 Backend: NLLB-200 via CTranslate2 (no PyTorch dependency)
 
 Features:

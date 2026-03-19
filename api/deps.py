@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Shared Dependencies
+Observer Intelligence Platform - Shared Dependencies
 ===================================================
 Single source of truth for db and intel_service instances.
 

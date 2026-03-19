@@ -1,6 +1,6 @@
 # CHANGELOG
 
-All notable changes to the RYBAT Intelligence Platform are documented here.
+All notable changes to the Observer Intelligence Platform are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---

@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Collector Controls & Content Filter
+ * Observer Dashboard - Collector Controls & Content Filter
  * Toggle switches for RSS, NewsAPI, Scraper (trafilatura) collectors
  * Content filter mode and file selection
  */

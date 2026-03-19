@@ -1,11 +1,11 @@
 # =============================================================================
-# RYBAT Intelligence Platform - GitHub Actions Build Workflow
+# Observer Intelligence Platform - GitHub Actions Build Workflow
 # Version: 1.0.0
 # Last Updated: 2026-02-02
 # Authors: Mr Cat + Claude AI
 # =============================================================================
 #
-# This workflow automatically builds RYBAT executables for all platforms
+# This workflow automatically builds Observer executables for all platforms
 # when a new release is created on GitHub.
 #
 # TRIGGERS:
@@ -13,10 +13,10 @@
 #   - Manual dispatch (workflow_dispatch)
 #
 # OUTPUTS:
-#   - RYBAT-{version}-windows-x64.zip
-#   - RYBAT-{version}-macos-x64.tar.gz
-#   - RYBAT-{version}-macos-arm64.tar.gz
-#   - RYBAT-{version}-linux-x64.tar.gz
+#   - Observer-{version}-windows-x64.zip
+#   - Observer-{version}-macos-x64.tar.gz
+#   - Observer-{version}-macos-arm64.tar.gz
+#   - Observer-{version}-linux-x64.tar.gz
 #
 # =============================================================================
 
@@ -125,9 +125,9 @@ jobs:
           ARCH="${{ matrix.arch }}"
           
           if [ "${{ matrix.artifact }}" == "zip" ]; then
-            mv dist/RYBAT-*.zip dist/RYBAT-${VERSION}-${PLATFORM}-${ARCH}.zip || true
+            mv dist/Observer-*.zip dist/Observer-${VERSION}-${PLATFORM}-${ARCH}.zip || true
           else
-            mv dist/RYBAT-*.tar.gz dist/RYBAT-${VERSION}-${PLATFORM}-${ARCH}.tar.gz || true
+            mv dist/Observer-*.tar.gz dist/Observer-${VERSION}-${PLATFORM}-${ARCH}.tar.gz || true
           fi
           
           ls -la dist/
@@ -138,8 +138,8 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: RYBAT-${{ steps.version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}
-          path: dist/RYBAT-*.${{ matrix.artifact }}
+          name: Observer-${{ steps.version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}
+          path: dist/Observer-*.${{ matrix.artifact }}
           retention-days: 30
 
   # ===========================================================================
@@ -164,7 +164,7 @@ jobs:
       - name: List artifacts
         run: |
           echo "Downloaded artifacts:"
-          find artifacts -type f -name "RYBAT-*"
+          find artifacts -type f -name "Observer-*"
       
       # -----------------------------------------------------------------------
       # UPLOAD TO GITHUB RELEASE
@@ -172,7 +172,7 @@ jobs:
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: artifacts/RYBAT-*
+          files: artifacts/Observer-*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -195,7 +195,7 @@ jobs:
       - name: Create checksums
         run: |
           cd artifacts
-          sha256sum RYBAT-* > SHA256SUMS.txt
+          sha256sum Observer-* > SHA256SUMS.txt
           cat SHA256SUMS.txt
       
       - name: Upload checksums to release

@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Screening Repository
+Observer Intelligence Platform - Screening Repository
 
 PostgreSQL operations for the sanctions_entities + sanctions_names tables.
 Supports bulk loading from OpenSanctions CSV and pg_trgm fuzzy name search.

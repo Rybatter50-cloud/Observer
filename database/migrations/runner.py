@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Migration Runner
+Observer Intelligence Platform - Migration Runner
 
 Lightweight migration system using versioned SQL.
 Tracks applied migrations in a schema_migrations table.

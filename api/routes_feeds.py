@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Feed Management API Routes
+Observer Intelligence Platform - Feed Management API Routes
 API Endpoints for feed control and regional filtering.
 
 @updated 2026-02-09 by Mr Cat + Claude - Phase 2 cleanup, removed legacy fallbacks

@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Reputation Repository
+Observer Intelligence Platform - Reputation Repository
 
 Source and author reputation tracking with rolling-average upserts.
 

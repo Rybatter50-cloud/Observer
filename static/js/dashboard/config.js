@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Configuration
+ * Observer Dashboard - Configuration
  * Location coordinates, quick regions, constants
  * 
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html

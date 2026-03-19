@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Source State Manager
+Observer Intelligence Platform - Source State Manager
 ===================================================
 Single source of truth for all data source configuration.
 

@@ -1,11 +1,11 @@
 """
-RYBAT Intelligence Platform — Security Middleware
+Observer Intelligence Platform — Security Middleware
 ==================================================
 API key authentication, rate limiting, and security headers.
 
 Authentication:
     All /api/ endpoints and WebSocket require a valid API key.
-    Keys are defined in RYBAT_API_KEYS env var (comma-separated).
+    Keys are defined in OBSERVER_API_KEYS env var (comma-separated).
     Passed via X-API-Key header or ?api_key= query parameter.
 
     Static files, health check, and HTML pages are unauthenticated
@@ -37,14 +37,14 @@ logger = get_logger(__name__)
 # =============================================================================
 # Load from env: comma-separated list of valid API keys
 # If not set, authentication is DISABLED (development mode)
-_raw_keys = os.getenv("RYBAT_API_KEYS", "").strip()
+_raw_keys = os.getenv("OBSERVER_API_KEYS", "").strip()
 API_KEYS: set = {k.strip() for k in _raw_keys.split(",") if k.strip()} if _raw_keys else set()
 AUTH_ENABLED: bool = len(API_KEYS) > 0
 
 if AUTH_ENABLED:
     logger.info(f"API authentication ENABLED ({len(API_KEYS)} key(s) configured)")
 else:
-    logger.warning("API authentication DISABLED — set RYBAT_API_KEYS in .env for production")
+    logger.warning("API authentication DISABLED — set OBSERVER_API_KEYS in .env for production")
 
 
 # FastAPI security scheme declarations (for OpenAPI docs)
@@ -87,13 +87,13 @@ def _is_api_path(path: str) -> bool:
 
 def _is_html_page(path: str) -> bool:
     """Check if this is an HTML page request (dashboard, client, feeds, etc.)."""
-    # These serve the UI shell — auth is optional (controlled by RYBAT_AUTH_PAGES)
+    # These serve the UI shell — auth is optional (controlled by OBSERVER_AUTH_PAGES)
     _page_paths = {"/", "/client", "/feeds", "/scraper", "/dashboard", "/console/obs"}
     return path in _page_paths or path.rstrip("/") in _page_paths
 
 
 # Whether to require auth on HTML pages too (default: yes if auth is enabled)
-AUTH_PAGES: bool = os.getenv("RYBAT_AUTH_PAGES", "true").lower() == "true"
+AUTH_PAGES: bool = os.getenv("OBSERVER_AUTH_PAGES", "true").lower() == "true"
 
 
 # =============================================================================
@@ -120,7 +120,7 @@ class APIKeyAuthMiddleware(BaseHTTPMiddleware):
         if _is_public_path(path):
             return await call_next(request)
 
-        # HTML pages — skip auth if RYBAT_AUTH_PAGES=false
+        # HTML pages — skip auth if OBSERVER_AUTH_PAGES=false
         if _is_html_page(path) and not AUTH_PAGES:
             return await call_next(request)
 
@@ -167,4 +167,4 @@ def verify_ws_api_key(websocket: WebSocket) -> bool:
 
 def generate_api_key() -> str:
     """Generate a cryptographically secure API key (for admin convenience)."""
-    return f"rybat_{secrets.token_urlsafe(32)}"
+    return f"observer_{secrets.token_urlsafe(32)}"

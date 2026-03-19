@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Compact Table Module
+ * Observer Dashboard - Compact Table Module
  * Data-driven compact table with column reorder, resize, and hide/show.
  */
 
@@ -117,7 +117,7 @@ const COMPACT_COLUMNS = [
 // ==================== COLUMN STATE ====================
 let _colOrder = [];    // ordered column ids
 let _colVisible = {};  // { id: bool }
-const _COL_STORAGE_KEY = 'rybat_col_config';
+const _COL_STORAGE_KEY = 'observer_col_config';
 
 function _getVisibleColumns() {
     return _colOrder.filter(id => _colVisible[id]).map(id => COMPACT_COLUMNS.find(c => c.id === id)).filter(Boolean);

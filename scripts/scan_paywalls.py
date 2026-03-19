@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RYBAT Intelligence Platform - Paywall / Subscriber Wall Scanner
+Observer Intelligence Platform - Paywall / Subscriber Wall Scanner
 ================================================================
 Scan all feed registry URLs for Schema.org isAccessibleForFree metadata.
 Flags domains with subscriber walls or paywalls in the source_fetch_flags table.
@@ -126,7 +126,7 @@ async def fetch_html(url: str) -> str | None:
             async with session.get(
                 url,
                 timeout=aiohttp.ClientTimeout(total=REQUEST_TIMEOUT),
-                headers={'User-Agent': 'RYBAT-Intelligence/1.0 (paywall-check)'},
+                headers={'User-Agent': 'Observer-Intelligence/1.0 (paywall-check)'},
                 ssl=False,
             ) as resp:
                 if resp.status != 200:

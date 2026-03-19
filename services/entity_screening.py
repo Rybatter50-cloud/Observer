@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Entity Screening Service
+Observer Intelligence Platform - Entity Screening Service
 =======================================================
 Unified service wrapping FBI Wanted, Interpol Notices, and OpenSanctions
 for entity screening against intelligence signals.
@@ -456,7 +456,7 @@ class SanctionsNetworkClient:
 
     API_URL = "https://api.sanctions.network/rpc/search_sanctions"
     HEADERS = {
-        'User-Agent': 'RYBAT-Intelligence/1.0 (entity-screening)',
+        'User-Agent': 'Observer-Intelligence/1.0 (entity-screening)',
         'Accept': 'application/json',
     }
 
@@ -592,7 +592,7 @@ class OpenSanctionsClient:
     CSV_URL = "https://data.opensanctions.org/datasets/latest/default/targets.simple.csv"
     ENTITY_URL_PREFIX = "https://www.opensanctions.org/entities/"
     HEADERS = {
-        'User-Agent': 'RYBAT-Intelligence/1.0 (entity-screening)',
+        'User-Agent': 'Observer-Intelligence/1.0 (entity-screening)',
         'Accept': 'text/csv',
     }
 

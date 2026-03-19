@@ -1,5 +1,5 @@
 """
-RYBAT Lite - Article Pipeline (Single-Pass)
+Observer Lite - Article Pipeline (Single-Pass)
 ============================================
 Single-pass article pipeline: collect -> translate -> persist -> broadcast.
 

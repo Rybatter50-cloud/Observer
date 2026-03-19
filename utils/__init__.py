@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Utilities Package
+Observer Intelligence Platform - Utilities Package
 """
 
 from .logging import setup_logging, get_logger

@@ -1,5 +1,5 @@
 # =============================================================================
-# RYBAT Lite - Windows Installation Script (PowerShell)
+# Observer Lite - Windows Installation Script (PowerShell)
 # Version: 1.0.0
 # Last Updated: 2026-03-18
 # Authors: Mr Cat + Claude AI
@@ -7,7 +7,7 @@
 #
 # USAGE:
 #   1. Open PowerShell as Administrator (recommended)
-#   2. Navigate to RYBAT directory
+#   2. Navigate to Observer directory
 #   3. Run: .\install.ps1
 #
 # EXECUTION POLICY:
@@ -25,7 +25,7 @@ param(
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
-$RYBAT_VERSION = "1.0.0"
+$Observer_VERSION = "1.0.0"
 $PYTHON_MIN_VERSION = [Version]"3.11"
 $VENV_DIR = "venv"
 
@@ -35,7 +35,7 @@ $VENV_DIR = "venv"
 function Write-Header {
     Write-Host ""
     Write-Host "=============================================================================" -ForegroundColor Blue
-    Write-Host " RYBAT Lite - Windows Installer v$RYBAT_VERSION" -ForegroundColor Blue
+    Write-Host " Observer Lite - Windows Installer v$Observer_VERSION" -ForegroundColor Blue
     Write-Host "=============================================================================" -ForegroundColor Blue
     Write-Host ""
 }
@@ -77,7 +77,7 @@ function Get-PythonVersion {
 }
 
 function Show-Help {
-    Write-Host "RYBAT Lite - Windows Installation Script"
+    Write-Host "Observer Lite - Windows Installation Script"
     Write-Host ""
     Write-Host "Usage: .\install.ps1 [OPTIONS]"
     Write-Host ""
@@ -131,7 +131,7 @@ function Test-Prerequisites {
     # Check PostgreSQL
     if (-not (Test-Command "psql")) {
         Write-WarnMsg "PostgreSQL (psql) not found in PATH"
-        Write-Info "RYBAT Lite requires PostgreSQL 14+ with pg_trgm extension"
+        Write-Info "Observer Lite requires PostgreSQL 14+ with pg_trgm extension"
         Write-Info "Download: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads"
         Write-Info "During install, ensure 'Command Line Tools' is selected"
         Write-Host ""
@@ -188,7 +188,7 @@ function Install-Development {
     # Create start script
     $startScript = @"
 @echo off
-echo Starting RYBAT Lite...
+echo Starting Observer Lite...
 call venv\Scripts\activate.bat
 python main.py
 pause
@@ -204,10 +204,10 @@ pause
     Write-Host "  1. Edit .env file with your database password:"
     Write-Host "     notepad .env"
     Write-Host ""
-    Write-Host "  2. Start RYBAT Lite (Option A - Double-click):"
+    Write-Host "  2. Start Observer Lite (Option A - Double-click):"
     Write-Host "     start.bat"
     Write-Host ""
-    Write-Host "  3. Start RYBAT Lite (Option B - Command line):"
+    Write-Host "  3. Start Observer Lite (Option B - Command line):"
     Write-Host "     .\venv\Scripts\activate"
     Write-Host "     python main.py"
     Write-Host ""
@@ -245,7 +245,7 @@ function Install-Docker {
     
     # Build image
     Write-Info "Building Docker image (this may take a few minutes)..."
-    docker build -t "rybat:$RYBAT_VERSION" .
+    docker build -t "observer:$Observer_VERSION" .
     if (-not $?) {
         Write-ErrorMsg "Failed to build Docker image"
         return
@@ -264,10 +264,10 @@ function Install-Docker {
     Write-Host "     docker-compose up -d"
     Write-Host ""
     Write-Host "  3. Or run directly:"
-    Write-Host "     docker run -d --name rybat -p 8000:8000 -v ${PWD}\.env:/app/.env:ro rybat:$RYBAT_VERSION"
+    Write-Host "     docker run -d --name observer -p 8000:8000 -v ${PWD}\.env:/app/.env:ro observer:$Observer_VERSION"
     Write-Host ""
     Write-Host "  4. View logs:"
-    Write-Host "     docker logs -f rybat"
+    Write-Host "     docker logs -f observer"
     Write-Host ""
     Write-Host "  5. Open dashboard:"
     Write-Host "     http://localhost:8000"

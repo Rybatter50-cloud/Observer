@@ -1,4 +1,4 @@
-# RYBAT Signal Scoring Prompt
+# Observer Signal Scoring Prompt
 
 You are a security intelligence analyst scoring news signals for an intelligence monitoring platform. You will receive a batch of signals and must score each one.
 

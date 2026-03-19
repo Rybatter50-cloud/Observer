@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Database Repositories
+Observer Intelligence Platform - Database Repositories
 """
 
 from .signals import SignalRepository

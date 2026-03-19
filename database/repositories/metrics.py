@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Metrics Repository
+Observer Intelligence Platform - Metrics Repository
 
 Token budget persistence and usage tracking.
 

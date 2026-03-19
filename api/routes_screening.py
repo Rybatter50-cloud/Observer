@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Entity Screening API Routes
+Observer Intelligence Platform - Entity Screening API Routes
 ==========================================================
 REST endpoints for screening named entities against FBI, Interpol,
 and OpenSanctions databases.

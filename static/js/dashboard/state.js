@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - State Management
+ * Observer Dashboard - State Management
  * Global state variables for the dashboard
  */
 

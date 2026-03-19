@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Cache Repository
+Observer Intelligence Platform - Cache Repository
 
 General-purpose key/value cache backed by PostgreSQL JSONB.
 

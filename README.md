@@ -1,4 +1,4 @@
-# RYBAT Lite v1.0.0
+# Observer v1.0.0
 
 Field-portable intelligence aggregation system. Collects articles from RSS feeds across global news sources, translates non-English content via NLLB-200, screens entities against sanctions databases, and delivers signals through a real-time WebSocket dashboard.
 
@@ -26,7 +26,7 @@ No LLMs, no cloud APIs, no GPU required.
 
 ```bash
 # Clone and enter
-git clone <repo-url> && cd RYBAT
+git clone git@github.com:Rybatter50-cloud/Observer.git && cd Observer
 
 # Create virtual environment
 python -m venv venv
@@ -90,7 +90,7 @@ See `.env.example` for all available settings.
 ## Project Structure
 
 ```
-RYBAT/
+Observer/
 ├── main.py                     # FastAPI app, lifespan, middleware
 ├── config.py                   # Environment variables and validation
 ├── api/                        # Route handlers

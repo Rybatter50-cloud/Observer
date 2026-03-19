@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RYBAT Intelligence Platform - Sanctions Database Loader
+Observer Intelligence Platform - Sanctions Database Loader
 ========================================================
 Download the OpenSanctions CSV and bulk-load into PostgreSQL.
 
@@ -41,7 +41,7 @@ logger = get_logger(__name__)
 
 CSV_URL = "https://data.opensanctions.org/datasets/latest/default/targets.simple.csv"
 HEADERS = {
-    'User-Agent': 'RYBAT-Intelligence/1.0 (entity-screening)',
+    'User-Agent': 'Observer-Intelligence/1.0 (entity-screening)',
     'Accept': 'text/csv',
 }
 
@@ -196,7 +196,7 @@ async def test_search(name: str):
 async def field_prep():
     """Pre-departure field prep: download latest data, load, verify, report."""
     print("=" * 65)
-    print("  RYBAT — OpenSanctions Field Prep")
+    print("  Observer — OpenSanctions Field Prep")
     print("  Updating sanctions database for offline / field deployment")
     print("=" * 65)
     print()

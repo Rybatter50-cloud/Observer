@@ -1,3 +1,3 @@
 """
-RYBAT Intelligence Platform - Database Migrations
+Observer Intelligence Platform - Database Migrations
 """

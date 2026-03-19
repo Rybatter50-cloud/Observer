@@ -1,5 +1,5 @@
 """
-RYBAT Lite v1.0.0 - Configuration Management
+Observer Lite v1.0.0 - Configuration Management
 Loads and validates all configuration from environment variables.
 
 Portable/field deployment: RSS feeds, NLLB translation, sanctions screening.
@@ -43,7 +43,7 @@ def _env_float(name: str, default: str) -> float:
 
 
 class Config:
-    """Application configuration for RYBAT Lite"""
+    """Application configuration for Observer Lite"""
 
     PROFILE: str = 'portable'
 
@@ -180,7 +180,7 @@ class Config:
     @classmethod
     def display(cls) -> None:
         print("\n" + "=" * 70)
-        print("RYBAT LITE v1.0.0 - PORTABLE (Field)")
+        print("OBSERVER v1.0.0 - PORTABLE (Field)")
         print("=" * 70)
         print(f"\nTRANSLATION:")
         print(f"  Mode:               {cls.AI_TRANSLATOR_MODE.upper()}")

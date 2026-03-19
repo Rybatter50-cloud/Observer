@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Initialization Module
+ * Observer Dashboard - Initialization Module
  * Main initialization - DOMContentLoaded handler
  *
  * IMPORTANT: This file must be loaded LAST after all other modules

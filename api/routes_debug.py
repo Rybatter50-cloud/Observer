@@ -1,5 +1,5 @@
 """
-RYBAT Lite - Pipeline Debug & Diagnostics API
+Observer Lite - Pipeline Debug & Diagnostics API
 Provides runtime inspection of the article flow pipeline.
 
 Endpoint: GET /api/v1/debug/pipeline

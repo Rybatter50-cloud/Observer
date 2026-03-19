@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Stats Module
+ * Observer Dashboard - Stats Module
  * Stats updates, translator activity, clock
  */
 

@@ -1,5 +1,5 @@
 # =============================================================================
-# RYBAT Intelligence Platform - Systemd Service File
+# Observer Intelligence Platform - Systemd Service File
 # Version: 1.0.0
 # Last Updated: 2026-02-02
 # Authors: Mr Cat + Claude AI
@@ -7,31 +7,31 @@
 #
 # INSTALLATION:
 #   1. Copy this file to systemd directory:
-#      sudo cp rybat.service /etc/systemd/system/
+#      sudo cp observer.service /etc/systemd/system/
 #
 #   2. Create system user (optional, recommended for security):
-#      sudo useradd --system --no-create-home --shell /bin/false rybat
+#      sudo useradd --system --no-create-home --shell /bin/false observer
 #
-#   3. Set ownership of RYBAT directory:
-#      sudo chown -R rybat:rybat /opt/rybat
+#   3. Set ownership of Observer directory:
+#      sudo chown -R observer:observer /opt/observer
 #
 #   4. Reload systemd and enable service:
 #      sudo systemctl daemon-reload
-#      sudo systemctl enable rybat
-#      sudo systemctl start rybat
+#      sudo systemctl enable observer
+#      sudo systemctl start observer
 #
 # MANAGEMENT:
-#   sudo systemctl status rybat    # Check status
-#   sudo systemctl start rybat     # Start service
-#   sudo systemctl stop rybat      # Stop service
-#   sudo systemctl restart rybat   # Restart service
-#   sudo journalctl -u rybat -f    # View logs
+#   sudo systemctl status observer    # Check status
+#   sudo systemctl start observer     # Start service
+#   sudo systemctl stop observer      # Stop service
+#   sudo systemctl restart observer   # Restart service
+#   sudo journalctl -u observer -f    # View logs
 #
 # =============================================================================
 
 [Unit]
-Description=RYBAT Intelligence Platform
-Documentation=https://github.com/Rybatter50-cloud/RYBAT
+Description=Observer Intelligence Platform
+Documentation=https://github.com/Rybatter50-cloud/Observer
 After=network.target network-online.target
 Wants=network-online.target
 
@@ -41,25 +41,25 @@ Wants=network-online.target
 # -----------------------------------------------------------------------------
 Type=simple
 
-# Run as dedicated user (create with: useradd --system rybat)
+# Run as dedicated user (create with: useradd --system observer)
 # For development, you can use your own user
-User=rybat
-Group=rybat
+User=observer
+Group=observer
 
 # -----------------------------------------------------------------------------
 # Working Directory & Environment
 # -----------------------------------------------------------------------------
-WorkingDirectory=/opt/rybat
-EnvironmentFile=/opt/rybat/.env
+WorkingDirectory=/opt/observer
+EnvironmentFile=/opt/observer/.env
 
 # -----------------------------------------------------------------------------
 # Execution
 # -----------------------------------------------------------------------------
 # Using virtual environment (recommended)
-ExecStart=/opt/rybat/venv/bin/python /opt/rybat/main.py
+ExecStart=/opt/observer/venv/bin/python /opt/observer/main.py
 
 # Alternative: Using system Python (not recommended)
-# ExecStart=/usr/bin/python3 /opt/rybat/main.py
+# ExecStart=/usr/bin/python3 /opt/observer/main.py
 
 # -----------------------------------------------------------------------------
 # Restart Policy
@@ -104,7 +104,7 @@ ProtectSystem=strict
 ProtectHome=true
 
 # Allow write only to specific directories
-ReadWritePaths=/opt/rybat/data /opt/rybat/logs
+ReadWritePaths=/opt/observer/data /opt/observer/logs
 
 # Private /tmp
 PrivateTmp=true
@@ -145,7 +145,7 @@ PrivateDevices=true
 # -----------------------------------------------------------------------------
 StandardOutput=journal
 StandardError=journal
-SyslogIdentifier=rybat
+SyslogIdentifier=observer
 
 [Install]
 WantedBy=multi-user.target

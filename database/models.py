@@ -1,5 +1,5 @@
 """
-RYBAT Lite - Database Models (Backward-Compatible Facade)
+Observer Lite - Database Models (Backward-Compatible Facade)
 
 Delegates all operations to the repository layer.
 """
@@ -16,7 +16,7 @@ __all__ = ['IntelligenceDB', 'record_to_dict']
 
 
 class IntelligenceDB:
-    """Backward-compatible database access layer for RYBAT Lite."""
+    """Backward-compatible database access layer for Observer."""
 
     def __init__(self, dsn: str):
         self.dsn = dsn

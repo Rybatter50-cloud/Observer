@@ -1,5 +1,5 @@
 /**
- * RYBAT Client - Article Detail Modal
+ * Observer Client - Article Detail Modal
  * Draggable modal showing full signal details with full-text fetch capability.
  *
  * Opens when the user clicks an article title in the compact table.

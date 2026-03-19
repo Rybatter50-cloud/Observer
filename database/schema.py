@@ -1,5 +1,5 @@
 """
-RYBAT Lite v1.0.0 - Database Schema (PostgreSQL)
+Observer Lite v1.0.0 - Database Schema (PostgreSQL)
 Stripped-down schema for portable/field deployment.
 
 Tables: intel_signals, feed_sources, sanctions, reputation, utility.
@@ -14,7 +14,7 @@ logger = get_logger(__name__)
 
 
 class DatabaseSchema:
-    """PostgreSQL-native schema management for RYBAT Lite"""
+    """PostgreSQL-native schema management for Observer Lite"""
 
     EXTENSIONS = [
         "CREATE EXTENSION IF NOT EXISTS pg_trgm",

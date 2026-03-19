@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Feed Registry Management Routes
+Observer Intelligence Platform - Feed Registry Management Routes
 API endpoints for CRUD operations on feed registry
 
 Features:
@@ -244,7 +244,7 @@ async def update_registry_endpoint(registry: Dict[str, Any]):
         if '_metadata' not in registry:
             registry['_metadata'] = {
                 "version": "3.0",
-                "description": "RYBAT Feed Registry",
+                "description": "Observer Feed Registry",
                 "last_updated": datetime.now().isoformat()
             }
         else:
@@ -313,7 +313,7 @@ async def test_feed(request: FeedTestRequest):
             async with session.get(
                 url,
                 timeout=aiohttp.ClientTimeout(total=15),
-                headers={'User-Agent': 'RYBAT Feed Manager/1.0'}
+                headers={'User-Agent': 'Observer Feed Manager/1.0'}
             ) as response:
                 if response.status != 200:
                     return JSONResponse({
@@ -478,7 +478,7 @@ _RSS_PROBE_PATHS = [
 # Paths that commonly host an RSS listing page (HTML page full of feed links)
 _RSS_LISTING_PATHS = ['/rss', '/rss/', '/feeds', '/feeds/', '/rss.aspx']
 
-_DISCOVER_UA = 'RYBAT Feed Discovery/1.0'
+_DISCOVER_UA = 'Observer Feed Discovery/1.0'
 
 
 async def _validate_rss_url(

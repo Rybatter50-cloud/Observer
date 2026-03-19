@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Admin Control Panel API
+Observer Intelligence Platform - Admin Control Panel API
 ======================================================
 Endpoints for the admin control panel sidebar:
   - Filter editor (read/write filter file contents + pattern lists)
@@ -736,7 +736,7 @@ async def restart_pipeline(request: Request):
 @admin_router.post("/restart/app")
 async def restart_app():
     """
-    Restart the entire RYBAT application.
+    Restart the entire Observer application.
 
     Sends SIGHUP to the current process to trigger uvicorn reload.
     The response may not be received if the process restarts immediately.

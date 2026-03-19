@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - API Routes
+Observer Intelligence Platform - API Routes
 Defines all HTTP and WebSocket endpoints
 """
 

@@ -1,5 +1,5 @@
 """
-RYBAT Test Suite - API Endpoint Tests
+Observer Test Suite - API Endpoint Tests
 =======================================
 Tests for FastAPI routes using TestClient.
 

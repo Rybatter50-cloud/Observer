@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - RSS Collector (Streaming)
+Observer Intelligence Platform - RSS Collector (Streaming)
 =======================================================
 Collects articles from RSS/Atom feeds with streaming output.
 

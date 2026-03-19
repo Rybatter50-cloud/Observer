@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - NP4K Web Scraper Collector (Streaming)
+Observer Intelligence Platform - NP4K Web Scraper Collector (Streaming)
 =====================================================================
 Collects articles via trafilatura web scraping with streaming output.
 

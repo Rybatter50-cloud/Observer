@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Source Fetch Flags Repository
+Observer Intelligence Platform - Source Fetch Flags Repository
 
 Tracks domains flagged as having paywalls or subscriber walls.
 Used by the fetch-fulltext endpoint and the client modal to

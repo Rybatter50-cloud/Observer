@@ -1,5 +1,5 @@
 """
-RYBAT Lite - Metrics API Routes
+Observer Lite - Metrics API Routes
 API endpoints for system telemetry and monitoring
 
 Endpoints:

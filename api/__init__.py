@@ -1,3 +1,3 @@
 """
-RYBAT Intelligence Platform - API Package
+Observer Intelligence Platform - API Package
 """

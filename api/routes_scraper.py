@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - News Scraper API Routes
+Observer Intelligence Platform - News Scraper API Routes
 API endpoints for the trafilatura scraper manager
 
 ===============================================================================

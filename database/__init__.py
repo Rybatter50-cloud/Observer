@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Database Package
+Observer Intelligence Platform - Database Package
 
 Provides:
   - DatabaseSchema:  Schema creation and management

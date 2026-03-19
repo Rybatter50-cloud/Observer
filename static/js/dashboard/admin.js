@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Admin Control Panel
+ * Observer Dashboard - Admin Control Panel
  * Collector config expand, filter editor, AI control mock, app controls
  */
 
@@ -711,7 +711,7 @@ async function restartPipeline() {
 }
 
 async function restartApp() {
-    if (!confirm('Restart the entire RYBAT application?\n\nThe page will reload automatically.')) return;
+    if (!confirm('Restart the entire Observer application?\n\nThe page will reload automatically.')) return;
 
     var btn = document.getElementById('restartAppBtn');
     var statusEl = document.getElementById('appControlStatus');

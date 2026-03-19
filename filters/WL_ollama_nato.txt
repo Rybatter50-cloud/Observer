@@ -1,4 +1,4 @@
-# RYBAT Auto-Generated Whitelist Filter
+# Observer Auto-Generated Whitelist Filter
 # Topic: NATO
 # Generated: 2026-02-10 19:21 UTC
 # Model: llama3.2:3b

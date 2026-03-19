@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - WebSocket Module
+ * Observer Dashboard - WebSocket Module
  * WebSocket connection and real-time message handling
  * 
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html

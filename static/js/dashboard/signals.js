@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Signals Module
+ * Observer Dashboard - Signals Module
  * Signal fetching, timestamp utilities, stale data checking
  * 
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html

@@ -1,5 +1,5 @@
 /**
- * RYBAT Intelligence Platform - VirusTotal Source Scanning
+ * Observer Intelligence Platform - VirusTotal Source Scanning
  * =========================================================
  * Dashboard card JavaScript for the VirusTotal feed URL scanner.
  *

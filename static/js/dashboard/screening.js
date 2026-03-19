@@ -1,5 +1,5 @@
 /**
- * RYBAT Intelligence Platform - Entity Screening (Redesigned)
+ * Observer Intelligence Platform - Entity Screening (Redesigned)
  * =============================================================
  * Table-based screening modal with source summary bar, inline filters,
  * sortable columns, expandable detail rows, and screening log.

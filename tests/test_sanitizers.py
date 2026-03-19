@@ -1,5 +1,5 @@
 """
-RYBAT Test Suite - Sanitizer Unit Tests
+Observer Test Suite - Sanitizer Unit Tests
 ========================================
 Comprehensive tests for all functions in utils/sanitizers.py.
 

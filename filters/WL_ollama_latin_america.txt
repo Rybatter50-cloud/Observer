@@ -1,4 +1,4 @@
-# RYBAT Auto-Generated Whitelist Filter
+# Observer Auto-Generated Whitelist Filter
 # Topic: latin america
 # Generated: 2026-02-10 22:53 UTC
 # Model: llama3.2:3b

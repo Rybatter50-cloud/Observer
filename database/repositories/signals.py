@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Signal Repository
+Observer Intelligence Platform - Signal Repository
 
 All CRUD operations for intel_signals table.
 Includes PostgreSQL-native fuzzy deduplication via pg_trgm.

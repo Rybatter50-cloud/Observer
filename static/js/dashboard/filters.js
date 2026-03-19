@@ -1,5 +1,5 @@
 /**
- * RYBAT Dashboard - Filters Module
+ * Observer Dashboard - Filters Module
  * Filter application, time window, search, region filtering
  * 
  * @created 2026-02-03 by Claude - Modularized from monolithic dashboard.html

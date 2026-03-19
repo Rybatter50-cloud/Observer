@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Collector Registry (Streaming)
+Observer Intelligence Platform - Collector Registry (Streaming)
 =============================================================
 Central registry for all data collectors with streaming support.
 
@@ -399,7 +399,7 @@ def _auto_register_collectors():
         logger.debug(f"NP4KCollector not available: {e}")
     
     # =========================================================================
-    # RYBAT Lite: Only RSS and NP4K collectors available
+    # Observer: Only RSS and NP4K collectors available
     # NewsAPI, DVIDS, WikiRumours removed
     # =========================================================================
     

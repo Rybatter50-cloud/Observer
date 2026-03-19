@@ -1,4 +1,4 @@
-# RYBAT Blacklist Filter: Strict
+# Observer Blacklist Filter: Strict
 # ================================
 # Extended blacklist: default patterns + broader entertainment,
 # lifestyle, and local-interest filters.

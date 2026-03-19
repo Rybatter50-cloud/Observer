@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Services Package
+Observer Intelligence Platform - Services Package
 """
 
 from .websocket import manager, ConnectionManager

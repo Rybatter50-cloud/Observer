@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Collector Management API Routes
+Observer Intelligence Platform - Collector Management API Routes
 ==============================================================
 API endpoints for runtime control of collectors (RSS, NP4K)
 

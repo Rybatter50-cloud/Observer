@@ -1,5 +1,5 @@
 /**
- * RYBAT Dev Console — Single consolidated JS file
+ * Observer Dev Console — Single consolidated JS file
  * Handles all API calls, WebSocket, polling, and DOM updates.
  * No dependencies. No frameworks. Just fetch() and getElementById().
  */

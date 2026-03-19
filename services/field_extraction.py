@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Field Extraction Utilities
+Observer Intelligence Platform - Field Extraction Utilities
 =========================================================
 Regex-based extraction of location and casualty data from article titles.
 

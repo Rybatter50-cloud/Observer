@@ -1,4 +1,4 @@
-# RYBAT Whitelist Filter: Conflict Only
+# Observer Whitelist Filter: Conflict Only
 # =======================================
 # Narrow focus: active conflict, military operations, terrorism.
 # Use this when you only want kinetic/violent event reporting.

@@ -1,5 +1,5 @@
 """
-RYBAT Intelligence Platform - Feed Manager
+Observer Intelligence Platform - Feed Manager
 ============================================
 Manages RSS feed registry and entry parsing with content filtering.
 
