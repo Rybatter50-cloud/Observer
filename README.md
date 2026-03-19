@@ -29,19 +29,14 @@ No LLMs, no cloud APIs, no GPU required.
 # Clone and enter
 git clone git@github.com:Rybatter50-cloud/Observer.git && cd Observer
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
+# Run setup (creates venv, installs deps, downloads NLLB model)
+python setup_observer.py
 
 # Configure
-cp .env.example .env
 # Edit .env — set DATABASE_URL with your PostgreSQL password
 
 # Start
+source venv/bin/activate
 python main.py
 ```
 
@@ -73,11 +68,18 @@ The admin console (`/dev`) provides full system management:
 .\start.bat
 ```
 
-### NLLB Translation Model (one-time setup)
+### NLLB Translation Model
 
-Translation requires the NLLB-200 model in CTranslate2 format (~1.2 GB). Place the converted model in `models/nllb-200-distilled-600M-ct2/`.
+The setup script (`python setup_observer.py` or `.\install.ps1`) automatically downloads and converts the NLLB-200 model to CTranslate2 int8 format. This requires a one-time download of ~1.2 GB.
 
-To run on CPU with int8 quantization (recommended):
+If you skipped setup or need to install the model manually:
+```bash
+pip install transformers torch huggingface_hub   # build-time only
+python scripts/download_nllb.py                  # download + convert
+pip uninstall transformers torch                  # free ~2 GB disk
+```
+
+To run on CPU with int8 quantization (recommended, set in `.env`):
 ```
 NLLB_DEVICE=cpu
 NLLB_COMPUTE_TYPE=int8
@@ -117,9 +119,12 @@ Observer/
 ├── templates/                  # Jinja2 HTML (news feed + admin console)
 ├── static/                     # CSS and JS (modular, per-view)
 ├── filters/                    # Whitelist/blacklist keyword files
-├── models/                     # NLLB CTranslate2 model
-├── data/                       # Runtime state (feed_state.json, cache)
+├── models/                     # NLLB CTranslate2 model (auto-downloaded)
+├── data/                       # Feed seed data, runtime state, cache
+├── scripts/                    # Setup utilities
+│   └── download_nllb.py        # NLLB model download & conversion
 ├── requirements.txt            # Python dependencies
+├── setup_observer.py           # Cross-platform setup script
 ├── install.ps1                 # Windows PowerShell installer
 ├── start.bat                   # Windows quick-start script
 └── .env.example                # Configuration template

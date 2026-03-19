@@ -231,6 +231,70 @@ def setup_configuration():
     
     return True
 
+def download_nllb_model():
+    """Download and convert the NLLB translation model."""
+    print_info("Setting up NLLB translation model...")
+
+    model_dir = Path("models") / "nllb-200-distilled-600M-ct2"
+    model_bin = model_dir / "model.bin"
+    sp_model = model_dir / "sentencepiece.bpe.model"
+
+    if model_bin.exists() and sp_model.exists():
+        size_mb = model_bin.stat().st_size / (1024 * 1024)
+        print_success(f"NLLB model already installed ({size_mb:.0f} MB)")
+        return True
+
+    print_info("NLLB model not found — downloading and converting...")
+    print_info("This requires transformers and torch (build-time only, ~2 GB download)")
+    print()
+
+    pip_path = get_venv_pip()
+    python_path = get_venv_python()
+
+    # Install build-time dependencies
+    try:
+        print_info("Installing build dependencies (transformers, torch)...")
+        subprocess.run(
+            [str(pip_path), "install", "transformers", "torch", "huggingface_hub"],
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print_warning(f"Could not install build dependencies: {e}")
+        print_info("You can install the model manually later:")
+        print_info("  python scripts/download_nllb.py")
+        return False
+
+    # Run the download script
+    try:
+        subprocess.run(
+            [str(python_path), "scripts/download_nllb.py"],
+            check=True,
+        )
+    except subprocess.CalledProcessError:
+        print_warning("NLLB model download/conversion failed")
+        print_info("You can retry later: python scripts/download_nllb.py")
+        return False
+
+    # Uninstall build-time dependencies to save space
+    print_info("Removing build-time dependencies (transformers, torch)...")
+    try:
+        subprocess.run(
+            [str(pip_path), "uninstall", "-y", "transformers", "torch"],
+            capture_output=True,
+        )
+        print_success("Build dependencies removed (saves ~2 GB)")
+    except subprocess.CalledProcessError:
+        print_warning("Could not auto-remove build deps — run manually:")
+        print_info("  pip uninstall transformers torch")
+
+    if model_bin.exists():
+        size_mb = model_bin.stat().st_size / (1024 * 1024)
+        print_success(f"NLLB model installed ({size_mb:.0f} MB)")
+        return True
+
+    return False
+
+
 def create_start_scripts():
     """Create platform-specific start scripts"""
     system = platform.system()
@@ -269,7 +333,9 @@ def install_development():
     
     if not setup_configuration():
         return False
-    
+
+    download_nllb_model()
+
     create_start_scripts()
     
     # Print success message

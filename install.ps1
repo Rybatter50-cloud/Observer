@@ -185,6 +185,32 @@ function Install-Development {
     }
     Write-Success "Data directory created"
     
+    # Download NLLB translation model
+    Write-Info "Setting up NLLB translation model..."
+    $modelBin = "models\nllb-200-distilled-600M-ct2\model.bin"
+    $spModel = "models\nllb-200-distilled-600M-ct2\sentencepiece.bpe.model"
+    if ((Test-Path $modelBin) -and (Test-Path $spModel)) {
+        Write-Success "NLLB model already installed"
+    } else {
+        Write-Info "Installing build dependencies (transformers, torch)..."
+        & ".\$VENV_DIR\Scripts\pip.exe" install transformers torch huggingface_hub
+        if ($?) {
+            Write-Info "Downloading and converting NLLB model (this may take a few minutes)..."
+            & ".\$VENV_DIR\Scripts\python.exe" scripts\download_nllb.py
+            if ($?) {
+                Write-Success "NLLB model installed"
+                Write-Info "Removing build dependencies (transformers, torch)..."
+                & ".\$VENV_DIR\Scripts\pip.exe" uninstall -y transformers torch 2>$null
+            } else {
+                Write-WarnMsg "NLLB model download failed — you can retry later:"
+                Write-Info "  python scripts\download_nllb.py"
+            }
+        } else {
+            Write-WarnMsg "Could not install build dependencies"
+            Write-Info "Install the model manually: python scripts\download_nllb.py"
+        }
+    }
+
     # Create start script
     $startScript = @"
 @echo off
