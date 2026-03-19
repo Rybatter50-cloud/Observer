@@ -6,14 +6,15 @@ No LLMs, no cloud APIs, no GPU required.
 
 ## Features
 
-- **RSS Collection**: 170+ curated feeds across global news sources with configurable check intervals
+- **RSS Collection**: 200+ curated feeds across global news sources with configurable check intervals
 - **NLLB Translation**: Translates non-English articles to English using NLLB-200 via CTranslate2 (CPU-friendly, int8 quantization)
 - **Content Filtering**: Whitelist/blacklist keyword filtering with regex support (13 filter lists included)
 - **Entity Screening**: Matches against OpenSanctions database locally via pg_trgm fuzzy matching. Optional FBI/Interpol API lookups
 - **Field Extraction**: Regex-based location and casualty extraction from headlines
 - **On-Demand Scraping**: Full-text article fetch via trafilatura with paywall detection
 - **Real-Time Dashboard**: WebSocket-powered feed with time filtering, full-text search, CSV/JSON export, keyboard shortcuts
-- **Feed Management**: Add/remove/disable feeds from the built-in feed registry UI
+- **Admin Console**: Built-in management interface for system monitoring, feed management, collector controls, filter editing, translation tuning, and entity screening status
+- **Feed Management**: Add/remove/disable feeds individually or by group/region from the admin console
 
 ## Requirements
 
@@ -44,7 +45,23 @@ cp .env.example .env
 python main.py
 ```
 
-Dashboard at `http://localhost:8000`.
+News feed at `http://localhost:8000`. Admin console at `http://localhost:8000/dev`.
+
+On first run, Observer automatically seeds the database with 200+ RSS feed sources covering all UN member states.
+
+### Admin Console
+
+The admin console (`/dev`) provides full system management:
+
+- **System** — Active feed count, accept rate, queue depth, translator status, pipeline and app restart controls
+- **Database** — DB size, signal counts, pool status, max signals limit, backup/restore
+- **Collectors** — RSS and Trafilatura collector status, 24h counts, error tracking, on/off toggle and manual collect
+- **Content Filters** — Switch between blacklist/whitelist/both modes, select filter files, edit patterns inline
+- **NLLB Translation** — Configure device, compute type, workers, beam size, length/repetition penalty, temperature, top-k, batch size
+- **Entity Screening** — Live status for FBI, Interpol, Sanctions Network, and OpenSanctions screeners with hit counts
+- **Signals** — Searchable, time-filtered signal table with score, source, title, and location
+- **Feed Groups** — Group-level stats, region presets (Ukraine, Middle East, Asia, Africa, Americas, Caucasus/Central Asia), bulk enable/disable
+- **Feed Sites** — Individual feed search/filter by name, URL, group, or type (RSS/Scraper), with per-feed toggle and delete
 
 ### Windows Quick Start
 
@@ -97,7 +114,7 @@ Observer/
 ├── services/                   # Business logic
 │   └── collectors/             # RSS, NP4K collectors
 ├── database/                   # Schema, connection pool, repositories
-├── templates/                  # Jinja2 HTML (client dashboard)
+├── templates/                  # Jinja2 HTML (news feed + admin console)
 ├── static/                     # CSS and JS (modular, per-view)
 ├── filters/                    # Whitelist/blacklist keyword files
 ├── models/                     # NLLB CTranslate2 model
