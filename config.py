@@ -166,10 +166,6 @@ class Config:
             errors.append("DATABASE_URL not set. PostgreSQL connection string required.")
 
         if cls.FEED_COLLECTION_ENABLED:
-            registry_path = Path(cls.FEED_REGISTRY_PATH)
-            if not registry_path.exists():
-                errors.append(f"Feed registry file not found: {cls.FEED_REGISTRY_PATH}")
-
             valid_content_modes = ['whitelist', 'blacklist', 'both']
             if cls.CONTENT_FILTER_MODE not in valid_content_modes:
                 errors.append(f"Invalid CONTENT_FILTER_MODE: '{cls.CONTENT_FILTER_MODE}'")
