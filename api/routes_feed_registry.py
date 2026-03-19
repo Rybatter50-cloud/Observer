@@ -18,7 +18,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, Any, List, Literal, Optional
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from config import config
@@ -29,8 +29,7 @@ logger = get_logger(__name__)
 # Sub-router: mounted under /api/v1/feeds by routes_feeds.py
 feed_registry_router = APIRouter(tags=["feed-management"])
 
-# Registry file path
-REGISTRY_PATH = Path(config.FEED_REGISTRY_PATH)
+from services.feed_manager import get_feed_manager
 
 class FeedHealthTracker:
     """Thread-safe feed health tracking with bounded size."""
@@ -90,40 +89,25 @@ _health_tracker = FeedHealthTracker()
 # ==================== REGISTRY I/O ====================
 
 def load_registry() -> Dict[str, Any]:
-    """Load the feed registry from disk."""
+    """Load the feed registry from the FeedManager (DB-backed)."""
     try:
-        if REGISTRY_PATH.exists():
-            with open(REGISTRY_PATH, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        else:
-            logger.error(f"Feed registry not found: {REGISTRY_PATH}")
-            return {}
+        fm = get_feed_manager()
+        return fm.feed_registry
     except Exception as e:
         logger.error(f"Error loading feed registry: {e}")
         return {}
 
 
 def save_registry(registry: Dict[str, Any]) -> bool:
-    """Save the feed registry to disk (atomic write with backup).
+    """Update the in-memory feed registry in the FeedManager.
 
-    NOTE: This writes the JSON file only.  Callers that modify scraper
-    sites should also call ``await sync_registry_to_db(registry)`` to
-    keep PostgreSQL (the runtime source of truth) in sync.
+    Callers should also call ``await sync_registry_to_db(registry)`` to
+    persist changes to PostgreSQL.
     """
     try:
-        if REGISTRY_PATH.exists():
-            backup_path = REGISTRY_PATH.with_suffix('.json.backup')
-            with open(REGISTRY_PATH, 'r') as f:
-                backup_data = f.read()
-            with open(backup_path, 'w') as f:
-                f.write(backup_data)
-
-        temp_path = REGISTRY_PATH.with_suffix('.tmp')
-        with open(temp_path, 'w', encoding='utf-8') as f:
-            json.dump(registry, f, indent=2, ensure_ascii=False)
-        temp_path.replace(REGISTRY_PATH)
-
-        logger.info("Feed registry saved successfully")
+        fm = get_feed_manager()
+        fm.feed_registry = registry
+        logger.info("Feed registry updated in memory")
         return True
     except Exception as e:
         logger.error(f"Error saving feed registry: {e}")
@@ -280,15 +264,15 @@ async def update_registry_endpoint(registry: Dict[str, Any]):
 @feed_registry_router.get("/registry/download")
 async def download_registry():
     """
-    Download registry as a file
+    Download registry as a JSON file
     """
-    if not REGISTRY_PATH.exists():
-        raise HTTPException(status_code=404, detail="Registry not found")
-    
-    return FileResponse(
-        REGISTRY_PATH,
-        media_type="application/json",
-        filename="feed_registry.json"
+    registry = load_registry()
+    if not registry:
+        raise HTTPException(status_code=404, detail="Registry is empty")
+
+    return JSONResponse(
+        content=registry,
+        headers={"Content-Disposition": "attachment; filename=feed_registry.json"}
     )
 
 

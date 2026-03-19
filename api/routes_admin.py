@@ -291,19 +291,15 @@ async def get_collectors_config():
 
 
 def _get_registry_stats() -> dict:
-    """Get feed registry statistics."""
+    """Get feed registry statistics from the FeedManager (DB-backed)."""
     try:
-        import json
-        registry_path = Path(config.FEED_REGISTRY_PATH)
-        if not registry_path.exists():
-            return {"error": "Registry file not found"}
-
-        with open(registry_path, 'r') as f:
-            data = json.load(f)
+        from services.feed_manager import get_feed_manager
+        fm = get_feed_manager()
+        registry = fm.feed_registry
 
         total_feeds = 0
         groups = 0
-        for key, value in data.items():
+        for key, value in registry.items():
             if key == '_metadata':
                 continue
             if isinstance(value, dict) and 'feeds' in value:
@@ -313,25 +309,20 @@ def _get_registry_stats() -> dict:
         return {
             "total_feeds": total_feeds,
             "total_groups": groups,
-            "version": data.get('_metadata', {}).get('version', 'unknown'),
         }
     except Exception as e:
         return {"error": str(e)}
 
 
 def _get_scraper_registry_stats() -> dict:
-    """Get scraper sites count from feed registry."""
+    """Get scraper sites count from the FeedManager registry (DB-backed)."""
     try:
-        import json
-        registry_path = Path(config.FEED_REGISTRY_PATH)
-        if not registry_path.exists():
-            return {}
-
-        with open(registry_path, 'r') as f:
-            data = json.load(f)
+        from services.feed_manager import get_feed_manager
+        fm = get_feed_manager()
+        registry = fm.feed_registry
 
         total_sites = 0
-        for key, value in data.items():
+        for key, value in registry.items():
             if key == '_metadata':
                 continue
             if isinstance(value, dict):
@@ -391,11 +382,6 @@ COLLECTOR_ENV_DEFS: dict[str, dict] = {
                 "description": "Max seconds per collector run",
                 "type": "int",
                 "default": "1200",
-            },
-            "FEED_REGISTRY_PATH": {
-                "description": "Path to feed registry JSON file",
-                "type": "str",
-                "default": "feed_registry_comprehensive.json",
             },
         },
     },

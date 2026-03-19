@@ -14,10 +14,7 @@ These are required only when their feature flag is enabled. `config.validate()` 
 
 | Variable | Required when | Purpose |
 |----------|--------------|---------|
-| `NEWSAPI_KEY` | `NEWSAPI_ENABLED=true` | NewsAPI.org API key |
-| `VIRUSTOTAL_API_KEY` | `VIRUSTOTAL_ENABLED=true` | VirusTotal API key |
-| `URLSCAN_API_KEY` | `URLSCAN_ENABLED=true` | urlscan.io API key |
-| `FEED_REGISTRY_PATH` | `FEED_COLLECTION_ENABLED=true` | File must exist at path |
+| `DATABASE_URL` | Always | PostgreSQL connection string |
 
 Additionally, `AI_TRANSLATOR_MODE` must be one of `nllb`, `local`, or `off`, and `CONTENT_FILTER_MODE` must be one of `whitelist`, `blacklist`, or `both`.
 
@@ -133,8 +130,7 @@ Additional Ollama parameters are configurable at runtime via the admin API (`POS
 
 | Variable | Type | Default | Purpose |
 |----------|------|---------|---------|
-| `FEED_REGISTRY_PATH` | str | `feed_registry_comprehensive.json` | Path to feed registry JSON |
-| `FEED_CHECK_INTERVAL` | int | `60` | Seconds between collection cycles |
+| `FEED_CHECK_INTERVAL` | int | `300` | Seconds between collection cycles |
 | `COLLECTOR_TIMEOUT` | int | `1200` | Max seconds per collector run |
 | `FEED_MAX_ARTICLES_PER_SOURCE` | int | `5` | Max articles per feed per cycle |
 | `FEED_CONCURRENCY` | int | `10` | Concurrent feed fetches |

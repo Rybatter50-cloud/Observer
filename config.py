@@ -91,7 +91,6 @@ class Config:
     # FEED COLLECTION
     # ==========================================================================
     FEED_COLLECTION_ENABLED: bool = os.getenv('FEED_COLLECTION_ENABLED', 'true').lower() == 'true'
-    FEED_REGISTRY_PATH: str = os.getenv('FEED_REGISTRY_PATH', 'feed_registry_comprehensive.json')
     FEED_CHECK_INTERVAL: int = _env_int('FEED_CHECK_INTERVAL', '300')
     COLLECTOR_TIMEOUT: int = _env_int('COLLECTOR_TIMEOUT', '1200')
     FEED_MAX_ARTICLES_PER_SOURCE: int = _env_int('FEED_MAX_ARTICLES_PER_SOURCE', '5')

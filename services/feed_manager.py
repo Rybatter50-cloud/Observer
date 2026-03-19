@@ -69,8 +69,7 @@ class FeedManager:
     Content filtering delegated to ContentFilter.
     """
 
-    def __init__(self, registry_path: str = "feed_registry_comprehensive.json"):
-        self.registry_path = Path(registry_path)
+    def __init__(self):
         self.feed_registry: Dict[str, Any] = {}
         self.last_check: Dict[str, datetime] = {}
         self.min_check_interval: int = 300
@@ -85,22 +84,15 @@ class FeedManager:
         }
         self.feed_health: Dict[str, Dict[str, Any]] = {}
 
-        self._load_registry()
         logger.info(f"FeedManager initialized, enabled groups: {len(self._source_state.enabled_groups)}")
 
-    def _load_registry(self) -> None:
-        if not self.registry_path.exists():
-            raise FileNotFoundError(f"Feed registry not found: {self.registry_path}")
-
-        with open(self.registry_path, 'r', encoding='utf-8') as f:
-            self.feed_registry = json.load(f)
-
-        total_feeds = sum(
+    def _count_feeds(self) -> int:
+        """Count total feeds across all groups in the registry."""
+        return sum(
             len(group.get('feeds', []))
             for key, group in self.feed_registry.items()
             if key != '_metadata' and isinstance(group, dict)
         )
-        logger.info(f"Feed registry loaded: {total_feeds} feeds in {len(self.feed_registry) - 1} groups")
 
     # -- Delegated properties --
 
@@ -243,9 +235,9 @@ class FeedManager:
 _feed_manager_instance: Optional[FeedManager] = None
 
 
-def get_feed_manager(registry_path: str = "feed_registry_comprehensive.json") -> FeedManager:
+def get_feed_manager() -> FeedManager:
     """Get or create singleton FeedManager instance."""
     global _feed_manager_instance
     if _feed_manager_instance is None:
-        _feed_manager_instance = FeedManager(registry_path)
+        _feed_manager_instance = FeedManager()
     return _feed_manager_instance

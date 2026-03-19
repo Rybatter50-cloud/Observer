@@ -11,7 +11,7 @@ CHANGELOG:
     - All three collection endpoints now use correct API
 -------------------------------------------------------------------------------
 2026-02-02 | Mr Cat + Claude | MAJOR REWRITE - Unified with Feed Registry
-    - Scraper sites now stored in feed_registry_comprehensive.json
+    - Scraper sites now stored in PostgreSQL (feed_sources table)
     - Each group has optional scraper_sites[] array
     - Sites follow group enable/disable from Feed Manager
     - Removed separate scraper_sites.json dependency

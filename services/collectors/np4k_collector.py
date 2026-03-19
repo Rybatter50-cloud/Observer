@@ -57,14 +57,6 @@ class NP4KCollector(BaseCollector):
         """Initialize NP4K collector"""
         super().__init__()
 
-        # Registry path for scraper sites
-        env_registry_path = os.getenv('FEED_REGISTRY_PATH')
-        if env_registry_path:
-            self.registry_path = Path(env_registry_path)
-        else:
-            project_root = Path(__file__).parent.parent.parent
-            self.registry_path = project_root / 'feed_registry_comprehensive.json'
-
         # Lazy-load scraper instance
         self._scraper = None
 

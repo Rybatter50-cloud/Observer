@@ -12,7 +12,7 @@ Collects articles from RSS/Atom feeds with streaming output.
                                          ETag/Last-Modified caching for HTTP 304 fast-path
 
 This collector:
-1. Reads feeds from feed_registry_comprehensive.json
+1. Reads feeds from PostgreSQL (feed_sources table)
 2. Fetches feeds concurrently (bounded by semaphore, default 10)
 3. Uses ETag/Last-Modified headers to skip unchanged feeds (HTTP 304)
 4. YIELDS each article immediately after parsing
@@ -80,7 +80,7 @@ class RSSCollector(BaseCollector):
     """
     RSS/Atom Feed Collector - STREAMING MODE
 
-    Collects articles from feeds defined in feed_registry_comprehensive.json.
+    Collects articles from feeds stored in PostgreSQL (feed_sources table).
     Now yields articles immediately as they are parsed, enabling real-time
     processing instead of batch accumulation.
 
@@ -103,16 +103,6 @@ class RSSCollector(BaseCollector):
     def __init__(self):
         """Initialize RSS collector"""
         super().__init__()
-        
-        # =====================================================================
-        # Feed registry path resolution
-        # =====================================================================
-        env_registry_path = os.getenv('FEED_REGISTRY_PATH')
-        if env_registry_path:
-            self.registry_path = Path(env_registry_path)
-        else:
-            project_root = Path(__file__).parent.parent.parent
-            self.registry_path = project_root / 'feed_registry_comprehensive.json'
         
         self.feed_registry: Dict[str, Any] = {}
         

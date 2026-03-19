@@ -42,14 +42,13 @@ REQUEST_TIMEOUT = 15
 
 
 def load_feed_urls() -> list:
-    """Load all feed URLs from the registry JSON."""
-    registry_path = Path(config.FEED_REGISTRY_PATH)
-    if not registry_path.exists():
-        print(f"ERROR: Feed registry not found: {registry_path}")
+    """Load all feed URLs from the FeedManager (DB-backed)."""
+    from services.feed_manager import get_feed_manager
+    fm = get_feed_manager()
+    registry = fm.feed_registry
+    if not registry:
+        print("ERROR: Feed registry is empty — is the database connected?")
         sys.exit(1)
-
-    with open(registry_path, 'r', encoding='utf-8') as f:
-        registry = json.load(f)
 
     feeds = []
     for group_name, group_data in registry.items():

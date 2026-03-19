@@ -232,32 +232,21 @@ class SourceStateManager:
         
     def _get_all_groups_from_registry(self) -> Set[str]:
         """
-        Get all group names from the feed registry
-        
-        Returns:
-            Set of all group names
+        Get all group names from the feed registry (loaded from DB into FeedManager).
+        Falls back to TIER1_GROUPS if the registry hasn't been populated yet.
         """
         try:
-            # Try to load from feed registry
-            registry_path = os.getenv('FEED_REGISTRY_PATH', 'feed_registry_comprehensive.json')
-            
-            if Path(registry_path).exists():
-                with open(registry_path, 'r', encoding='utf-8') as f:
-                    registry = json.load(f)
-                
+            from services.feed_manager import get_feed_manager
+            fm = get_feed_manager()
+            if fm.feed_registry:
                 groups = set()
-                for key in registry.keys():
+                for key in fm.feed_registry.keys():
                     if key != '_metadata':
                         groups.add(key)
-                
                 return groups
-            else:
-                logger.warning(f"Feed registry not found: {registry_path}")
-                return self.TIER1_GROUPS.copy()
-                
         except Exception as e:
-            logger.error(f"Error loading feed registry for groups: {e}")
-            return self.TIER1_GROUPS.copy()
+            logger.debug(f"Could not read groups from feed manager: {e}")
+        return self.TIER1_GROUPS.copy()
     
     def _load_state(self):
         """Load state from persistence file"""
