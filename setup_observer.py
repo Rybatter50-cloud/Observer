@@ -421,7 +421,7 @@ def download_nllb_model():
         return True
 
     print_info("NLLB model not found — downloading and converting...")
-    print_info("This requires transformers and torch (build-time only, ~2 GB download)")
+    print_info("This requires transformers and torch (~2 GB download)")
     print()
 
     pip_path = get_venv_pip()
@@ -451,17 +451,17 @@ def download_nllb_model():
         print_info("You can retry later: python scripts/download_nllb.py")
         return False
 
-    # Uninstall build-time dependencies to save space
-    print_info("Removing build-time dependencies (transformers, torch)...")
+    # Uninstall transformers (build-time only); keep torch — GLiNER needs it at runtime
+    print_info("Removing build-time dependency (transformers)...")
     try:
         subprocess.run(
-            [str(pip_path), "uninstall", "-y", "transformers", "torch"],
+            [str(pip_path), "uninstall", "-y", "transformers"],
             capture_output=True,
         )
-        print_success("Build dependencies removed (saves ~2 GB)")
+        print_success("transformers removed (torch kept for GLiNER)")
     except subprocess.CalledProcessError:
-        print_warning("Could not auto-remove build deps — run manually:")
-        print_info("  pip uninstall transformers torch")
+        print_warning("Could not auto-remove transformers — run manually:")
+        print_info("  pip uninstall transformers")
 
     if model_bin.exists():
         size_mb = model_bin.stat().st_size / (1024 * 1024)
