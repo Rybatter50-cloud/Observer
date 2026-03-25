@@ -92,6 +92,16 @@ async def lifespan(app: FastAPI):
                 await collector.load_registry_from_db()
 
         logger.info("Feed system loaded from DB")
+
+        # Ensure all feed groups are enabled when SOURCE_STARTUP_ALL=true
+        # (must run AFTER feeds are loaded from DB so group names are known)
+        import os
+        if os.getenv('SOURCE_STARTUP_ALL', 'true').lower() == 'true':
+            from services.source_state import get_source_state_manager
+            ssm = get_source_state_manager()
+            ssm.enable_all_groups()
+            logger.info(f"All {len(ssm.enabled_groups)} feed groups enabled at startup")
+
     except Exception as e:
         logger.warning(f"DB feed reload failed (using JSON fallback): {e}")
 
