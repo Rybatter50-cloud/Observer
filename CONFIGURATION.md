@@ -33,10 +33,10 @@ Additionally, `AI_TRANSLATOR_MODE` must be one of `nllb`, `local`, or `off`, and
 
 | Variable | Type | Default | Purpose |
 |----------|------|---------|---------|
-| `HOST` | str | `127.0.0.1` | Bind address |
-| `PORT` | int | `8000` | Bind port |
+| `HOST` | str | `0.0.0.0` | Bind address |
+| `PORT` | int | `8999` | Bind port |
 | `DEBUG` | bool | `false` | Debug logging and uvicorn log level |
-| `ALLOWED_ORIGINS` | str | `http://localhost:8000` | Comma-separated CORS origins |
+| `ALLOWED_ORIGINS` | str | `http://localhost:8999` | Comma-separated CORS origins |
 
 ## Feature Flags
 
@@ -81,9 +81,9 @@ must exist at `NLLB_MODEL` before NLLB translation will work. Without it the ser
 falls back to Ollama or disables translation.
 
 ```bash
-pip install transformers torch          # temporary, for conversion only
-python scripts/convert_nllb_ct2.py      # downloads + converts (~1.2 GB)
-pip uninstall transformers torch -y     # safe to remove after
+pip install transformers torch huggingface_hub   # temporary, for conversion only
+python scripts/download_nllb.py                  # downloads + converts (~1.2 GB)
+pip uninstall transformers torch -y              # safe to remove after
 ```
 
 | Variable | Type | Default | Purpose |
@@ -139,7 +139,7 @@ Additional Ollama parameters are configurable at runtime via the admin API (`POS
 
 | Variable | Type | Default | Purpose |
 |----------|------|---------|---------|
-| `SOURCE_STARTUP_ALL` | bool | `false` | Enable all feed groups at startup |
+| `SOURCE_STARTUP_ALL` | bool | `true` | Enable all feed groups at startup |
 | `SOURCE_STATE_RESTORE` | bool | `true` | Restore group state from JSON on startup |
 
 ## Content Filtering
@@ -207,7 +207,7 @@ The multilingual model (`paraphrase-multilingual-MiniLM-L12-v2`) is required for
 
 1. `AI_TRANSLATOR_MODE` must be `nllb`, `local`, or `off`
 2. `DATABASE_URL` must be set
-3. If `FEED_COLLECTION_ENABLED`: registry file must exist, `CONTENT_FILTER_MODE` must be valid
+3. If `FEED_COLLECTION_ENABLED`: `CONTENT_FILTER_MODE` must be valid
 4. If `NEWSAPI_ENABLED`: `NEWSAPI_KEY` must be set
 5. If `VIRUSTOTAL_ENABLED`: `VIRUSTOTAL_API_KEY` must be set
 6. If `URLSCAN_ENABLED`: `URLSCAN_API_KEY` must be set

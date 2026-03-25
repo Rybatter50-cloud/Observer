@@ -59,7 +59,10 @@ CREATE TABLE IF NOT EXISTS intel_signals (
     title_tsvector     tsvector,
     screening_hits     JSONB,
     created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    original_title     TEXT,
+    entities_json      JSONB,
+    entities_tier      INTEGER NOT NULL DEFAULT 0
 );
 ```
 
@@ -316,6 +319,9 @@ These tables are created by the migration runner (`database/migrations/runner.py
 - `token_usage` — AI token usage tracking (used by `MetricsRepository`)
 - `gemini_discover_calls` — Gemini rate limiting (used by `MetricsRepository`)
 - `screening_log` — Screening audit trail (used by `ScreeningRepository`)
+- `feed_sources` — RSS/scraper feed sources (seeded from `data/feed_sources_seed.csv` on first run)
+- `translation_memory` — Vector translation cache (requires pgvector, optional)
+- `article_clusters` / `cluster_members` — Semantic article grouping (requires pgvector, optional)
 
 ---
 

@@ -5,6 +5,30 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.1.0] — 2026-03-25
+
+### Added
+- **Automated PostgreSQL setup** in `setup_observer.py`: creates database user, database, enables pg_trgm extension, generates secure password, and updates `.env` automatically. Tries `sudo -u postgres` first, falls back to credential prompt.
+- **CSV feed seeding**: `feed_sources_seed.csv` (200+ curated feeds, 1 per country + global sources) replaces the old 3,500+ JSON registry. Seeded automatically on first run via `seed_from_csv()`.
+- **Migration 021** (`021_add_entities_columns.sql`): adds `entities_json` (JSONB) and `entities_tier` (INTEGER) columns to `intel_signals`.
+- `colorama` added to `requirements.txt` (required by `utils/logging.py`).
+
+### Changed
+- **Default port** changed from 8000 to 8999 (config, `.env.example`, CORS origins).
+- **All feed groups enabled by default** (`SOURCE_STARTUP_ALL` defaults to `true`).
+- **Feed sources fully DB-backed**: removed all JSON feed registry references. RSS and NP4K collectors load feeds from PostgreSQL via `load_registry_from_db()`.
+- **Starlette 1.0 compatibility**: updated all `TemplateResponse` calls to new signature (`request` as first positional arg).
+- **NLLB converter PATH fix**: `download_nllb.py` now checks the venv bin directory for `ct2-transformers-converter` before falling back to system PATH.
+- **Migrations 019/020** wrapped in `IF EXISTS` check for `article_clusters` table, so they no longer crash when pgvector is not installed.
+- **Client layout fix**: corrected `main-layout` CSS so sidebar and feed list no longer render under the fixed header.
+- Removed Docker prerequisite check from setup (not used by Observer).
+
+### Removed
+- Old 3,500+ feed JSON registry and all references to `FEED_REGISTRY_PATH`.
+- `feed_registry_comprehensive.json` removed from repo and git history.
+
+---
+
 ## [Unreleased] — Vector Translation Memory
 
 ### Added

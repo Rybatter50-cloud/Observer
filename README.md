@@ -29,18 +29,15 @@ No LLMs, no cloud APIs, no GPU required.
 # Clone and enter
 git clone git@github.com:Rybatter50-cloud/Observer.git && cd Observer
 
-# Run setup (creates venv, installs deps, downloads NLLB model)
+# Run setup (creates venv, installs deps, configures PostgreSQL, downloads NLLB model)
 python setup_observer.py
-
-# Configure
-# Edit .env — set DATABASE_URL with your PostgreSQL password
 
 # Start
 source venv/bin/activate
 python main.py
 ```
 
-News feed at `http://localhost:8000`. Admin console at `http://localhost:8000/dev`.
+News feed at `http://localhost:8999`. Admin console at `http://localhost:8999/dev`.
 
 On first run, Observer automatically seeds the database with 200+ RSS feed sources covering all UN member states.
 
@@ -89,11 +86,11 @@ Without the model, the app still runs but translation is disabled.
 
 ## Configuration
 
-Only `DATABASE_URL` is required. Everything else has working defaults.
+The setup script handles `DATABASE_URL` automatically. Everything else has working defaults.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DATABASE_URL` | — | PostgreSQL connection string (required) |
+| `DATABASE_URL` | — | PostgreSQL connection string (set by setup) |
 | `AI_TRANSLATOR_MODE` | `nllb` | Translation mode: `nllb` or `off` |
 | `FEED_COLLECTION_ENABLED` | `true` | Enable RSS feed collection |
 | `FEED_CHECK_INTERVAL` | `300` | Seconds between collection cycles |
@@ -102,7 +99,7 @@ Only `DATABASE_URL` is required. Everything else has working defaults.
 | `FBI_ENABLED` | `false` | Enable FBI Most Wanted API |
 | `INTERPOL_ENABLED` | `false` | Enable Interpol Notices API |
 | `HOST` | `0.0.0.0` | Server bind address |
-| `PORT` | `8000` | Server port |
+| `PORT` | `8999` | Server port |
 
 See `.env.example` for all available settings.
 

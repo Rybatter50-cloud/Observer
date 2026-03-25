@@ -50,7 +50,7 @@ Applied in order:
 | vt_router | routes_virustotal.py | `/api/v1/virustotal` |
 | us_router | routes_urlscan.py | `/api/v1/urlscan` |
 
-Additionally, `feeds_router` (routes_feeds.py) is included via `router.include_router()` with prefix `/api/v1/feeds`, and `feed_registry_router` (routes_feed_registry.py) is included within feeds_router.
+Additionally, `feeds_router` (routes_feeds.py) is included via `router.include_router()` with prefix `/api/v1/feeds`. Feed sources are stored in the `feed_sources` PostgreSQL table (seeded from `data/feed_sources_seed.csv` on first run).
 
 Static files mounted at `/static` from the `static/` directory.
 
@@ -189,8 +189,8 @@ All services are singletons instantiated at import time or via `get_*()` factory
 ```python
 asyncpg.create_pool(
     dsn,
-    min_size=config.DB_POOL_MIN_SIZE,    # default 3
-    max_size=config.DB_POOL_MAX_SIZE,    # default 10
+    min_size=config.DB_POOL_MIN_SIZE,    # default 1
+    max_size=config.DB_POOL_MAX_SIZE,    # default 3
     command_timeout=30,
     statement_cache_size=256,
     server_settings={'jit': 'off'}
@@ -277,7 +277,7 @@ The pool is opened during lifespan startup (`db.connect()`). All route handlers 
 
 | Task | Interval | Condition |
 |------|----------|-----------|
-| ArticlePipeline.run() | `FEED_CHECK_INTERVAL` (default 60s) | `FEED_COLLECTION_ENABLED=true` |
+| ArticlePipeline.run() | `FEED_CHECK_INTERVAL` (default 300s) | `FEED_COLLECTION_ENABLED=true` |
 | VirusTotal scheduler | Continuous (quota-paced) | `VIRUSTOTAL_ENABLED=true` |
 | urlscan.io scheduler | Continuous (quota-paced) | `URLSCAN_ENABLED=true` |
 | Wikipedia events refresh | 1 hour | `WIKI_EVENTS_ENABLED=true` |
