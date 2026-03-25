@@ -38,6 +38,8 @@ class ArticlePipeline:
 
         self._state_manager = None
         self._collector_registry = None
+        self._entity_extractor = None
+        self._screening_service = None
 
         self._work_queue: asyncio.Queue = asyncio.Queue(maxsize=200)
         self._in_flight: Dict[str, float] = {}
@@ -54,6 +56,7 @@ class ArticlePipeline:
             logger.error("Pipeline: collector init failed -- cannot start")
             return
 
+        await self._init_entity_extraction()
         await self._recover_pending()
 
         workers = [
@@ -153,6 +156,85 @@ class ArticlePipeline:
         except Exception as e:
             logger.error(f"Failed to initialize collectors: {e}")
             return False
+
+    async def _init_entity_extraction(self):
+        """Load GLiNER model for inline entity extraction (if enabled)."""
+        if not config.ENTITY_EXTRACTION_ENABLED:
+            logger.info("Entity extraction disabled")
+            return
+
+        try:
+            import asyncio
+            from services.entity_extraction import get_entity_extraction_service
+
+            self._entity_extractor = get_entity_extraction_service()
+            loop = asyncio.get_running_loop()
+            success = await loop.run_in_executor(None, self._entity_extractor.load_model)
+            if success:
+                logger.info("Entity extraction ready (GLiNER inline)")
+                # Init screening service if auto-screen enabled
+                if config.ENTITY_AUTO_SCREEN:
+                    from services.entity_screening import get_screening_service
+                    self._screening_service = get_screening_service()
+                    # Wire DB repo for OpenSanctions
+                    if config.SANCTIONS_NET_ENABLED and hasattr(self._intel.db, 'screening'):
+                        self._screening_service.connect_db(self._intel.db.screening)
+                    logger.info("Entity auto-screening enabled")
+            else:
+                logger.warning("GLiNER model failed to load — extraction disabled")
+                self._entity_extractor = None
+        except Exception as e:
+            logger.warning(f"Entity extraction init failed: {e}")
+            self._entity_extractor = None
+
+    async def _extract_and_screen(self, finalized: dict) -> dict:
+        """Extract entities from article and optionally screen persons."""
+        if not self._entity_extractor or not self._entity_extractor.ready:
+            return finalized
+
+        try:
+            title = finalized.get('title', '')
+            description = finalized.get('description', '')
+            entities = await self._entity_extractor.extract_entities_async(title, description)
+
+            if entities:
+                finalized['entities_json'] = entities
+                finalized['entities_tier'] = 1
+
+                # Auto-screen persons
+                if self._screening_service and config.ENTITY_AUTO_SCREEN:
+                    persons = [e for e in entities if e['type'] == 'PERSON' and e.get('confidence', 0) >= 0.6]
+                    if persons:
+                        all_hits = []
+                        for person in persons:
+                            try:
+                                result = await self._screening_service.screen_entity(person['text'], entity_type='Person')
+                                if result.has_hits:
+                                    for hit in result.hits:
+                                        all_hits.append({
+                                            'entity': person['text'],
+                                            'source': hit.source,
+                                            'score': hit.score,
+                                            'category': hit.category,
+                                            'name': hit.name,
+                                            'url': hit.url,
+                                            'details': hit.details,
+                                        })
+                            except Exception as e:
+                                logger.debug(f"Screening error for '{person['text']}': {e}")
+
+                        if all_hits:
+                            max_score = max(h['score'] for h in all_hits)
+                            finalized['screening_hits'] = {
+                                'hit_count': len(all_hits),
+                                'max_score': max_score,
+                                'entities_screened': len(persons),
+                                'hits': all_hits,
+                            }
+        except Exception as e:
+            logger.debug(f"Entity extraction error: {e}")
+
+        return finalized
 
     async def _collect_cycle(self):
         """Stream articles from all enabled collectors into the work queue."""
@@ -350,6 +432,9 @@ class ArticlePipeline:
                     # No scoring in Lite — default relevance_score = 0
                     finalized['relevance_score'] = 0
                     finalized['analysis_mode'] = 'SKIPPED'
+
+                    # Entity extraction + auto-screening (inline)
+                    finalized = await self._extract_and_screen(finalized)
 
                     signal = await self._intel.db.insert_final_signal(finalized)
                     if signal:
