@@ -43,8 +43,7 @@ CACHE_BUST = str(int(time.time()))
 async def home(request: Request):
     """Serve the dev console (minimal debug/config interface)"""
     try:
-        resp = templates.TemplateResponse("dev.html", {
-            "request": request,
+        resp = templates.TemplateResponse(request, "dev.html", {
             "v": CACHE_BUST,
         })
         resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -58,7 +57,7 @@ async def home(request: Request):
 async def client_view(request: Request):
     """Serve the read-only client interface"""
     try:
-        resp = templates.TemplateResponse("client.html", {"request": request, "v": CACHE_BUST})
+        resp = templates.TemplateResponse(request, "client.html", {"v": CACHE_BUST})
         resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         return resp
     except Exception as e:
@@ -70,7 +69,7 @@ async def client_view(request: Request):
 async def obs_overlay_view(request: Request):
     """Serve the OBS Browser Source overlay (analyst panel only, transparent bg)"""
     try:
-        resp = templates.TemplateResponse("obs.html", {"request": request, "v": CACHE_BUST})
+        resp = templates.TemplateResponse(request, "obs.html", {"v": CACHE_BUST})
         resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         return resp
     except Exception as e:
