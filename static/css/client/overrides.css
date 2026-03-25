@@ -17,15 +17,13 @@
     margin-top: 50px; /* Header only (50px) */
 }
 
-/* Main layout: sidebar + feed, positioned below top panel + resize handle.
-   Height fills remaining viewport below header(50)+topPanel+handle(5).
-   --top-panel-h is set dynamically by initTopPanelResize() in init.js. */
+/* Main layout: sidebar + feed, positioned below fixed header (50px). */
 .main-layout {
     display: flex;
     flex-direction: row;
-    margin-top: 0;
+    margin-top: 50px;
     overflow: hidden;
-    height: calc(100vh - 55px - var(--top-panel-h, 250px));
+    height: calc(100vh - 50px);
     padding: 0;
     gap: 0;
 }
