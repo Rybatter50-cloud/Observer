@@ -137,13 +137,19 @@ class RSSCollector(BaseCollector):
         logger.info(f"RSSCollector initialized: {self._get_total_feed_count()} feeds in registry")
     
     def _load_registry(self) -> None:
-        """Load feed registry from JSON file (sync fallback for init)."""
+        """Load feed registry from JSON file (sync fallback for init).
+
+        Feeds are now DB-backed; this only runs if a legacy JSON registry
+        path is configured.  Otherwise it's a no-op — feeds are loaded
+        asynchronously from PostgreSQL via load_registry_from_db().
+        """
+        if not hasattr(self, 'registry_path') or self.registry_path is None:
+            return
         try:
             abs_path = self.registry_path.resolve()
             logger.debug(f"Looking for feed registry at: {abs_path}")
 
             if not self.registry_path.exists():
-                logger.error(f"Feed registry not found: {abs_path}")
                 return
 
             with open(self.registry_path, 'r', encoding='utf-8') as f:

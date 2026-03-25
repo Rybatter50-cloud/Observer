@@ -17,6 +17,8 @@
 # =============================================================================
 
 import os
+import re
+import secrets
 import sys
 import subprocess
 import shutil
@@ -153,20 +155,37 @@ def check_docker():
         print_warning("Docker not available (optional)")
         return False
 
+def check_postgres():
+    """Check if PostgreSQL client is available"""
+    try:
+        result = subprocess.run(["psql", "--version"],
+                               capture_output=True, check=True)
+        version = result.stdout.decode().strip()
+        print_success(f"PostgreSQL: {version}")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print_warning("PostgreSQL client (psql) not found")
+        if platform.system() == "Linux":
+            print_info("Install with: sudo apt install postgresql postgresql-client")
+        elif platform.system() == "Darwin":
+            print_info("Install with: brew install postgresql")
+        return False
+
 def check_prerequisites():
     """Run all prerequisite checks"""
     print_info("Checking prerequisites...")
     print()
-    
+
     checks = [
         check_python_version(),
         check_pip(),
         check_venv_module(),
     ]
-    
-    # Docker is optional
+
+    # PostgreSQL and Docker are checked but not required to proceed
+    check_postgres()
     check_docker()
-    
+
     print()
     if all(checks):
         print_success("All required prerequisites satisfied")
@@ -230,6 +249,175 @@ def setup_configuration():
     print_success("Data directory ready")
     
     return True
+
+# =============================================================================
+# DATABASE SETUP
+# =============================================================================
+DB_NAME = "observer"
+DB_USER = "observer"
+
+def _run_psql(sql, method, database="postgres"):
+    """Execute SQL via psql using the given connection method.
+
+    method is either:
+      ("sudo",)                          — sudo -u postgres psql
+      ("credentials", user, password)    — psql -U user -h localhost (with PGPASSWORD)
+    """
+    if method[0] == "sudo":
+        cmd = ["sudo", "-u", "postgres", "psql", "-d", database,
+               "-tAc", sql]
+        env = None
+    else:
+        _, user, password = method
+        cmd = ["psql", "-U", user, "-h", "localhost", "-d", database,
+               "-tAc", sql]
+        env = {**os.environ, "PGPASSWORD": password}
+
+    result = subprocess.run(cmd, capture_output=True, text=True, env=env)
+    return result
+
+
+def _get_psql_method():
+    """Determine how to connect to PostgreSQL as superuser.
+
+    Try sudo -u postgres first; fall back to prompting for credentials.
+    """
+    # Try sudo -u postgres (may prompt for the user's own sudo password)
+    try:
+        result = subprocess.run(
+            ["sudo", "-u", "postgres", "psql", "-tAc", "SELECT 1"],
+            capture_output=False, text=True, timeout=30,
+            stdout=subprocess.PIPE,
+        )
+        if result.returncode == 0 and "1" in (result.stdout or ""):
+            print_success("PostgreSQL access via sudo")
+            return ("sudo",)
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        pass
+
+    # Fall back to credentials
+    print_info("sudo access to postgres not available — enter admin credentials")
+    try:
+        pg_user = input("  PostgreSQL superuser [postgres]: ").strip() or "postgres"
+        import getpass
+        pg_pass = getpass.getpass(f"  Password for {pg_user}: ")
+    except KeyboardInterrupt:
+        print()
+        return None
+
+    result = _run_psql("SELECT 1", ("credentials", pg_user, pg_pass))
+    if result.returncode == 0 and "1" in result.stdout:
+        print_success(f"PostgreSQL access via {pg_user}")
+        return ("credentials", pg_user, pg_pass)
+
+    print_error(f"Could not connect as {pg_user}")
+    if result.stderr:
+        print_error(result.stderr.strip())
+    return None
+
+
+def setup_database():
+    """Create PostgreSQL user, database, and update .env with credentials."""
+    print_header("PostgreSQL Database Setup")
+    print()
+
+    # Check if psql is available
+    try:
+        subprocess.run(["psql", "--version"], capture_output=True, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print_warning("psql not found — skipping database setup")
+        print_info("Create the database manually and update DATABASE_URL in .env")
+        return False
+
+    # Check if .env already has a real password (not CHANGEME)
+    env_path = Path(".env")
+    if env_path.exists():
+        env_text = env_path.read_text()
+        if "CHANGEME" not in env_text and "DATABASE_URL=" in env_text:
+            print_info("DATABASE_URL already configured in .env")
+            try:
+                reconfigure = input("  Reconfigure database? [y/N]: ").strip().lower()
+            except KeyboardInterrupt:
+                print()
+                reconfigure = "n"
+            if reconfigure != "y":
+                print_info("Skipping database setup")
+                return True
+
+    # Get superuser connection method
+    method = _get_psql_method()
+    if method is None:
+        print_warning("Skipping database setup — configure manually in .env")
+        return False
+
+    print()
+
+    # Generate password
+    generated_password = secrets.token_urlsafe(18)
+    print_info(f"Generated password: {generated_password}")
+    try:
+        custom = input("  Press Enter to accept, or type a custom password: ").strip()
+    except KeyboardInterrupt:
+        print()
+        return False
+    password = custom if custom else generated_password
+
+    print()
+
+    # Create role (or update password if it exists)
+    safe_pw = password.replace("'", "''")
+    create_role_sql = (
+        f"DO $$ BEGIN "
+        f"CREATE ROLE {DB_USER} WITH LOGIN PASSWORD '{safe_pw}'; "
+        f"EXCEPTION WHEN duplicate_object THEN "
+        f"ALTER ROLE {DB_USER} WITH PASSWORD '{safe_pw}'; "
+        f"END $$;"
+    )
+    result = _run_psql(create_role_sql, method)
+    if result.returncode != 0:
+        print_error(f"Failed to create database user: {result.stderr.strip()}")
+        return False
+    print_success(f"Database user '{DB_USER}' ready")
+
+    # Create database if it doesn't exist
+    check_db = _run_psql(
+        f"SELECT 1 FROM pg_database WHERE datname = '{DB_NAME}'", method
+    )
+    if "1" not in (check_db.stdout or ""):
+        result = _run_psql(f"CREATE DATABASE {DB_NAME} OWNER {DB_USER}", method)
+        if result.returncode != 0:
+            print_error(f"Failed to create database: {result.stderr.strip()}")
+            return False
+        print_success(f"Database '{DB_NAME}' created")
+    else:
+        # Ensure ownership
+        _run_psql(f"ALTER DATABASE {DB_NAME} OWNER TO {DB_USER}", method)
+        print_success(f"Database '{DB_NAME}' already exists")
+
+    # Enable pg_trgm extension
+    result = _run_psql("CREATE EXTENSION IF NOT EXISTS pg_trgm", method, database=DB_NAME)
+    if result.returncode != 0:
+        print_warning(f"Could not enable pg_trgm: {result.stderr.strip()}")
+        print_info("pg_trgm is required for sanctions screening — enable it manually")
+    else:
+        print_success("pg_trgm extension enabled")
+
+    # Update .env with the real DATABASE_URL
+    db_url = f"postgresql://{DB_USER}:{password}@localhost:5432/{DB_NAME}"
+    if env_path.exists():
+        env_text = env_path.read_text()
+        env_text = re.sub(
+            r"^DATABASE_URL=.*$",
+            f"DATABASE_URL={db_url}",
+            env_text,
+            flags=re.MULTILINE,
+        )
+        env_path.write_text(env_text)
+    print_success("DATABASE_URL updated in .env")
+
+    print()
+    return True
+
 
 def download_nllb_model():
     """Download and convert the NLLB translation model."""
@@ -334,30 +522,26 @@ def install_development():
     if not setup_configuration():
         return False
 
+    setup_database()
+
     download_nllb_model()
 
     create_start_scripts()
-    
+
     # Print success message
     print()
     print_header("Installation Complete!")
     print()
-    
+
     system_info = get_system_info()
     activate_cmd = get_venv_activate()
-    
+
     print("Next steps:")
     print()
-    print(f"  1. Edit .env file with your API keys:")
-    if system_info["is_windows"]:
-        print("     notepad .env")
-    else:
-        print("     nano .env")
-    print()
-    print("  2. Activate virtual environment:")
+    print("  1. Activate virtual environment:")
     print(f"     {activate_cmd}")
     print()
-    print("  3. Start Observer:")
+    print("  2. Start Observer:")
     if system_info["is_windows"]:
         print("     python main.py")
         print("     (or double-click start.bat)")
@@ -365,7 +549,7 @@ def install_development():
         print("     python main.py")
         print("     (or run ./start.sh)")
     print()
-    print("  4. Open dashboard:")
+    print("  3. Open dashboard:")
     print("     http://localhost:8000")
     print()
     

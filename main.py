@@ -60,22 +60,19 @@ async def lifespan(app: FastAPI):
         logger.error(f"PostgreSQL connection failed: {e}")
         sys.exit(1)
 
-    # Seed feed_sources from JSON registry (first run only)
+    # Seed feed_sources from CSV (first run only)
     try:
         count = await db.feed_sources.count()
         if count == 0:
-            import json
             from pathlib import Path
-            json_path = Path(config.FEED_REGISTRY_PATH)
-            if json_path.exists():
-                with open(json_path, 'r', encoding='utf-8') as f:
-                    registry_json = json.load(f)
-                seeded = await db.feed_sources.seed_from_json(registry_json)
-                logger.info(f"Seeded {seeded} feed sources from {json_path.name}")
+            csv_path = Path("data/feed_sources_seed.csv")
+            if csv_path.exists():
+                seeded = await db.feed_sources.seed_from_csv(str(csv_path))
+                logger.info(f"Seeded {seeded} feed sources from {csv_path.name}")
             else:
-                logger.warning(f"No JSON registry found at {json_path} — feed_sources table empty")
+                logger.warning(f"No seed file found at {csv_path} — feed_sources table empty")
         else:
-            logger.info(f"feed_sources table has {count} entries — skipping JSON seed")
+            logger.info(f"feed_sources table has {count} entries — skipping seed")
     except Exception as e:
         logger.warning(f"Feed sources seeding skipped: {e}")
 

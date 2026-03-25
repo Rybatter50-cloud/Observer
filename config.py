@@ -145,11 +145,11 @@ class Config:
 
     # Server Configuration
     HOST: str = os.getenv('HOST', '0.0.0.0')
-    PORT: int = _env_int('PORT', '8000')
+    PORT: int = _env_int('PORT', '8999')
     DEBUG: bool = os.getenv('DEBUG', 'false').lower() == 'true'
 
     # CORS Configuration
-    ALLOWED_ORIGINS: list = os.getenv('ALLOWED_ORIGINS', 'http://localhost:8000').split(',')
+    ALLOWED_ORIGINS: list = os.getenv('ALLOWED_ORIGINS', 'http://localhost:8999').split(',')
 
     # API Key Authentication
     API_KEY_ENABLED: bool = os.getenv('API_KEY_ENABLED', 'false').lower() == 'true'

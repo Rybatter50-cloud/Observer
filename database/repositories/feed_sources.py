@@ -553,3 +553,52 @@ class FeedSourcesRepository:
         inserted = await self.insert_batch(sources)
         logger.info(f"Seeded {inserted} feed sources from JSON registry")
         return inserted
+
+    async def seed_from_csv(self, csv_path: str) -> int:
+        """
+        Seed the feed_sources table from a CSV file (no header row).
+        Columns: id, group_key, group_label, name, url, domain, feed_type,
+                 language, city, country, enabled, lat, lon, description,
+                 created_at, last_error, status, updated_at, last_fetched
+        Skips entries that already exist (ON CONFLICT DO NOTHING).
+        Returns count of newly inserted rows.
+        """
+        import csv
+        sources = []
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if len(row) < 13:
+                    continue
+                enabled_str = row[10].strip().lower()
+                enabled = enabled_str in ('true', '1', 'yes', 't')
+                try:
+                    lat = float(row[11]) if row[11].strip() else None
+                except (ValueError, IndexError):
+                    lat = None
+                try:
+                    lon = float(row[12]) if row[12].strip() else None
+                except (ValueError, IndexError):
+                    lon = None
+                sources.append({
+                    'group_key': row[1].strip(),
+                    'group_label': row[2].strip(),
+                    'name': row[3].strip(),
+                    'url': row[4].strip(),
+                    'domain': row[5].strip(),
+                    'feed_type': row[6].strip() or 'rss',
+                    'language': row[7].strip() or 'en',
+                    'city': row[8].strip(),
+                    'country': row[9].strip(),
+                    'enabled': enabled,
+                    'lat': lat,
+                    'lon': lon,
+                    'description': row[13].strip() if len(row) > 13 else '',
+                })
+
+        if not sources:
+            return 0
+
+        inserted = await self.insert_batch(sources)
+        logger.info(f"Seeded {inserted} feed sources from {csv_path}")
+        return inserted

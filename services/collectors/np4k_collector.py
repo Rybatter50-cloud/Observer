@@ -84,7 +84,14 @@ class NP4KCollector(BaseCollector):
             logger.debug("NP4KCollector initialized: no scraper sites configured")
 
     def _load_registry(self) -> None:
-        """Load and cache the feed registry JSON (sync fallback for init)."""
+        """Load and cache the feed registry JSON (sync fallback for init).
+
+        Feeds are now DB-backed; this only runs if a legacy JSON registry
+        path is configured.
+        """
+        if not hasattr(self, 'registry_path') or self.registry_path is None:
+            self._registry_data = {}
+            return
         try:
             if not self.registry_path.exists():
                 self._registry_data = {}

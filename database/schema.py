@@ -59,7 +59,9 @@ class DatabaseSchema:
                 screening_hits     JSONB,
                 created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                 updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                original_title     TEXT
+                original_title     TEXT,
+                entities_json      JSONB,
+                entities_tier      INTEGER NOT NULL DEFAULT 0
             )
         """,
 
