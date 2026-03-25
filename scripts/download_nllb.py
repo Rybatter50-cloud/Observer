@@ -40,9 +40,15 @@ def check_model(output_dir: Path) -> bool:
     return has_model and has_sp
 
 
-def check_converter() -> bool:
-    """Check if ct2-opus-mt-converter or ct2-transformers-converter is available."""
-    return shutil.which("ct2-transformers-converter") is not None
+def find_converter() -> str | None:
+    """Find ct2-transformers-converter, checking the current venv first."""
+    # Check alongside the running Python (works inside a venv)
+    bin_dir = Path(sys.executable).parent
+    candidate = bin_dir / "ct2-transformers-converter"
+    if candidate.exists():
+        return str(candidate)
+    # Fall back to system PATH
+    return shutil.which("ct2-transformers-converter")
 
 
 def check_build_deps() -> list:
@@ -104,13 +110,13 @@ def download_sentencepiece(model_name: str, output_dir: Path) -> bool:
     return False
 
 
-def convert_model(model_name: str, output_dir: Path, quantization: str) -> bool:
+def convert_model(model_name: str, output_dir: Path, quantization: str, converter: str = "ct2-transformers-converter") -> bool:
     """Convert HuggingFace model to CTranslate2 format."""
     print(f"\n  Converting {model_name} to CTranslate2 ({quantization})...")
     print("  This downloads ~1.2 GB and may take a few minutes...\n")
 
     cmd = [
-        "ct2-transformers-converter",
+        converter,
         "--model", model_name,
         "--output_dir", str(output_dir),
         "--quantization", quantization,
@@ -198,8 +204,9 @@ def main():
         print("  pip uninstall transformers torch")
         return 1
 
-    if not check_converter():
-        print("ct2-transformers-converter not found in PATH.")
+    converter = find_converter()
+    if not converter:
+        print("ct2-transformers-converter not found.")
         print("Install with: pip install ctranslate2")
         return 1
 
@@ -207,7 +214,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
 
     # Convert model
-    if not convert_model(args.model, args.output, args.quantization):
+    if not convert_model(args.model, args.output, args.quantization, converter):
         return 1
 
     # Download sentencepiece model
