@@ -5,6 +5,7 @@ Owns the asyncpg connection pool and provides it to repositories.
 """
 
 import asyncio
+import json
 import asyncpg
 from datetime import datetime
 from typing import Dict, Any, Optional
@@ -49,6 +50,17 @@ class Database:
         max_size = config.DB_POOL_MAX_SIZE
 
         logger.info(f"Connecting to PostgreSQL (pool: {min_size}-{max_size})...")
+        async def _init_connection(conn):
+            """Register JSON/JSONB codecs so columns decode to Python objects."""
+            await conn.set_type_codec(
+                'jsonb', encoder=json.dumps, decoder=json.loads,
+                schema='pg_catalog',
+            )
+            await conn.set_type_codec(
+                'json', encoder=json.dumps, decoder=json.loads,
+                schema='pg_catalog',
+            )
+
         self._pool = await asyncpg.create_pool(
             self.dsn,
             min_size=min_size,
@@ -56,6 +68,7 @@ class Database:
             command_timeout=30,
             statement_cache_size=256,
             server_settings={'jit': 'off'},
+            init=_init_connection,
         )
 
         await DatabaseSchema.initialize_tables(self._pool)

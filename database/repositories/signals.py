@@ -353,13 +353,6 @@ class SignalRepository:
         try:
             async with self._pool.acquire() as conn:
                 async with conn.transaction():
-                    import json as _json
-                    _entities_json = data.get('entities_json')
-                    _entities_json_str = _json.dumps(_entities_json) if _entities_json else None
-
-                    _screening_hits = data.get('screening_hits')
-                    _screening_hits_str = _json.dumps(_screening_hits) if _screening_hits else None
-
                     row = await conn.fetchrow(
                         """INSERT INTO intel_signals
                            (title, description, full_text, url, published_at,
@@ -370,7 +363,7 @@ class SignalRepository:
                             translation_source, author, source_group,
                             original_title, entities_json, entities_tier,
                             screening_hits)
-                           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22::jsonb,$23,$24::jsonb)
+                           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
                            ON CONFLICT (url) DO NOTHING
                            RETURNING *""",
                         data['title'],
@@ -394,9 +387,9 @@ class SignalRepository:
                         data.get('author'),
                         data.get('source_group'),
                         data.get('original_title'),
-                        _entities_json_str,
+                        data.get('entities_json'),
                         data.get('entities_tier', 0),
-                        _screening_hits_str,
+                        data.get('screening_hits'),
                     )
 
                     if row is not None:
@@ -497,10 +490,9 @@ class SignalRepository:
     ) -> None:
         """Store auto-screening results as JSONB on a signal row."""
         try:
-            import json
             await self._pool.execute(
-                "UPDATE intel_signals SET screening_hits = $1::jsonb WHERE id = $2",
-                json.dumps(screening_data),
+                "UPDATE intel_signals SET screening_hits = $1 WHERE id = $2",
+                screening_data,
                 signal_id,
             )
         except Exception as e:

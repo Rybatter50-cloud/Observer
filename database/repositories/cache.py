@@ -66,14 +66,12 @@ class CacheRepository:
             True on success
         """
         try:
-            import json
-            json_val = json.dumps(value)
             await self._pool.execute(
                 """INSERT INTO cache_store (key, value, updated_at)
-                   VALUES ($1, $2::jsonb, NOW())
+                   VALUES ($1, $2, NOW())
                    ON CONFLICT (key)
-                   DO UPDATE SET value = $2::jsonb, updated_at = NOW()""",
-                key, json_val,
+                   DO UPDATE SET value = $2, updated_at = NOW()""",
+                key, value,
             )
             return True
         except Exception as e:
