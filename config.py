@@ -11,8 +11,11 @@ from pathlib import Path
 from typing import Optional
 from dotenv import load_dotenv
 
+# Project root — used to resolve relative model paths regardless of cwd
+_PROJECT_ROOT = Path(__file__).parent
+
 # Load .env file if it exists
-env_path = Path(__file__).parent / '.env'
+env_path = _PROJECT_ROOT / '.env'
 if env_path.exists():
     load_dotenv(env_path)
 
@@ -64,8 +67,8 @@ class Config:
     TRANSLATION_USE_NLLB: bool = (AI_TRANSLATOR_MODE == 'nllb')
 
     # NLLB Configuration (CTranslate2)
-    NLLB_MODEL: str = os.getenv('NLLB_MODEL', 'models/nllb-200-distilled-600M-ct2')
-    NLLB_SP_MODEL: str = os.getenv('NLLB_SP_MODEL', 'models/nllb-200-distilled-600M-ct2/sentencepiece.bpe.model')
+    NLLB_MODEL: str = os.getenv('NLLB_MODEL', str(_PROJECT_ROOT / 'models' / 'nllb-200-distilled-600M-ct2'))
+    NLLB_SP_MODEL: str = os.getenv('NLLB_SP_MODEL', str(_PROJECT_ROOT / 'models' / 'nllb-200-distilled-600M-ct2' / 'sentencepiece.bpe.model'))
     NLLB_MAX_LENGTH: int = _env_int('NLLB_MAX_LENGTH', '512')
     NLLB_MAX_INPUT_LENGTH: int = _env_int('NLLB_MAX_INPUT_LENGTH', '0')
     NLLB_BATCH_SIZE: int = _env_int('NLLB_BATCH_SIZE', '8')
