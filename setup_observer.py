@@ -143,17 +143,6 @@ def check_venv_module():
             print_info("Install with: sudo apt install python3-venv")
         return False
 
-def check_docker():
-    """Check if Docker is available"""
-    try:
-        result = subprocess.run(["docker", "--version"], 
-                               capture_output=True, check=True)
-        version = result.stdout.decode().strip()
-        print_success(f"Docker: {version}")
-        return True
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print_warning("Docker not available (optional)")
-        return False
 
 def check_postgres():
     """Check if PostgreSQL client is available"""
@@ -182,9 +171,8 @@ def check_prerequisites():
         check_venv_module(),
     ]
 
-    # PostgreSQL and Docker are checked but not required to proceed
+    # PostgreSQL is checked but not required to proceed
     check_postgres()
-    check_docker()
 
     print()
     if all(checks):
