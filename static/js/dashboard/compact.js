@@ -254,21 +254,30 @@ function _initHeaderInteractions() {
             _showColumnMenu(e.pageX, e.pageY);
         });
 
-        // Resize handle
+        // Resize handle — drag adjusts this column and its right neighbour inversely
         if (!th.querySelector('.col-resize-handle')) {
             const handle = document.createElement('div');
             handle.className = 'col-resize-handle';
             th.appendChild(handle);
-            let startX, startWidth;
+            let startX, startWidth, nextTh, nextStartWidth;
             handle.addEventListener('mousedown', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 startX = e.pageX;
                 startWidth = th.offsetWidth;
+                nextTh = th.nextElementSibling;
+                nextStartWidth = nextTh ? nextTh.offsetWidth : 0;
                 handle.classList.add('active');
                 table.classList.add('resizing');
                 function onMove(e) {
-                    th.style.width = Math.max(30, startWidth + e.pageX - startX) + 'px';
+                    const dx = e.pageX - startX;
+                    const newWidth = Math.max(30, startWidth + dx);
+                    th.style.width = newWidth + 'px';
+                    // Adjust neighbour inversely so total width stays constant
+                    if (nextTh) {
+                        const newNextWidth = Math.max(30, nextStartWidth - dx);
+                        nextTh.style.width = newNextWidth + 'px';
+                    }
                 }
                 function onUp() {
                     handle.classList.remove('active');

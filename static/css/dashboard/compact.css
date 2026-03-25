@@ -5,8 +5,7 @@
 
 /* ==================== COMPACT VIEW ==================== */
 .compact-table {
-    min-width: 100%;
-    width: max-content;
+    width: 100%;
     border-collapse: collapse;
     display: none;
     table-layout: fixed;
