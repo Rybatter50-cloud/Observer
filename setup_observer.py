@@ -471,6 +471,38 @@ def download_nllb_model():
     return False
 
 
+def download_gliner_model():
+    """Pre-download the GLiNER entity extraction model."""
+    print_info("Setting up GLiNER entity extraction model...")
+
+    python_path = get_venv_python()
+
+    # Check if model is already cached (huggingface_hub cache)
+    try:
+        result = subprocess.run(
+            [str(python_path), "-c",
+             "from gliner import GLiNER; "
+             "m = GLiNER.from_pretrained('urchade/gliner_medium-v2.1', map_location='cpu'); "
+             "print('OK')"],
+            capture_output=True, text=True, timeout=300,
+        )
+        if result.returncode == 0 and 'OK' in result.stdout:
+            print_success("GLiNER model ready (urchade/gliner_medium-v2.1)")
+            return True
+    except subprocess.TimeoutExpired:
+        print_warning("GLiNER model download timed out")
+        print_info("You can download it later — it will auto-download on first use")
+        return False
+    except Exception as e:
+        print_warning(f"GLiNER model setup failed: {e}")
+        print_info("You can download it later — it will auto-download on first use")
+        return False
+
+    print_warning("GLiNER model download failed")
+    print_info("It will auto-download on first use of: python scripts/extract_entities.py")
+    return False
+
+
 def create_start_scripts():
     """Create platform-specific start scripts"""
     system = platform.system()
@@ -513,6 +545,8 @@ def install_development():
     setup_database()
 
     download_nllb_model()
+
+    download_gliner_model()
 
     create_start_scripts()
 

@@ -581,6 +581,21 @@
     color: #f97316;
 }
 
+.entity-pill.entity-country {
+    background: rgba(20, 184, 166, 0.15);
+    color: #14b8a6;
+}
+
+.entity-pill.entity-military {
+    background: rgba(185, 28, 28, 0.15);
+    color: #b91c1c;
+}
+
+.entity-pill.entity-weapon {
+    background: rgba(234, 88, 12, 0.15);
+    color: #ea580c;
+}
+
 .entity-pill.entity-event {
     background: rgba(163, 113, 247, 0.15);
     color: var(--accent-purple);

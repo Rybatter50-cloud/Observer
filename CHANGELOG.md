@@ -5,6 +5,23 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.2.0] — 2026-03-25
+
+### Added
+- **GLiNER entity extraction** (`services/entity_extraction.py`): Named entity recognition using `urchade/gliner_medium-v2.1` model. Extracts Person, Organization, Location, Country, Military Unit, and Weapon entities from article titles and descriptions.
+- **Batch extraction script** (`scripts/extract_entities.py`): Standalone script to process signals in bulk. Supports `--limit`, `--batch-size`, `--auto-screen`, and `--reprocess` flags.
+- **Entity auto-screening**: Extracted Person entities (confidence ≥ 0.6) are automatically screened against OpenSanctions, FBI, and Interpol databases. Results stored in `screening_hits` JSONB column.
+- **Screening hits in article detail modal**: Red alert section showing matched entities with source, score, category, and key details. Exact matches (100%) highlighted with red border.
+- **Entity pills in article detail modal**: Extracted entities displayed as color-coded tags with confidence percentages.
+- **New entity type CSS**: Added color styles for Country (teal), Military (dark red), and Weapon (orange-red) entity pills.
+- **GLiNER model pre-download** in `setup_observer.py`: Downloads model during installation so first extraction doesn't pause.
+- `gliner>=0.2.0` added to `requirements.txt`.
+
+### Changed
+- `ENTITY_EXTRACTION_ENABLED` and `ENTITY_AUTO_SCREEN` now default to `true` (configurable via `.env`).
+
+---
+
 ## [1.1.0] — 2026-03-25
 
 ### Added

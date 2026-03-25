@@ -149,6 +149,9 @@ function getEntityPills(signal) {
         'PERSON': 'entity-person',
         'ORG': 'entity-org',
         'GPE': 'entity-gpe',
+        'COUNTRY': 'entity-country',
+        'MILITARY': 'entity-military',
+        'WEAPON': 'entity-weapon',
         'EVENT': 'entity-event',
     };
 
@@ -176,9 +179,13 @@ function getScreeningBadge(signal) {
 
     const count = hits.hit_count;
     const maxScore = Math.round(hits.max_score || 0);
+    const isExact = maxScore >= 100;
     const title = `${count} screening hit${count !== 1 ? 's' : ''} (max confidence: ${maxScore}%)`;
 
-    return `<button class="screening-shield has-hits" onclick="openScreeningModal(${signal.id})" title="${title}">
+    // Red badge only for exact matches (100%); amber for partial matches
+    const cls = isExact ? 'screening-shield has-hits exact-match' : 'screening-shield has-hits partial-match';
+
+    return `<button class="${cls}" onclick="openScreeningModal(${signal.id})" title="${title}">
         <span class="shield-icon">🛡</span><span class="shield-count">${count}</span>
     </button>`;
 }

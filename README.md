@@ -98,10 +98,34 @@ The setup script handles `DATABASE_URL` automatically. Everything else has worki
 | `SANCTIONS_NET_ENABLED` | `true` | Enable OpenSanctions screening |
 | `FBI_ENABLED` | `false` | Enable FBI Most Wanted API |
 | `INTERPOL_ENABLED` | `false` | Enable Interpol Notices API |
+| `ENTITY_EXTRACTION_ENABLED` | `true` | Enable GLiNER entity extraction |
+| `ENTITY_AUTO_SCREEN` | `true` | Auto-screen persons against watchlists |
 | `HOST` | `0.0.0.0` | Server bind address |
 | `PORT` | `8999` | Server port |
 
 See `.env.example` for all available settings.
+
+### Entity Extraction (GLiNER)
+
+Observer uses [GLiNER](https://github.com/urchade/GLiNER) (`urchade/gliner_medium-v2.1`, ~80MB) to extract named entities from article titles and descriptions. Entity types: Person, Organization, Location, Country, Military Unit, Weapon.
+
+Entity extraction runs as a batch script — not inline during collection:
+
+```bash
+# Extract entities from unprocessed signals (default: 500)
+python scripts/extract_entities.py
+
+# Extract + auto-screen persons against sanctions/FBI/Interpol
+python scripts/extract_entities.py --auto-screen
+
+# Process more signals
+python scripts/extract_entities.py --limit 2000 --auto-screen
+
+# Re-extract all signals (e.g. after model update)
+python scripts/extract_entities.py --reprocess
+```
+
+Extracted entities appear as color-coded pills on article cards. When auto-screening finds a 100% match, a red shield badge appears on the card and screening details are shown in the article detail modal.
 
 ## Project Structure
 

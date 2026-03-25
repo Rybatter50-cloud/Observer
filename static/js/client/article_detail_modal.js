@@ -188,6 +188,16 @@ function _admPopulate(signal) {
             (reviewedIds.has(signal.id) ? 'Reviewed' : 'Mark Reviewed') +
         '</button>';
 
+    // Screening hits + entity section (reusable container)
+    var extraContainer = document.getElementById('admExtraSections');
+    if (!extraContainer) {
+        extraContainer = document.createElement('div');
+        extraContainer.id = 'admExtraSections';
+        var textLabel = textContent.parentNode.querySelector('.article-detail-text-label');
+        textContent.parentNode.insertBefore(extraContainer, textLabel);
+    }
+    extraContainer.innerHTML = _admBuildScreeningHits(signal) + _admBuildEntitySection(signal);
+
     // Article text (description + full_text)
     var text = '';
     if (signal.full_text) {
@@ -530,4 +540,80 @@ function _admCopyXPost() {
             setTimeout(function() { btn.textContent = 'Copy to Clipboard'; }, 1500);
         }
     });
+}
+
+// ==================== SCREENING HITS SECTION ====================
+
+function _admBuildScreeningHits(signal) {
+    var hits = signal.screening_hits;
+    if (!hits || !hits.hit_count) return '';
+
+    var html = '<div class="adm-screening-section">';
+    html += '<div class="adm-screening-header">';
+    html += '<span class="adm-screening-icon">&#128737;</span> ';
+    html += '<strong>Screening Hits (' + hits.hit_count + ')</strong>';
+    if (hits.max_score >= 100) {
+        html += ' <span class="adm-screening-alert">EXACT MATCH</span>';
+    }
+    html += '</div>';
+
+    var hitList = hits.hits || [];
+    for (var i = 0; i < hitList.length; i++) {
+        var h = hitList[i];
+        var isExact = (h.score >= 100);
+        var cls = isExact ? 'adm-hit-row exact' : 'adm-hit-row';
+
+        html += '<div class="' + cls + '">';
+        html += '<span class="adm-hit-entity">' + _admEsc(h.entity || h.name || '') + '</span>';
+        html += '<span class="adm-hit-source">' + _admEsc(h.source || '') + '</span>';
+        html += '<span class="adm-hit-score">' + Math.round(h.score || 0) + '%</span>';
+        html += '<span class="adm-hit-category">' + _admEsc(h.category || '') + '</span>';
+
+        // Show key details
+        if (h.details) {
+            var detailParts = [];
+            if (h.details.nationality) detailParts.push('Nationality: ' + h.details.nationality);
+            if (h.details.countries) detailParts.push('Countries: ' + h.details.countries);
+            if (h.details.sanctions) detailParts.push('Sanctions: ' + h.details.sanctions);
+            if (h.details.charges) detailParts.push('Charges: ' + h.details.charges);
+            if (detailParts.length > 0) {
+                html += '<div class="adm-hit-details">' + _admEsc(detailParts.join(' | ')) + '</div>';
+            }
+        }
+        html += '</div>';
+    }
+
+    html += '</div>';
+    return html;
+}
+
+// ==================== ENTITY SECTION ====================
+
+function _admBuildEntitySection(signal) {
+    var entities = signal.entities_json;
+    if (!entities || !Array.isArray(entities) || entities.length === 0) return '';
+
+    var typeLabels = {
+        'PERSON': 'Person', 'ORG': 'Organization', 'GPE': 'Location',
+        'COUNTRY': 'Country', 'MILITARY': 'Military', 'WEAPON': 'Weapon'
+    };
+
+    var html = '<div class="adm-entity-section">';
+    html += '<div class="adm-entity-header"><strong>Extracted Entities (' + entities.length + ')</strong></div>';
+    html += '<div class="adm-entity-list">';
+
+    for (var i = 0; i < entities.length; i++) {
+        var e = entities[i];
+        var conf = Math.round((e.confidence || 0) * 100);
+        var typeLabel = typeLabels[e.type] || e.type;
+        var hasScreening = e.screening_result && e.screening_result.hit_count;
+
+        html += '<span class="adm-entity-tag adm-entity-' + _admEsc((e.type || '').toLowerCase()) + '">';
+        if (hasScreening) html += '<span class="entity-warn">!</span>';
+        html += _admEsc(e.text) + ' <span class="adm-entity-conf">' + typeLabel + ' ' + conf + '%</span>';
+        html += '</span>';
+    }
+
+    html += '</div></div>';
+    return html;
 }

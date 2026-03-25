@@ -25,12 +25,23 @@
 
 .screening-shield.has-hits {
     display: inline-flex;
+}
+
+.screening-shield.exact-match {
     color: #ef4444;
     animation: screening-pulse 2s ease-in-out infinite;
 }
 
-.screening-shield.has-hits:hover {
+.screening-shield.partial-match {
+    color: #f59e0b;
+}
+
+.screening-shield.exact-match:hover {
     background: rgba(239, 68, 68, 0.2);
+}
+
+.screening-shield.partial-match:hover {
+    background: rgba(245, 158, 11, 0.2);
 }
 
 .screening-shield .shield-icon {
@@ -41,7 +52,7 @@
 .screening-shield .shield-count {
     font-size: 10px;
     font-weight: 700;
-    color: #ef4444;
+    color: inherit;
     background: rgba(239, 68, 68, 0.2);
     border-radius: 8px;
     padding: 0 4px;

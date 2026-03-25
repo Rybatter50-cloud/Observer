@@ -131,7 +131,7 @@ class Config:
     # Features permanently disabled in Lite
     EMBEDDINGS_ENABLED: bool = False
     WIKI_EVENTS_ENABLED: bool = False
-    ENTITY_EXTRACTION_ENABLED: bool = False
+    ENTITY_EXTRACTION_ENABLED: bool = os.getenv('ENTITY_EXTRACTION_ENABLED', 'true').lower() == 'true'
     ENTITY_ENRICHMENT_ENABLED: bool = False
     GEMINI_ENABLED: bool = False
     VIRUSTOTAL_ENABLED: bool = False
@@ -141,7 +141,7 @@ class Config:
     KOKORO_ENABLED: bool = False
     NP4K_ENABLED: bool = os.getenv('NP4K_ENABLED', 'false').lower() == 'true'
     VECTOR_TRANSLATION_ENABLED: bool = False
-    ENTITY_AUTO_SCREEN: bool = False
+    ENTITY_AUTO_SCREEN: bool = os.getenv('ENTITY_AUTO_SCREEN', 'true').lower() == 'true'
 
     # Server Configuration
     HOST: str = os.getenv('HOST', '0.0.0.0')

@@ -332,3 +332,128 @@
     color: #ef4444;
     font-weight: 600;
 }
+
+/* ── Screening Hits Section ── */
+.adm-screening-section {
+    margin-bottom: 12px;
+    padding: 10px;
+    background: rgba(239, 68, 68, 0.06);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 6px;
+}
+
+.adm-screening-header {
+    font-size: 11px;
+    color: #ef4444;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.adm-screening-icon {
+    font-size: 13px;
+}
+
+.adm-screening-alert {
+    background: #ef4444;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+}
+
+.adm-hit-row {
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    font-size: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.adm-hit-row.exact {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 2px solid #ef4444;
+}
+
+.adm-hit-entity {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.adm-hit-source {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+}
+
+.adm-hit-score {
+    font-weight: 700;
+    color: #ef4444;
+}
+
+.adm-hit-category {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.adm-hit-details {
+    width: 100%;
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    line-height: 1.4;
+}
+
+/* ── Entity Section ── */
+.adm-entity-section {
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.adm-entity-header {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.adm-entity-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.adm-entity-tag {
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.adm-entity-tag .adm-entity-conf {
+    font-size: 7px;
+    opacity: 0.7;
+}
+
+.adm-entity-person { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.adm-entity-org { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+.adm-entity-gpe { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+.adm-entity-country { background: rgba(20, 184, 166, 0.15); color: #14b8a6; }
+.adm-entity-military { background: rgba(185, 28, 28, 0.15); color: #b91c1c; }
+.adm-entity-weapon { background: rgba(234, 88, 12, 0.15); color: #ea580c; }
