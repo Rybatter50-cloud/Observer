@@ -16,6 +16,7 @@ import asyncio
 import os
 import re
 import signal
+import sys
 from pathlib import Path
 from typing import Optional
 
@@ -928,3 +929,146 @@ async def save_nllb_model_params(request: Request):
         })
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ==================== CLASSIFIER TRAINING ====================
+
+# Track the running training process
+_classifier_state = {
+    "running": False,
+    "process": None,
+    "output": [],
+    "exit_code": None,
+    "started_at": None,
+}
+
+
+@admin_router.post("/classifier/train")
+async def train_classifier():
+    """
+    Launch the classifier training script as a background subprocess.
+    Safe defaults: all-MiniLM-L6-v2, no backfill, preview 20.
+    """
+    if _classifier_state["running"]:
+        return JSONResponse(
+            {"success": False, "message": "Training already in progress"},
+            status_code=409,
+        )
+
+    from pathlib import Path
+
+    project_root = Path(__file__).parent.parent
+    script = project_root / "scripts" / "train_classifier.py"
+    if not script.exists():
+        raise HTTPException(status_code=404, detail="train_classifier.py not found")
+
+    # Find the venv python
+    venv_python = project_root / "venv" / "bin" / "python"
+    python_cmd = str(venv_python) if venv_python.exists() else sys.executable
+
+    _classifier_state["running"] = True
+    _classifier_state["output"] = []
+    _classifier_state["exit_code"] = None
+    _classifier_state["started_at"] = asyncio.get_event_loop().time()
+
+    async def _run():
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                python_cmd, str(script),
+                "--preview", "20",
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.STDOUT,
+                cwd=str(project_root),
+            )
+            _classifier_state["process"] = proc
+
+            async for line in proc.stdout:
+                text = line.decode("utf-8", errors="replace").rstrip()
+                _classifier_state["output"].append(text)
+                # Cap stored output at 500 lines
+                if len(_classifier_state["output"]) > 500:
+                    _classifier_state["output"] = _classifier_state["output"][-500:]
+
+            await proc.wait()
+            _classifier_state["exit_code"] = proc.returncode
+        except Exception as e:
+            _classifier_state["output"].append(f"ERROR: {e}")
+            _classifier_state["exit_code"] = -1
+        finally:
+            _classifier_state["running"] = False
+            _classifier_state["process"] = None
+
+    asyncio.create_task(_run())
+    logger.info("Classifier training started via client button")
+
+    return JSONResponse({"success": True, "message": "Training started"})
+
+
+@admin_router.post("/classifier/train-and-backfill")
+async def train_classifier_and_backfill():
+    """
+    Launch the classifier training script with --backfill flag.
+    Trains on scored articles then classifies all unlabeled ones.
+    """
+    if _classifier_state["running"]:
+        return JSONResponse(
+            {"success": False, "message": "Training already in progress"},
+            status_code=409,
+        )
+
+    from pathlib import Path
+
+    project_root = Path(__file__).parent.parent
+    script = project_root / "scripts" / "train_classifier.py"
+    if not script.exists():
+        raise HTTPException(status_code=404, detail="train_classifier.py not found")
+
+    venv_python = project_root / "venv" / "bin" / "python"
+    python_cmd = str(venv_python) if venv_python.exists() else sys.executable
+
+    _classifier_state["running"] = True
+    _classifier_state["output"] = []
+    _classifier_state["exit_code"] = None
+    _classifier_state["started_at"] = asyncio.get_event_loop().time()
+
+    async def _run():
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                python_cmd, str(script),
+                "--backfill", "--min-confidence", "0.5", "--preview", "0",
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.STDOUT,
+                cwd=str(project_root),
+            )
+            _classifier_state["process"] = proc
+
+            async for line in proc.stdout:
+                text = line.decode("utf-8", errors="replace").rstrip()
+                _classifier_state["output"].append(text)
+                if len(_classifier_state["output"]) > 500:
+                    _classifier_state["output"] = _classifier_state["output"][-500:]
+
+            await proc.wait()
+            _classifier_state["exit_code"] = proc.returncode
+        except Exception as e:
+            _classifier_state["output"].append(f"ERROR: {e}")
+            _classifier_state["exit_code"] = -1
+        finally:
+            _classifier_state["running"] = False
+            _classifier_state["process"] = None
+
+    asyncio.create_task(_run())
+    logger.info("Classifier training + backfill started via client button")
+
+    return JSONResponse({"success": True, "message": "Training + backfill started"})
+
+
+@admin_router.get("/classifier/status")
+async def get_classifier_status():
+    """Get the current state of a classifier training run."""
+    return JSONResponse({
+        "running": _classifier_state["running"],
+        "exit_code": _classifier_state["exit_code"],
+        "output": _classifier_state["output"],
+        "line_count": len(_classifier_state["output"]),
+    })

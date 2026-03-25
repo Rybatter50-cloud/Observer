@@ -83,6 +83,14 @@
                 <input type="text" class="sidebar-search-input" id="sidebarSearchInput" placeholder='ukraine "military base" -russia ...' oninput="_sidebarOnSearchInput(this.value)">
                 <div class="sidebar-search-hint">"quotes" = exact &nbsp;|&nbsp; -word = exclude</div>
             </div>
+
+            <!-- Classifier Training -->
+            <div class="sidebar-section">
+                <h3>Classifier</h3>
+                <button class="sidebar-action-btn" id="trainClassifierBtn" onclick="trainClassifier(false)">Train Classifier</button>
+                <button class="sidebar-action-btn" id="trainBackfillBtn" onclick="trainClassifier(true)" style="margin-top: 4px;">Train + Backfill</button>
+                <div class="sidebar-search-hint" id="classifierHint">Score articles, then train to auto-classify new ones</div>
+            </div>
         </aside>
 
         <!-- Feed Area -->
@@ -152,6 +160,7 @@
     <!-- Client-specific modules -->
     <script src="/static/js/client/search_filter_modal.js?v={{ v }}"></script>
     <script src="/static/js/client/article_detail_modal.js?v={{ v }}"></script>
+    <script src="/static/js/client/classifier.js?v={{ v }}"></script>
 
     <script src="/static/js/client/init.js?v={{ v }}"></script>
 </body>

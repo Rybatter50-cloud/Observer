@@ -57,6 +57,13 @@ torch>=2.0.0,<3.0.0                      # PyTorch (CPU) — required by GLiNER
 gliner>=0.2.0                            # Named entity recognition (NER)
 
 # =============================================================================
+# CLASSIFIER TRAINING
+# =============================================================================
+sentence-transformers>=2.2.0             # Title embeddings for classifier
+scikit-learn>=1.3.0                      # OneVsRest LogisticRegression
+joblib>=1.3.0                            # Model serialization
+
+# =============================================================================
 # UTILITIES
 # =============================================================================
 python-dateutil>=2.8.0,<3.0.0
