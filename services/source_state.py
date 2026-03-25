@@ -216,7 +216,7 @@ class SourceStateManager:
         - SOURCE_STARTUP_ALL=true: Enable ALL groups
         - SOURCE_STARTUP_ALL=false (default): Enable only Tier 1
         """
-        startup_all = os.getenv('SOURCE_STARTUP_ALL', 'false').lower() == 'true'
+        startup_all = os.getenv('SOURCE_STARTUP_ALL', 'true').lower() == 'true'
         
         if startup_all:
             # Get all available groups from feed registry
