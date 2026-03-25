@@ -5,7 +5,8 @@
 
 /* ==================== COMPACT VIEW ==================== */
 .compact-table {
-    width: 100%;
+    min-width: 100%;
+    width: max-content;
     border-collapse: collapse;
     display: none;
     table-layout: fixed;
@@ -244,6 +245,39 @@
 
 .compact-action-btn.reviewed {
     color: var(--accent-green);
+}
+
+/* Entities column */
+.compact-entities {
+    width: 200px;
+    overflow: hidden;
+}
+
+.compact-entities .entity-pills {
+    margin-bottom: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+/* Screening indicator (inline in indicators column) */
+.compact-screening-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.compact-screening-dot.exact {
+    background: #ef4444;
+    box-shadow: 0 0 4px rgba(239, 68, 68, 0.6);
+    animation: screening-pulse 2s ease-in-out infinite;
+}
+
+.compact-screening-dot.partial {
+    background: #f59e0b;
 }
 
 /* ==================== COMPACT INLINE BADGES ==================== */

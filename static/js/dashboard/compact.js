@@ -35,16 +35,52 @@ const COMPACT_COLUMNS = [
         id: 'indicators',
         label: 'Indicators',
         cssClass: 'compact-indicators',
-        defaultWidth: '80px',
+        defaultWidth: '100px',
         defaultVisible: true,
         render: (signal) => {
+            // Screening dot (red = exact 100% match, amber = partial)
+            let screeningDot = '';
+            const hits = signal.screening_hits;
+            if (hits && hits.hit_count) {
+                const maxScore = Math.round(hits.max_score || 0);
+                const cls = maxScore >= 100 ? 'exact' : 'partial';
+                const title = `${hits.hit_count} screening hit${hits.hit_count !== 1 ? 's' : ''} (max: ${maxScore}%)`;
+                screeningDot = `<span class="compact-screening-dot ${cls}" title="${title}" onclick="event.stopPropagation(); openScreeningModal(${signal.id})"></span>`;
+            }
             const transFlag = signal.is_translated
                 ? `<span class="compact-translated" title="Translated from ${escapeHtml(signal.source_language || '?')}">${escapeHtml((signal.source_language || '??').toUpperCase())}</span>`
                 : '';
             const indicators = (signal.risk_indicators || []).map(c =>
                 `<span class="compact-indicator" title="${escapeHtml(window.INDICATOR_LABELS && window.INDICATOR_LABELS[c] || c)}">${escapeHtml(c)}</span>`
             ).join('');
-            return transFlag + `<span class="ie-clickable" onclick="event.stopPropagation(); openIndicatorEditModal(${signal.id})" title="Click to edit indicators">${indicators || '<span class="ie-add-hint">+</span>'}</span>`;
+            return screeningDot + transFlag + `<span class="ie-clickable" onclick="event.stopPropagation(); openIndicatorEditModal(${signal.id})" title="Click to edit indicators">${indicators || '<span class="ie-add-hint">+</span>'}</span>`;
+        }
+    },
+    {
+        id: 'entities',
+        label: 'Entities',
+        cssClass: 'compact-entities',
+        defaultWidth: '200px',
+        defaultVisible: true,
+        render: (signal) => {
+            const entities = signal.entities_json;
+            if (!entities || !Array.isArray(entities) || entities.length === 0) return '';
+
+            const typeColors = {
+                'PERSON': 'entity-person', 'ORG': 'entity-org', 'GPE': 'entity-gpe',
+                'COUNTRY': 'entity-country', 'MILITARY': 'entity-military',
+                'WEAPON': 'entity-weapon', 'EVENT': 'entity-event',
+            };
+
+            const pills = entities.slice(0, 5).map(ent => {
+                const cls = typeColors[ent.type] || 'entity-other';
+                const hasScreening = ent.screening_result && ent.screening_result.hit_count;
+                const warn = hasScreening ? '<span class="entity-warn">!</span>' : '';
+                return `<span class="entity-pill ${cls}" title="${escapeHtml(ent.type)}: ${escapeHtml(ent.text)}">${warn}${escapeHtml(ent.text)}</span>`;
+            }).join('');
+
+            const more = entities.length > 5 ? `<span class="entity-pill entity-more">+${entities.length - 5}</span>` : '';
+            return `<div class="entity-pills">${pills}${more}</div>`;
         }
     },
     {
