@@ -1280,13 +1280,18 @@ function _sfmParseSearchTokens(text) {
 function _sfmMatchesSearchTokens(signal, tokens) {
     if (!tokens) return true;
 
-    // Build a single searchable string from all text fields
+    // Build a single searchable string from all text fields + extracted entities
+    var entityText = '';
+    if (signal.entities_json && Array.isArray(signal.entities_json)) {
+        entityText = signal.entities_json.map(function(e) { return e.text || ''; }).join(' ');
+    }
     var haystack = [
         signal.title || '',
         signal.description || '',
         signal.location || '',
         signal.source || '',
-        signal.author || ''
+        signal.author || '',
+        entityText
     ].join(' ').toLowerCase();
 
     // All required terms must be present
@@ -1347,10 +1352,15 @@ function sfmBuildPredicate() {
 
             // News: check article content for country names
             if (hasNews) {
+                var entText = '';
+                if (signal.entities_json && Array.isArray(signal.entities_json)) {
+                    entText = signal.entities_json.map(function(e) { return e.text || ''; }).join(' ');
+                }
                 var haystack = [
                     signal.title || '',
                     signal.description || '',
-                    signal.location || ''
+                    signal.location || '',
+                    entText
                 ].join(' ').toLowerCase();
                 sfmState.newsRegions.forEach(function(key) {
                     if (passesNews) return; // already matched
